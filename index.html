@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Михаил — продажи × код · автоматизация, боты, OpenVPN</title>
-<meta name="description" content="Михаил: B2B-продажи (МТС, ТЕНДЕР-КОНСАЛТ) + собственные проекты: Telegram-бот генератор договоров, VPN-сервис на 4 160 клиентов, сайты с автоматизацией документооборота.">
+<title>Михаил — бизнес-анализ × код · автоматизация, боты, AI/LLM, OpenVPN</title>
+<meta name="description" content="Михаил: B2B-продажи → бизнес-анализ и автоматизация. Сбор требований, диалоговые сценарии, Telegram-бот генератор договоров, LLM-инструменты в работе, VPN-сервис на 4 160 клиентов.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -19,6 +19,7 @@
   --text:#dbe4f0; --muted:#8fa3bd; --warm:#f2e9d8;
   --blue:#4da3ff; --blue-deep:#1b4fd8;
   --amber:#ffb454; --green:#69f0a0; --magenta:#ff5c93; --red:#ff7a7a;
+  --violet:#a78bfa;
   --nav-acc:var(--blue);
   --mono:'JetBrains Mono',ui-monospace,monospace;
   --sans:'Manrope',system-ui,-apple-system,sans-serif;
@@ -135,6 +136,7 @@ h2::after{content:'';display:block;width:64px;height:3px;margin-top:14px;border-
 .tag.t-amber{border-color:rgba(255,180,84,.45);color:var(--amber);background:rgba(255,180,84,.09)}
 .tag.t-green{border-color:rgba(105,240,160,.4);color:var(--green);background:rgba(105,240,160,.08)}
 .tag.t-magenta{border-color:rgba(255,92,147,.4);color:var(--magenta);background:rgba(255,92,147,.08)}
+.tag.t-violet{border-color:rgba(167,139,250,.4);color:var(--violet);background:rgba(167,139,250,.08)}
 .tag.learning{border-style:dashed;border-color:var(--line-2);color:var(--muted);background:transparent}
 .chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.7rem;padding:4px 11px;border-radius:999px;border:1px solid;white-space:nowrap}
 .chip.ok{color:var(--green);border-color:rgba(105,240,160,.45);background:rgba(105,240,160,.08)}
@@ -220,6 +222,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .about-text b{color:var(--text)}
 .about-text .hl-a{color:var(--amber);font-weight:600}
 .about-text .hl-g{color:var(--green);font-weight:600}
+.about-text .hl-v{color:var(--violet);font-weight:600}
 
 /* ================= VALUE ================= */
 .value-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
@@ -230,6 +233,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .v2 .v-icon{color:var(--amber);border-color:rgba(255,180,84,.4);background:rgba(255,180,84,.09)}
 .v3 .v-icon{color:var(--green);border-color:rgba(105,240,160,.4);background:rgba(105,240,160,.08)}
 .v4 .v-icon{color:var(--magenta);border-color:rgba(255,92,147,.4);background:rgba(255,92,147,.08)}
+.v5 .v-icon{color:var(--violet);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.09)}
 
 /* ================= TIMELINE ================= */
 .timeline{position:relative;padding-left:var(--tl-pad);display:flex;flex-direction:column;gap:30px;margin-top:8px}
@@ -455,12 +459,12 @@ footer .f-line span{color:var(--amber)}
 <!-- ================= HERO ================= -->
 <header class="hero" id="top" data-acc="#4da3ff">
   <div class="page">
-    <div class="hero-pre enter" style="--e:.05s">// из продаж — в инженерию · 2026</div>
+    <div class="hero-pre enter" style="--e:.05s">// из продаж — в аналитику и инженерию · 2026</div>
     <div class="enter" style="--e:.12s"><span class="status-badge"><span class="pulse"></span>open to work · удалённо / релокация в СПб</span></div>
     <h1 class="name enter" style="--e:.2s">Михаил</h1>
     <div class="typed-line enter" style="--e:.3s"><span class="prompt">&gt;</span> <span id="typed">автоматизирую рутину</span><span class="cursor" aria-hidden="true"></span></div>
-    <p class="print-only">Специалист по автоматизации · junior-разработчик · Telegram-боты · OpenVPN · документооборот</p>
-    <p class="hero-sub enter" style="--e:.38s">B2B-менеджер, который научился кодить и довёл собственные сервисы до <b>тысяч пользователей</b>. Понимаю, за что платит клиент, — и умею воплощать это в коде: боты, генерация договоров, сайты, VPN-инфраструктура.</p>
+    <p class="print-only">Бизнес-аналитик (автоматизация / AI) · требования и диалоговые сценарии · Telegram-боты · OpenVPN · документооборот</p>
+    <p class="hero-sub enter" style="--e:.38s">B2B-менеджер, который научился кодить и довёл собственные сервисы до <b>тысяч пользователей</b>. Перевожу бизнес-«хочу» в требования, сценарии и работающие инструменты: диалоговые боты, генерация договоров, сайты, VPN-инфраструктура.</p>
     <div class="hero-meta enter" style="--e:.46s">Самара <span>→</span> Санкт-Петербург · удалённый формат · открыт к предложениям</div>
     <div class="hero-btns enter" style="--e:.54s">
       <a class="btn btn-primary" href="https://t.me/Xersgoryytt" target="_blank" rel="noopener">
@@ -519,7 +523,9 @@ footer .f-line span{color:var(--amber)}
           <div class="cmd">$ status</div>
           <div class="out">open_to_work: <span class="hl">true</span></div>
           <div class="cmd">$ focus</div>
-          <div class="out">автоматизация · боты · backend</div>
+          <div class="out">автоматизация · боты · анализ требований</div>
+          <div class="cmd">$ llm_tools</div>
+          <div class="out">в рабочих задачах — <span class="hl">ежедневно</span></div>
           <div class="cmd">$ uptime_vpn</div>
           <div class="out">4&nbsp;160 клиентов <span class="cm"># пик</span></div>
         </div>
@@ -528,7 +534,8 @@ footer .f-line span{color:var(--amber)}
         <p class="reveal">Начинал в активных продажах: колл-центр <b>МТС</b> (июнь — декабрь 2025), затем почти год B2B в <b>«ТЕНДЕР-КОНСАЛТ»</b> — компании тендерного сопровождения бизнеса. Мой фокус — <span class="hl-a">коммерческие предложения и согласование прямых продаж</span>; с госзакупками работал эпизодически, в формате переработок.</p>
         <p class="reveal" style="--d:.08s">Параллельно учился кодить — и сразу применял: Telegram-боты, сайты с почтой и автоподготовкой договоров, собственный <b>VPN-сервис на OpenVPN</b>, который вырос до <span class="hl-g">4&nbsp;160 клиентов</span>. Друг заказал бота-генератор договоров — теперь документы собираются в PDF за минуты, с параметрами под конкретный договор и человека.</p>
         <p class="reveal" style="--d:.16s">В октябре 2026 ушёл со стабильной позиции <b>осознанно</b> — ради роста в IT. Продажи научили меня понимать клиента, код дал инструмент решать его задачи. Сейчас ищу команду, где этот гибрид полезен каждый день.</p>
-        <div class="quote-card reveal" style="--d:.24s">«Я не складываю сертификаты в стол — я решаю задачи, за которые мне платили».</div>
+        <p class="reveal" style="--d:.24s">Ращу себя в <span class="hl-a">бизнес-анализе</span>: сбор и формализация требований, диалоговые сценарии, критерии приёмки. <span class="hl-v">LLM-ассистенты — ежедневный рабочий инструмент</span>: код, шаблоны документов, промпты и проверка результатов. Понимаю, зачем ИИ нужны жёсткие рамки, валидация и сценарий «не уверен → передай человеку».</p>
+        <div class="quote-card reveal" style="--d:.32s">«Я не складываю сертификаты в стол — я решаю задачи, за которые мне платили».</div>
       </div>
     </div>
   </section>
@@ -538,10 +545,11 @@ footer .f-line span{color:var(--amber)}
     <div class="sec-tag reveal">// 02. чем я полезен бизнесу</div>
     <h2 class="reveal">Что вы получите, взяв меня в команду</h2>
     <div class="value-grid" style="margin-top:26px">
-      <div class="card glow-track v1 reveal"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/><path d="M9 11h6M9 14h4"/></svg></div><h3>Понимаю клиента</h3><p>Активные продажи и B2B-переговоры: выявляю реальную потребность, говорю на языке бизнеса и перевожу «хочу» во внятное техническое задание.</p></div>
-      <div class="card glow-track v2 reveal" style="--d:.08s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div><h3>Автоматизирую рутину</h3><p>Боты, генерация документов, автоподготовка договоров. Нахожу процессы, где люди часами делают руками то, что скрипт сделает за минуты.</p></div>
-      <div class="card glow-track v3 reveal" style="--d:.16s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 13c-2-6 2-10 9-10 0 7-4 11-10 9z"/><circle cx="14.5" cy="8.5" r="1.5"/></svg></div><h3>Довожу до пользователей</h3><p>VPN-сервис прошёл весь путь: сервер → продукт → 4&nbsp;160 клиентов → поддержка. Умею не только писать код, но и доводить его до людей.</p></div>
-      <div class="card glow-track v4 reveal" style="--d:.24s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h3>Работаю автономно</h3><p>Самообучение с нуля и удалённый формат — моя норма. Не требую микроменеджмента, задаю вопросы по делу, соблюдаю договорённости и сроки.</p></div>
+      <div class="card glow-track v1 reveal"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/><path d="M9 11h6M9 14h4"/></svg></div><h3>Понимаю клиента → формализую</h3><p>Активные продажи и B2B-переговоры: выявляю реальную потребность и перевожу «хочу» в структурированные требования, сценарии и ТЗ, понятные разработчику.</p></div>
+      <div class="card glow-track v5 reveal" style="--d:.08s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9.5 16.5h5"/></svg></div><h3>Проектирую диалоги · знаю рамки ИИ</h3><p>Диалоговые сценарии: ветки, тон, границы, обработка ошибок. LLM использую в работе ежедневно — понимаю риски галлюцинаций и зачем нужны валидация, ограничения и передача диалога человеку.</p></div>
+      <div class="card glow-track v2 reveal" style="--d:.16s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div><h3>Автоматизирую рутину</h3><p>Боты, генерация документов, автоподготовка договоров. Нахожу процессы, где люди часами делают руками то, что скрипт сделает за минуты.</p></div>
+      <div class="card glow-track v3 reveal" style="--d:.24s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 13c-2-6 2-10 9-10 0 7-4 11-10 9z"/><circle cx="14.5" cy="8.5" r="1.5"/></svg></div><h3>Довожу до пользователей</h3><p>VPN-сервис прошёл весь путь: сервер → продукт → 4&nbsp;160 клиентов → поддержка. Умею не только писать код, но и доводить его до людей.</p></div>
+      <div class="card glow-track v4 reveal" style="--d:.32s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h3>Работаю автономно</h3><p>Самообучение с нуля и удалённый формат — моя норма. Не требую микроменеджмента, задаю вопросы по делу, соблюдаю договорённости и сроки.</p></div>
     </div>
   </section>
 
@@ -549,7 +557,7 @@ footer .f-line span{color:var(--amber)}
   <section id="experience" data-acc="#ffb454">
     <div class="sec-tag reveal">// 03. опыт</div>
     <h2 class="reveal">Карьерный путь</h2>
-    <p class="sec-sub reveal">Полтора года в продажах — и параллельный трек разработки, который постепенно стал основным.</p>
+    <p class="sec-sub reveal">Полтора года в продажах — и параллельный трек разработки и анализа, который постепенно стал основным.</p>
     <div class="timeline">
       <div class="tl-item reveal">
         <div class="tl-role">Специалист активных продаж</div>
@@ -559,30 +567,34 @@ footer .f-line span{color:var(--amber)}
           <li>Выполнение KPI по продажам в условиях высокой интенсивности звонков.</li>
           <li>Работа в CRM, ведение клиентской базы, живая адаптация скриптов под собеседника.</li>
         </ul>
-        <div class="tl-chips"><span class="tag">холодные звонки</span><span class="tag">KPI</span><span class="tag">CRM</span><span class="tag">возражения</span></div>
-        <div class="tl-lesson"><b>Что это дало:</b> стрессоустойчивость, скорость коммуникации и умение слышать клиента с первых секунд разговора.</div>
+        <div class="tl-chips"><span class="tag">холодные звонки</span><span class="tag">KPI</span><span class="tag">CRM</span><span class="tag">возражения</span><span class="tag">адаптация скриптов</span></div>
+        <div class="tl-lesson"><b>Что это дало:</b> стрессоустойчивость, скорость коммуникации и умение слышать клиента с первых секунд разговора. Скрипты — те же диалоговые сценарии, только голосом.</div>
       </div>
       <div class="tl-item reveal">
         <div class="tl-role">Менеджер по B2B-продажам</div>
         <div class="tl-place">«ТЕНДЕР-КОНСАЛТ» · тендерное сопровождение бизнеса · январь 2026 — октябрь 2026</div>
         <ul>
           <li>Основной фокус — <b>прямые B2B-продажи</b>: подготовка коммерческих предложений, согласование условий, доведение сделки до подписанного договора.</li>
+          <li><b>Анализ потребностей клиентов</b>: переводил «хочу» в структурированные КП и понятные параметры для юристов и тендерных специалистов — по сути, требования для внутренней команды.</li>
           <li>Госзакупки — эпизодически, в формате переработок: знаком с тендерным процессом на практике.</li>
           <li>Рутина в КП и договорах стала первым топливом для автоматизации: начал писать код, чтобы не делать руками то, что может скрипт.</li>
         </ul>
-        <div class="tl-chips"><span class="tag t-amber">подготовка КП</span><span class="tag t-amber">согласование сделок</span><span class="tag t-amber">договоры</span><span class="tag t-amber">B2B</span><span class="tag learning">госзакупки · эпизодически</span></div>
-        <div class="tl-lesson"><b>Что это дало:</b> B2B-цикл сделки целиком — от первого контакта до договора. Плюс насмотренность в закупочных процессах.</div>
+        <div class="tl-chips"><span class="tag t-amber">подготовка КП</span><span class="tag t-amber">анализ потребностей</span><span class="tag t-amber">согласование сделок</span><span class="tag t-amber">договоры</span><span class="tag t-amber">B2B</span><span class="tag learning">госзакупки · эпизодически</span></div>
+        <div class="tl-lesson"><b>Что это дало:</b> B2B-цикл сделки целиком — от первого контакта до договора. Плюс насмотренность в закупочных процессах и понимание, как бизнес формулирует задачи.</div>
         <div class="tl-lesson leave"><b>Почему ушёл:</b> осознанный переход в IT. Хочу расти в сложности задач и доходе, а не стоять на плато.</div>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-role">Разработка и автоматизация</div>
+        <div class="tl-role">Разработка · автоматизация · бизнес-анализ</div>
         <div class="tl-place">собственные и заказные проекты · 2025 — настоящее время</div>
         <ul>
           <li>Заказной Telegram-бот генерации договоров, VPN-сервис на OpenVPN с монетизацией, сайты с автоматизацией документооборота.</li>
-          <li>Полный цикл в одиночку: идея → реализация → пользователи → поддержка.</li>
+          <li><b>Сбор и формализация требований</b>: интервью с заказчиком → схема параметров и сценариев → критерии приёмки → работающий инструмент.</li>
+          <li><b>Проектирование диалоговых сценариев (User Flow)</b>: ветвление логики, валидация ввода, обработка крайних случаев и ошибок.</li>
+          <li><b>tag learning</b>: код, шаблоны документов, промпты; результаты проверяю и валидирую, а не принимаю на веру.</li>
+          <li>Полный цикл в одиночку: идея → требования → реализация → пользователи → поддержка.</li>
         </ul>
-        <div class="tl-chips"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">OpenVPN</span><span class="tag t-green">PDF-генерация</span></div>
-        <div class="tl-lesson"><b>Что это даёт вам:</b> человека, который учится по реальным задачам — и уже умеет доводить проекты до результата.</div>
+        <div class="tl-chips"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">OpenVPN</span><span class="tag t-green">PDF-генерация</span><span class="tag t-amber">сбор требований</span><span class="tag t-amber">User Flow</span><span class="tag t-violet">LLM-инструменты</span><span class="tag t-violet">промпт-инжиниринг</span></div>
+        <div class="tl-lesson"><b>Что это даёт вам:</b> человека, который был по обе стороны ТЗ — и как заказчик, и как разработчик. Учится по реальным задачам и доводит проекты до результата.</div>
       </div>
     </div>
   </section>
@@ -634,14 +646,16 @@ footer .f-line span{color:var(--amber)}
       <div class="card glow-track reveal">
         <div class="proj-head"><span class="proj-num">project_02 · commissioned</span><span class="chip ok"><span class="dot"></span>заказной · используется</span></div>
         <h3>Telegram-бот — генератор договоров</h3>
-        <p>Заказ друга: бот принимает параметры — стороны, реквизиты, суммы, даты — подставляет их в шаблоны под <b>разные типы договоров и разных людей</b> и отдаёт готовый документ в PDF и других форматах.</p>
-        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">PDF-генерация</span><span class="tag t-green">шаблоны документов</span></div>
-        <div class="proj-proof"><b>Доказывает:</b> умею снять задачу с заказчика, спроектировать параметры и выдать инструмент, которым реально пользуются.</div>
+        <p>Заказной проект с полным циклом анализа: снял требования с заказчика, спроектировал <b>диалоговый сценарий сбора параметров</b> — стороны, реквизиты, суммы, даты — с валидацией ввода и обработкой крайних случаев. Бот подставляет данные в шаблоны под <b>разные типы договоров и разных людей</b> и отдаёт готовый PDF.</p>
+        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">PDF-генерация</span><span class="tag t-green">шаблоны документов</span><span class="tag t-amber">сбор требований</span><span class="tag t-amber">User Flow</span><span class="tag t-amber">валидация ввода</span></div>
+        <div class="proj-proof"><b>Доказывает:</b> умею снять задачу с заказчика, формализовать требования, спроектировать диалоговую логику и выдать инструмент, которым реально пользуются.</div>
         <details class="case">
           <summary>разбор кейса <span class="plus">+</span></summary>
           <div class="case-body">
             <div class="case-row"><span class="k">задача</span><span class="v">Друг тонул в договорах: каждый — вручную, с правками реквизитов и условий под конкретного человека.</span></div>
-            <div class="case-row"><span class="k">решение</span><span class="v">Бот собирает параметры, сам подставляет их в нужный шаблон и генерирует готовый PDF — под каждый тип договора и каждого человека.</span></div>
+            <div class="case-row"><span class="k">требования</span><span class="v">Интервью с заказчиком → список типов договоров и параметров → критерии приёмки: корректные реквизиты, ноль ошибок копипаста, документ за минуты.</span></div>
+            <div class="case-row"><span class="k">сценарий</span><span class="v">User Flow сбора параметров: ветвление по типу договора, валидация на каждом шаге, понятные сообщения при некорректном вводе, подтверждение перед генерацией.</span></div>
+            <div class="case-row"><span class="k">решение</span><span class="v">Rule-based ассистент: поведение детерминировано, «фантазировать» нечему. Но задачи проектирования те же, что у AI-агентов: сценарии, границы, обработка ошибок. LLM-ассистенты использовал как рабочий инструмент при разработке.</span></div>
             <div class="case-row"><span class="k">результат</span><span class="v">Документ за минуты вместо ручного заполнения. Заказчик пользуется, ошибки копипаста ушли.</span></div>
           </div>
         </details>
@@ -649,14 +663,14 @@ footer .f-line span{color:var(--amber)}
       <div class="card glow-track reveal" style="--d:.1s">
         <div class="proj-head"><span class="proj-num">project_03 · automation</span><span class="chip info"><span class="dot"></span>личные и заказные задачи</span></div>
         <h3>Сайты + автоматизация документооборота</h3>
-        <p>Сборка сайтов: отдельные страницы, навигация, подключение почты и форм. Настроил генерацию документов и автоматическую подготовку договоров — то, что в продажах делается руками часами.</p>
-        <div class="tags"><span class="tag t-green">HTML / CSS</span><span class="tag t-green">почта / SMTP</span><span class="tag t-green">генерация документов</span><span class="tag t-green">автоматизация</span></div>
+        <p>Сборка сайтов: отдельные страницы, навигация, подключение почты и форм. Спроектировал процесс end-to-end и настроил генерацию документов и автоматическую подготовку договоров — то, что в продажах делается руками часами.</p>
+        <div class="tags"><span class="tag t-green">HTML / CSS</span><span class="tag t-green">почта / SMTP</span><span class="tag t-green">генерация документов</span><span class="tag t-green">автоматизация</span><span class="tag t-amber">описание процессов</span></div>
         <div class="proj-proof"><b>Доказывает:</b> вижу процесс целиком и автоматизирую его end-to-end, а не просто «верстаю странички».</div>
         <details class="case">
           <summary>разбор кейса <span class="plus">+</span></summary>
           <div class="case-body">
             <div class="case-row"><span class="k">задача</span><span class="v">Сайт как рабочий инструмент: заявки, почта, документы — без ручной рутины между ними.</span></div>
-            <div class="case-row"><span class="k">решение</span><span class="v">Страницы и формы, почтовые интеграции, генерация документов и автоподготовка договоров по параметрам сделки.</span></div>
+            <div class="case-row"><span class="k">решение</span><span class="v">Страницы и формы с валидацией, почтовые интеграции, генерация документов и автоподготовка договоров по параметрам сделки.</span></div>
             <div class="case-row"><span class="k">результат</span><span class="v">Связка «заявка → письмо → договор» работает без ручного переноса данных.</span></div>
           </div>
         </details>
@@ -671,22 +685,34 @@ footer .f-line span{color:var(--amber)}
     <h2 class="reveal">Стек и компетенции</h2>
     <div class="legend reveal">сплошные теги — есть практика · пунктирные — активно изучаю</div>
     <div class="skills-grid">
+      <!-- ПРОВЕРЬ: сплошные теги ниже = только то, что реально делал руками -->
       <div class="card glow-track reveal">
+        <h3>Бизнес-анализ</h3>
+        <div class="sub">требования → сценарии → ТЗ</div>
+        <div class="tags"><span class="tag t-amber">сбор требований</span><span class="tag t-amber">формализация требований</span><span class="tag t-amber">диалоговые сценарии / User Flow</span><span class="tag t-amber">критерии приёмки</span><span class="tag t-amber">крайние случаи / edge cases</span><span class="tag t-amber">ТЗ для разработчиков</span><span class="tag t-amber">описание процессов</span><span class="tag learning">User Stories / Use Cases · изучаю</span><span class="tag learning">BPMN · изучаю</span><span class="tag learning">Jira / Confluence · изучаю</span></div>
+      </div>
+      <!-- ПРОВЕРЬ: если промпт-инжиниринг пока только теория — сделай тег learning -->
+      <div class="card glow-track reveal" style="--d:.08s">
+        <h3>AI / LLM</h3>
+        <div class="sub">инструменты в работе — ежедневно; агенты — разбираю глубже</div>
+        <div class="tags"><span class="tag t-violet">LLM-ассистенты в рабочих задачах</span><span class="tag t-violet">промпт-инжиниринг</span><span class="tag t-violet">проверка и валидация ответов</span><span class="tag t-violet">ограничения LLM · понимание</span><span class="tag t-violet">риски галлюцинаций · понимание</span><span class="tag learning">AI-агенты · изучаю</span><span class="tag learning">RAG · изучаю</span><span class="tag learning">LLM-диалоги · изучаю</span></div>
+      </div>
+      <div class="card glow-track reveal" style="--d:.16s">
         <h3>Коммуникация и продажи</h3>
         <div class="sub">то, чему не учат на курсах разработки</div>
         <div class="tags"><span class="tag t-amber">активные продажи</span><span class="tag t-amber">B2B-переговоры</span><span class="tag t-amber">подготовка КП</span><span class="tag t-amber">согласование сделок</span><span class="tag t-amber">работа с возражениями</span><span class="tag t-amber">выявление потребностей</span><span class="tag t-amber">CRM</span><span class="tag t-amber">документооборот</span><span class="tag t-amber">клиентская поддержка</span><span class="tag learning">тендерные процессы · базово</span></div>
       </div>
-      <div class="card glow-track reveal" style="--d:.08s">
+      <div class="card glow-track reveal" style="--d:.24s">
         <h3>Разработка</h3>
         <div class="sub">проверено на собственных и заказных проектах</div>
         <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">HTML / CSS</span><span class="tag t-green">работа с API</span><span class="tag t-green">PDF-генерация</span><span class="tag learning">JavaScript</span><span class="tag learning">Git</span><span class="tag learning">SQL</span></div>
       </div>
-      <div class="card glow-track reveal" style="--d:.16s">
+      <div class="card glow-track reveal" style="--d:.32s">
         <h3>Инфраструктура и автоматизация</h3>
         <div class="sub">от настройки сервера до бизнес-процесса</div>
         <div class="tags"><span class="tag">Linux / VPS</span><span class="tag">SSH</span><span class="tag">OpenVPN</span><span class="tag">почтовые интеграции</span><span class="tag">генерация документов</span><span class="tag">автоматизация процессов</span></div>
       </div>
-      <div class="card glow-track reveal" style="--d:.24s">
+      <div class="card glow-track reveal" style="--d:.4s">
         <h3>Образование и языки</h3>
         <div class="sub">честно, без приписок</div>
         <ul class="edu-list">
@@ -696,12 +722,12 @@ footer .f-line span{color:var(--amber)}
         </ul>
       </div>
     </div>
-    <div class="quote-card reveal" style="margin-top:26px">Гибрид «продажи × код» даёт максимум пользы здесь:</div>
+    <div class="quote-card reveal" style="margin-top:26px">Гибрид «продажи × код × аналитика» даёт максимум пользы здесь:</div>
     <div class="roles reveal">
-      <span class="role-chip">Junior Python-разработчик</span>
+      <span class="role-chip">Бизнес-аналитик · AI / автоматизация</span>
+      <span class="role-chip">Аналитик диалоговых сценариев</span>
       <span class="role-chip">Специалист по автоматизации</span>
-      <span class="role-chip">Technical Support Engineer</span>
-      <span class="role-chip">Специалист по внедрению</span>
+      <span class="role-chip">Junior Python-разработчик</span>
     </div>
   </section>
 
@@ -786,7 +812,7 @@ document.addEventListener('visibilitychange',function(){if(document.hidden)rainS
 
 /* ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ---------- */
 var typedEl=$('#typed');
-var phrases=['автоматизирую рутину','генерирую договоры в PDF','пишу Telegram-ботов','поднял OpenVPN на 4\u00A0160 клиентов','понимаю клиента и код'];
+var phrases=['автоматизирую рутину','проектирую диалоговые сценарии','перевожу «хочу» в требования и ТЗ','генерирую договоры в PDF','пишу Telegram-ботов','поднял OpenVPN на 4\u00A0160 клиентов','понимаю клиента и код'];
 if(reduced){typedEl.textContent=phrases[0];}
 else{
   var pi=0,ci=0,del=false;
