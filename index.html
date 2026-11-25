@@ -3,15 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Михаил — бизнес-анализ × код · автоматизация, боты, AI/LLM, OpenVPN</title>
-<meta name="description" content="Михаил: B2B-продажи → бизнес-анализ и автоматизация. Сбор требований, диалоговые сценарии, Telegram-бот генератор договоров, LLM-инструменты в работе, VPN-сервис на 4 160 клиентов.">
+<meta name="theme-color" content="#070b12">
+<title>Михаил — бизнес-анализ × код · пост-панк резюме с генеративным саундтреком</title>
+<meta name="description" content="Михаил: B2B → бизнес-анализ и автоматизация. Telegram-боты, генерация договоров, VPN на 4 160 клиентов, терминал-песочница и Web Audio синтезатор пост-панка. Открытый исходник.">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+   ПРИВЕТ, ШАЛУНИШКА 👀  КУДА ТЫ СМОТРИШЬ?
+
+        _
+      _ \'-_,#
+     _\'--','`#
+    \\          `\\
+     `\\      ,   `\\
+       `---'` `---'`   🍌 ВЕСЬ МИР КРУТИТСЯ ВОКРУГА БАНАНА
+
+   Раз ты открыл исходник — ты внимательный. Таких и ищем.
+   Резюме честное, код ручной, дождь на canvas, музыка синтезируется
+   прямо в браузере (Web Audio API, ноль сэмплов, ноль библиотек).
+
+   💀 У АЙТИШНИКОВ НЕТУ ЛИЧНОЙ ЖИЗНИ — зато их резюме поёт пост-панком.
+
+   Пасхалки:
+   1. Открой консоль (F12) — там банановый совет.
+   2. Кликни по логотипу в шапке 5 раз — пойдёт банановый дождь.
+   3. В песочнице набери `banana`, `sudo` или `neofetch`.
+   4. Сти в沙盘 можно таскать мышью. Они не обидятся.
+   5. Весь саундтрек — оригинальные генеративные петли в духе Цоя,
+      Вещих Ослов и Совы. Чужих записей нет: только осцилляторы,
+      шум и немного питерской тоски.
+
+   Деплой на GitHub Pages:
+   сохрани файл как index.html → repo nikto4451-commits/resume →
+   git add . && git commit -m "resume: post-punk edition" && git push →
+   Settings → Pages → Deploy from branch → main / root.
+
+   Лицензия: MIT. Форкай, только дождь оставь.
+  ═══════════════════════════════════════════════════════════════════
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ================= ПАЛИТРА: ПИТЕРСКАЯ НОЧЬ =================
+/* ============ ПАЛИТРА: ПИТЕРСКАЯ НОЧЬ · НЕВА FM ============
    чернила Невы · электрический синий · фонарный янтарь ·
-   терминальный зелёный · неоновая маджента · тёплая бумага */
+   терминальный зелёный · неоновая маджента · кассетный фиолет */
 :root{
   --ink:#070b12; --ink-2:#0b1120;
   --surface:#101828; --surface-2:#152036;
@@ -19,11 +54,20 @@
   --text:#dbe4f0; --muted:#8fa3bd; --warm:#f2e9d8;
   --blue:#4da3ff; --blue-deep:#1b4fd8;
   --amber:#ffb454; --green:#69f0a0; --magenta:#ff5c93; --red:#ff7a7a;
-  --violet:#a78bfa;
+  --violet:#a78bfa; --cyan:#67e8f9;
   --nav-acc:var(--blue);
   --mono:'JetBrains Mono',ui-monospace,monospace;
   --sans:'Manrope',system-ui,-apple-system,sans-serif;
   --tl-pad:40px; --tl-line:8px;
+  --rev:4s;
+  /* атмосфера — крутится из пульта */
+  --a-grain:.055;
+  --a-scan:.05;
+  --a-fog:1;
+  --a-glow:1;
+  --a-vinyl:.05;
+  --a-vinyl-dur:64s;
+  --a-grid:.5;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-color:#2c3d5e #0a0f1a;scrollbar-width:thin}
@@ -34,91 +78,142 @@ body{
 }
 body.locked{overflow:hidden}
 ::selection{background:var(--amber);color:var(--ink)}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#0a0f1a}
-::-webkit-scrollbar-thumb{background:#2c3d5e;border-radius:6px;border:2px solid #0a0f1a}
-::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:#0a0f1a;border-left:1px solid #16223a}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#2c3d5e,#3a2f5c);border-radius:6px;border:2px solid #0a0f1a}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--blue),var(--violet))}
+::-webkit-scrollbar-corner{background:#0a0f1a}
 a{color:var(--blue)}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
 .skip{position:absolute;left:-999px;top:8px;z-index:99;background:var(--amber);color:var(--ink);padding:8px 16px;border-radius:6px;font-weight:700;text-decoration:none}
 .skip:focus{left:8px}
 
-/* ================= ФОНОВЫЕ СЛОИ ================= */
-.aurora{position:fixed;inset:-12%;z-index:0;pointer-events:none;will-change:transform}
+/* ============ ФОНОВЫЕ СЛОИ · ПОСТ-ПАНК ============ */
+.aurora{position:fixed;inset:-12%;z-index:0;pointer-events:none;will-change:transform;opacity:var(--a-fog)}
 .blob{position:absolute;border-radius:50%}
 .b1{width:58vw;height:58vw;left:-12%;top:-14%;background:radial-gradient(closest-side,rgba(27,79,216,.34),transparent 70%);animation:drift1 46s ease-in-out infinite alternate}
 .b2{width:42vw;height:42vw;right:-8%;top:26%;background:radial-gradient(closest-side,rgba(255,150,60,.15),transparent 70%);animation:drift2 38s ease-in-out infinite alternate}
 .b3{width:46vw;height:46vw;left:16%;bottom:-18%;background:radial-gradient(closest-side,rgba(255,92,147,.12),transparent 70%);animation:drift3 52s ease-in-out infinite alternate}
-.b4{width:30vw;height:30vw;right:22%;bottom:6%;background:radial-gradient(closest-side,rgba(105,240,160,.09),transparent 70%);animation:drift4 44s ease-in-out infinite alternate}
+.b4{width:30vw;height:30vw;right:22%;bottom:6%;background:radial-gradient(closest-side,rgba(167,139,250,.11),transparent 70%);animation:drift4 44s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate(7%,9%) scale(1.12)}}
 @keyframes drift2{to{transform:translate(-9%,-7%) scale(1.08)}}
 @keyframes drift3{to{transform:translate(6%,-8%) scale(1.15)}}
 @keyframes drift4{to{transform:translate(-7%,6%) scale(1.1)}}
 #rain{position:fixed;inset:0;z-index:1;pointer-events:none}
-.grain{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.055;
+.grain{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:var(--a-grain);
   background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* ЭЛТ-развёртка */
+.scanlines{position:fixed;inset:-4px 0;z-index:4;pointer-events:none;opacity:var(--a-scan);
+  background:repeating-linear-gradient(180deg,rgba(219,228,240,.9) 0 1px,transparent 1px 4px);
+  animation:scanroll 9s linear infinite}
+@keyframes scanroll{to{transform:translateY(4px)}}
+.vhs-sweep{position:fixed;left:0;right:0;height:110px;z-index:4;pointer-events:none;opacity:calc(var(--a-scan) * 5);
+  background:linear-gradient(180deg,transparent,rgba(103,232,249,.07) 42%,rgba(255,92,147,.09) 52%,transparent);
+  animation:sweep 13s linear infinite;mix-blend-mode:screen}
+@keyframes sweep{0%{top:-15%}100%{top:115%}}
+/* винил на заднике */
+.vinyl-bg{position:fixed;right:-16vw;top:34vh;width:56vw;height:56vw;z-index:0;pointer-events:none;
+  opacity:var(--a-vinyl);animation:spin var(--a-vinyl-dur) linear infinite}
+.vinyl-bg .disc{fill:none;stroke:var(--violet);stroke-width:.6}
+.vinyl-bg .lbl{fill:none;stroke:var(--magenta);stroke-width:1.2}
+.vinyl-bg .arm{stroke:var(--amber);stroke-width:1.4;fill:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* сетка-горизонт */
+.grid-horizon{position:fixed;left:-25%;right:-25%;bottom:-6vh;height:44vh;z-index:0;pointer-events:none;
+  opacity:calc(var(--a-grid) * .34);
+  background-image:linear-gradient(rgba(77,163,255,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(167,139,250,.4) 1px,transparent 1px);
+  background-size:64px 46px;
+  transform:perspective(320px) rotateX(72deg);transform-origin:bottom center;
+  mask-image:linear-gradient(180deg,transparent,#000 55%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 55%,transparent);
+  animation:gridflow 6s linear infinite}
+@keyframes gridflow{to{background-position:0 46px,64px 0}}
+body.no-grid .grid-horizon,body.no-vinyl .vinyl-bg{display:none}
 
-/* ================= НАВИГАЦИЯ ================= */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:22px;
-  padding:0 26px;height:62px;background:rgba(7,11,18,.78);backdrop-filter:blur(14px);
+/* ============ БЕГУЩАЯ СТРОКА ============ */
+.marquee{position:relative;z-index:2;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:linear-gradient(90deg,rgba(11,17,32,.9),rgba(21,32,54,.75),rgba(11,17,32,.9));padding:11px 0;margin:8px 0}
+.marquee::before,.marquee::after{content:'';position:absolute;top:0;bottom:0;width:90px;z-index:2;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--ink),transparent)}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--ink),transparent)}
+.mq-track{display:flex;width:max-content;animation:mq 44s linear infinite}
+.marquee.rev .mq-track{animation-direction:reverse;animation-duration:56s}
+.marquee:hover .mq-track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-item{font-family:var(--mono);font-size:.8rem;color:var(--muted);padding:0 26px;white-space:nowrap;display:flex;align-items:center;gap:12px}
+.mq-item b{color:var(--amber);font-weight:500}
+.mq-item i{color:var(--violet);font-style:normal}
+.mq-item u{color:var(--green);text-decoration:none}
+.mq-dot{width:5px;height:5px;border-radius:50%;background:var(--magenta);flex:none;box-shadow:0 0 8px var(--magenta)}
+
+/* ============ НАВИГАЦИЯ ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:18px;
+  padding:0 22px;height:62px;background:rgba(7,11,18,.8);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line)}
-.logo{font-family:var(--mono);font-size:.88rem;color:var(--muted);white-space:nowrap}
+.logo{font-family:var(--mono);font-size:.86rem;color:var(--muted);white-space:nowrap;background:none;border:0;cursor:pointer;padding:4px 2px}
 .logo b{color:var(--blue);font-weight:500}
 .logo .tld{color:var(--amber)}
-.nav-links{display:flex;gap:24px;margin-left:auto}
-.nav-links a{font-family:var(--mono);font-size:.8rem;color:var(--muted);text-decoration:none;position:relative;padding:4px 0;transition:color .25s}
+.nav-links{display:flex;gap:17px;margin-left:auto}
+.nav-links a{font-family:var(--mono);font-size:.76rem;color:var(--muted);text-decoration:none;position:relative;padding:4px 0;transition:color .25s}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--nav-acc);transition:width .3s;border-radius:2px}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--nav-acc)}
 .nav-links a.active::after{width:100%}
-.nav-tools{display:flex;align-items:center;gap:10px}
+.nav-tools{display:flex;align-items:center;gap:8px}
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;min-width:36px;padding:0 10px;
   background:var(--surface);border:1px solid var(--line);border-radius:8px;color:var(--muted);cursor:pointer;
-  font-family:var(--mono);font-size:.76rem;transition:.25s}
+  font-family:var(--mono);font-size:.74rem;transition:.25s}
 .icon-btn:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 14px rgba(77,163,255,.25)}
 .icon-btn svg{width:17px;height:17px;flex:none}
 .rain-toggle[aria-pressed="true"]{color:var(--blue);border-color:rgba(77,163,255,.5)}
 .rain-toggle[aria-pressed="false"]{opacity:.6}
 .rain-toggle[aria-pressed="false"] .drop{display:none}
-.nav-cta{font-family:var(--mono);font-size:.78rem;color:var(--ink);background:var(--blue);font-weight:700;
-  border-radius:8px;padding:8px 15px;text-decoration:none;transition:.25s;white-space:nowrap}
+.sound-toggle[aria-pressed="true"]{color:var(--green);border-color:rgba(105,240,160,.5);box-shadow:0 0 12px rgba(105,240,160,.18)}
+.sound-toggle[aria-pressed="true"] .wave{display:inline}
+.sound-toggle[aria-pressed="false"] .wave{display:none}
+.sound-toggle[aria-pressed="false"] .cross{display:inline}
+.sound-toggle[aria-pressed="true"] .cross{display:none}
+.nav-cta{font-family:var(--mono);font-size:.76rem;color:var(--ink);background:var(--blue);font-weight:700;
+  border-radius:8px;padding:8px 14px;text-decoration:none;transition:.25s;white-space:nowrap}
 .nav-cta:hover{box-shadow:0 0 22px rgba(77,163,255,.5);transform:translateY(-1px)}
 .progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;
-  background:linear-gradient(90deg,var(--blue),var(--amber),var(--green),var(--magenta));
+  background:linear-gradient(90deg,var(--blue),var(--cyan),var(--amber),var(--green),var(--magenta),var(--violet));
   box-shadow:0 0 10px rgba(77,163,255,.6)}
 .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:38px;height:36px;background:var(--surface);border:1px solid var(--line);border-radius:8px;cursor:pointer;padding:0 9px}
 .burger span{display:block;height:2px;background:var(--text);border-radius:2px;transition:.3s}
 body.menu-open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 body.menu-open .burger span:nth-child(2){opacity:0}
 body.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.menu-overlay{position:fixed;inset:62px 0 0;z-index:40;background:rgba(7,11,18,.96);backdrop-filter:blur(16px);
-  display:flex;flex-direction:column;padding:36px 28px;gap:6px;opacity:0;pointer-events:none;transition:opacity .3s}
+.menu-overlay{position:fixed;inset:62px 0 0;z-index:40;background:rgba(7,11,18,.97);backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;padding:28px 26px;gap:2px;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto;
+  scrollbar-color:#3a2f5c #0a0f1a;scrollbar-width:thin}
 body.menu-open .menu-overlay{opacity:1;pointer-events:auto}
-.menu-overlay a{font-family:var(--mono);font-size:1.25rem;color:var(--text);text-decoration:none;padding:14px 4px;border-bottom:1px solid var(--line);opacity:0;transform:translateY(12px);transition:.4s}
+.menu-overlay a{font-family:var(--mono);font-size:1.14rem;color:var(--text);text-decoration:none;padding:12px 4px;border-bottom:1px solid var(--line);opacity:0;transform:translateY(12px);transition:.4s}
 body.menu-open .menu-overlay a{opacity:1;transform:none}
-body.menu-open .menu-overlay a:nth-child(2){transition-delay:.05s}
-body.menu-open .menu-overlay a:nth-child(3){transition-delay:.1s}
-body.menu-open .menu-overlay a:nth-child(4){transition-delay:.15s}
-body.menu-open .menu-overlay a:nth-child(5){transition-delay:.2s}
 .menu-overlay a:hover{color:var(--amber)}
-.menu-overlay .m-cta{margin-top:22px;border:1px solid var(--blue);color:var(--blue);text-align:center;border-radius:10px}
+.menu-overlay .m-cta{margin-top:18px;border:1px solid var(--blue);color:var(--blue);text-align:center;border-radius:10px}
 
-/* ================= ОБЩЕЕ ================= */
+/* ============ ОБЩЕЕ ============ */
 .page{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 26px}
 section{padding:72px 0;scroll-margin-top:86px;position:relative}
 section::before{content:'';position:absolute;top:0;left:-20%;width:60%;height:220px;pointer-events:none;
-  background:radial-gradient(closest-side,var(--acc-soft,rgba(77,163,255,.07)),transparent 70%)}
+  background:radial-gradient(closest-side,var(--acc-soft,rgba(77,163,255,.07)),transparent 70%);opacity:var(--a-glow)}
 #about{--acc:var(--blue);--acc-soft:rgba(77,163,255,.08)}
 #value{--acc:var(--amber);--acc-soft:rgba(255,180,84,.07)}
+#process{--acc:var(--cyan);--acc-soft:rgba(103,232,249,.07)}
 #experience{--acc:var(--amber);--acc-soft:rgba(255,180,84,.08)}
 #projects{--acc:var(--green);--acc-soft:rgba(105,240,160,.07)}
 #skills{--acc:var(--magenta);--acc-soft:rgba(255,92,147,.07)}
+#sandbox{--acc:var(--green);--acc-soft:rgba(105,240,160,.08)}
+#roadmap{--acc:var(--amber);--acc-soft:rgba(255,180,84,.07)}
+#music{--acc:var(--violet);--acc-soft:rgba(167,139,250,.09)}
+#faq{--acc:var(--magenta);--acc-soft:rgba(255,92,147,.06)}
 #contacts{--acc:var(--blue);--acc-soft:rgba(77,163,255,.09)}
 .sec-tag{font-family:var(--mono);color:var(--acc,var(--blue));font-size:.82rem;margin-bottom:10px}
 h2{font-size:clamp(1.65rem,4vw,2.2rem);font-weight:800;color:#eef3fa;letter-spacing:-.6px;margin-bottom:14px;line-height:1.2}
 h2::after{content:'';display:block;width:64px;height:3px;margin-top:14px;border-radius:3px;
   background:linear-gradient(90deg,var(--acc,var(--blue)),transparent)}
-.sec-sub{color:var(--muted);max-width:640px;margin-bottom:30px}
+.sec-sub{color:var(--muted);max-width:700px;margin-bottom:30px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;position:relative;
   transition:transform .3s,border-color .3s,box-shadow .3s}
 .card:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 14px 34px rgba(0,0,0,.45)}
@@ -137,18 +232,21 @@ h2::after{content:'';display:block;width:64px;height:3px;margin-top:14px;border-
 .tag.t-green{border-color:rgba(105,240,160,.4);color:var(--green);background:rgba(105,240,160,.08)}
 .tag.t-magenta{border-color:rgba(255,92,147,.4);color:var(--magenta);background:rgba(255,92,147,.08)}
 .tag.t-violet{border-color:rgba(167,139,250,.4);color:var(--violet);background:rgba(167,139,250,.08)}
+.tag.t-cyan{border-color:rgba(103,232,249,.4);color:var(--cyan);background:rgba(103,232,249,.08)}
 .tag.learning{border-style:dashed;border-color:var(--line-2);color:var(--muted);background:transparent}
 .chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.7rem;padding:4px 11px;border-radius:999px;border:1px solid;white-space:nowrap}
 .chip.ok{color:var(--green);border-color:rgba(105,240,160,.45);background:rgba(105,240,160,.08)}
 .chip.warn{color:var(--amber);border-color:rgba(255,180,84,.45);background:rgba(255,180,84,.08)}
 .chip.info{color:var(--blue);border-color:rgba(77,163,255,.45);background:rgba(77,163,255,.08)}
+.chip.vio{color:var(--violet);border-color:rgba(167,139,250,.45);background:rgba(167,139,250,.08)}
+.chip.cy{color:var(--cyan);border-color:rgba(103,232,249,.45);background:rgba(103,232,249,.08)}
 .chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
 .reveal.visible{opacity:1;transform:none}
 html.no-js .reveal{opacity:1;transform:none}
-html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .burger{display:none}
+html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .sound-toggle,html.no-js .burger{display:none}
 
-/* ================= HERO ================= */
+/* ============ HERO ============ */
 .hero{position:relative;padding:148px 0 236px;min-height:92vh;--acc:var(--blue)}
 .hero .page{z-index:2}
 .enter{opacity:0;animation:fadeUp .75s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--e,0s)}
@@ -159,7 +257,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .status-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(105,240,160,.5)}55%{box-shadow:0 0 0 7px rgba(105,240,160,0)}}
 .name{font-size:clamp(3.2rem,9vw,5rem);font-weight:800;letter-spacing:-2.5px;line-height:1.02;
-  background:linear-gradient(100deg,#eaf2ff 5%,var(--blue) 30%,var(--amber) 55%,var(--magenta) 76%,#eaf2ff 95%);
+  background:linear-gradient(100deg,#eaf2ff 5%,var(--blue) 28%,var(--amber) 50%,var(--magenta) 70%,var(--violet) 84%,#eaf2ff 96%);
   background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
   animation:shine 10s linear infinite}
 @keyframes shine{to{background-position:280% 0}}
@@ -167,7 +265,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .typed-line .prompt{color:var(--green)}
 .cursor{display:inline-block;width:9px;height:1.12em;background:var(--amber);vertical-align:text-bottom;margin-left:4px;animation:blink 1s step-end infinite}
 @keyframes blink{50%{opacity:0}}
-.hero-sub{color:var(--muted);max-width:640px;font-size:1.06rem}
+.hero-sub{color:var(--muted);max-width:660px;font-size:1.06rem}
 .hero-sub b{color:var(--text)}
 .hero-meta{font-family:var(--mono);font-size:.83rem;color:var(--muted);margin-top:20px}
 .hero-meta span{color:var(--amber)}
@@ -178,16 +276,19 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .btn-primary:hover{box-shadow:0 0 30px rgba(77,163,255,.55);transform:translateY(-2px)}
 .btn-ghost{border-color:var(--line-2);color:var(--text);background:rgba(16,24,40,.6)}
 .btn-ghost:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px)}
+.btn-violet{border-color:rgba(167,139,250,.5);color:var(--violet);background:rgba(167,139,250,.08)}
+.btn-violet:hover{box-shadow:0 0 24px rgba(167,139,250,.4);transform:translateY(-2px)}
+.btn-green{border-color:rgba(105,240,160,.5);color:var(--green);background:rgba(105,240,160,.08)}
+.btn-green:hover{box-shadow:0 0 24px rgba(105,240,160,.4);transform:translateY(-2px)}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:48px}
 .stat{background:rgba(16,24,40,.82);border:1px solid var(--line);border-radius:12px;padding:20px 18px;text-align:center;transition:.3s;backdrop-filter:blur(4px)}
 .stat:hover{border-color:var(--amber);box-shadow:0 0 24px rgba(255,180,84,.18);transform:translateY(-3px)}
 .stat-num{font-family:var(--mono);font-size:2.1rem;font-weight:700;color:var(--amber);line-height:1.2}
 .stat:nth-child(1) .stat-num{color:var(--green)}
 .stat:nth-child(3) .stat-num{color:var(--blue)}
-.stat:nth-child(4) .stat-num{color:var(--magenta)}
+.stat:nth-child(4) .stat-num{color:var(--violet)}
 .stat-label{font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.45}
 .stat-note{font-family:var(--mono);font-size:.66rem;color:var(--muted);opacity:.75;margin-top:4px}
-/* силуэт Петербурга */
 .skyline-wrap{position:absolute;left:0;right:0;bottom:0;z-index:1;pointer-events:none;will-change:transform}
 .skyline{display:block;width:100%;height:210px}
 .skyline .city{fill:#04070d}
@@ -200,11 +301,11 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 @keyframes flick{0%,42%,58%,100%{opacity:.85}50%{opacity:.2}}
 .star{fill:var(--amber);animation:starglow 3.2s ease-in-out infinite}
 @keyframes starglow{0%,100%{opacity:1}50%{opacity:.35}}
-.neva{height:6px;background:linear-gradient(90deg,transparent,rgba(77,163,255,.55),rgba(255,180,84,.4),rgba(255,92,147,.3),transparent);
+.neva{height:6px;background:linear-gradient(90deg,transparent,rgba(77,163,255,.55),rgba(103,232,249,.45),rgba(255,180,84,.4),rgba(255,92,147,.3),rgba(167,139,250,.4),transparent);
   background-size:220% 100%;animation:shimmer 7s linear infinite}
 @keyframes shimmer{to{background-position:220% 0}}
 
-/* ================= ABOUT ================= */
+/* ============ ABOUT ============ */
 .about-grid{display:grid;grid-template-columns:330px 1fr;gap:40px;align-items:start}
 .terminal{position:sticky;top:92px;background:#0a0f1c;border:1px solid var(--line-2);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.5)}
 .term-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:var(--surface-2);border-bottom:1px solid var(--line)}
@@ -217,6 +318,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .term-body .cmd{color:var(--green)}
 .term-body .out{color:var(--text);padding-left:14px}
 .term-body .hl{color:var(--amber)}
+.term-body .vi{color:var(--violet)}
 .term-body .cm{color:var(--muted)}
 .about-text p{color:var(--muted);margin-bottom:18px;font-size:1.02rem}
 .about-text b{color:var(--text)}
@@ -224,7 +326,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .about-text .hl-g{color:var(--green);font-weight:600}
 .about-text .hl-v{color:var(--violet);font-weight:600}
 
-/* ================= VALUE ================= */
+/* ============ VALUE ============ */
 .value-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
 .value-grid h3{color:#eef3fa;font-size:1.06rem;margin-bottom:10px}
 .v-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;border:1px solid}
@@ -235,7 +337,18 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .v4 .v-icon{color:var(--magenta);border-color:rgba(255,92,147,.4);background:rgba(255,92,147,.08)}
 .v5 .v-icon{color:var(--violet);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.09)}
 
-/* ================= TIMELINE ================= */
+/* ============ PROCESS ============ */
+.proc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;counter-reset:proc}
+.proc-card{background:linear-gradient(165deg,var(--surface),#0c1424);border:1px solid var(--line);border-radius:14px;padding:22px 20px;position:relative;overflow:hidden;transition:.3s}
+.proc-card::before{counter-increment:proc;content:'0' counter(proc);position:absolute;right:14px;top:8px;
+  font-family:var(--mono);font-size:2.6rem;font-weight:700;color:rgba(103,232,249,.09);line-height:1}
+.proc-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.45);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.proc-card h3{font-size:.98rem;color:#eef3fa;margin-bottom:8px;position:relative}
+.proc-card p{font-size:.85rem;color:var(--muted);position:relative}
+.proc-card .p-out{margin-top:12px;font-family:var(--mono);font-size:.68rem;color:var(--cyan);border-top:1px dashed rgba(103,232,249,.25);padding-top:9px;position:relative}
+.proc-line{height:2px;margin:22px 0 0;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green),var(--amber),var(--magenta));opacity:.5}
+
+/* ============ TIMELINE ============ */
 .timeline{position:relative;padding-left:var(--tl-pad);display:flex;flex-direction:column;gap:30px;margin-top:8px}
 .timeline::before{content:'';position:absolute;left:var(--tl-line);top:6px;bottom:6px;width:2px;background:var(--line);border-radius:2px}
 .timeline::after{content:'';position:absolute;left:var(--tl-line);top:6px;width:2px;height:var(--fill,0%);max-height:calc(100% - 12px);
@@ -259,7 +372,7 @@ html.no-js .copy-btn,html.no-js .print-btn,html.no-js .rain-toggle,html.no-js .b
 .tl-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
 .tl-chips .tag{font-size:.7rem;padding:3px 10px;margin:0}
 
-/* ================= PROJECTS ================= */
+/* ============ PROJECTS ============ */
 .proj-featured{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;margin-bottom:18px;border-color:rgba(105,240,160,.25)}
 .proj-featured:hover{border-color:rgba(105,240,160,.5)}
 .proj-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
@@ -292,14 +405,20 @@ details.case summary:hover{background:rgba(105,240,160,.06)}
 details.case summary .plus{transition:transform .3s;font-size:1rem;line-height:1}
 details.case[open] summary .plus{transform:rotate(45deg)}
 .case-body{padding:6px 15px 15px;display:flex;flex-direction:column;gap:10px}
-.case-row{display:grid;grid-template-columns:88px 1fr;gap:10px;font-size:.86rem}
+.case-row{display:grid;grid-template-columns:92px 1fr;gap:10px;font-size:.86rem}
 .case-row .k{font-family:var(--mono);font-size:.7rem;color:var(--amber);padding-top:3px;text-transform:uppercase;letter-spacing:.5px}
 .case-row .v{color:var(--muted)}
 .case-row .v b{color:var(--text)}
-.self-note{margin-top:18px;font-family:var(--mono);font-size:.78rem;color:var(--muted);border:1px dashed var(--line-2);border-radius:10px;padding:13px 17px;background:rgba(16,24,40,.5)}
-.self-note b{color:var(--magenta);font-weight:500}
+.self-card{margin-top:18px;border-color:rgba(167,139,250,.3)}
+.self-card:hover{border-color:rgba(167,139,250,.55)}
+.self-card .proj-num{color:var(--violet)}
+.self-card .proj-proof b{color:var(--violet)}
+.self-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.self-links a{font-family:var(--mono);font-size:.76rem;text-decoration:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(167,139,250,.45);color:var(--violet);background:rgba(167,139,250,.07);transition:.25s}
+.self-links a:hover{box-shadow:0 0 16px rgba(167,139,250,.35);transform:translateY(-1px)}
+.tilt{transform-style:preserve-3d;will-change:transform}
 
-/* ================= SKILLS ================= */
+/* ============ SKILLS ============ */
 .legend{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-bottom:20px}
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
 .skills-grid h3{color:#eef3fa;font-size:1.02rem;margin-bottom:4px}
@@ -312,38 +431,265 @@ details.case[open] summary .plus{transform:rotate(45deg)}
 .role-chip{font-size:.87rem;font-weight:600;padding:9px 18px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line);color:var(--text);transition:.25s;cursor:default}
 .role-chip:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 16px rgba(255,92,147,.2);transform:translateY(-2px)}
 
-/* ================= CONTACTS ================= */
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+/* ============ SANDBOX · ТЕРМИНАЛ + СТИКЕРЫ + ПУЛЬТ ============ */
+.sandbox-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:start}
+.console{background:#080d18;border:1px solid rgba(105,240,160,.3);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.5);display:flex;flex-direction:column}
+.console-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.console-bar i{width:10px;height:10px;border-radius:50%}
+.console-bar i:nth-child(1){background:var(--red)}
+.console-bar i:nth-child(2){background:var(--amber)}
+.console-bar i:nth-child(3){background:var(--green)}
+.console-bar span{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-left:6px}
+.console-bar .hint{margin-left:auto;color:var(--green);font-size:.66rem}
+.console-out{padding:14px 16px;font-family:var(--mono);font-size:.78rem;line-height:1.75;height:330px;overflow-y:auto;
+  scrollbar-color:#2f5a45 #080d18;scrollbar-width:thin}
+.console-out::-webkit-scrollbar{width:9px}
+.console-out::-webkit-scrollbar-track{background:#080d18}
+.console-out::-webkit-scrollbar-thumb{background:#2f5a45;border-radius:5px;border:2px solid #080d18}
+.console-out::-webkit-scrollbar-thumb:hover{background:var(--green)}
+.console-out .ln{white-space:pre-wrap;word-break:break-word;margin-bottom:2px}
+.console-out .u{color:var(--green)}
+.console-out .r{color:var(--text)}
+.console-out .d{color:var(--muted)}
+.console-out .a{color:var(--amber)}
+.console-out .v{color:var(--violet)}
+.console-out .m{color:var(--magenta)}
+.console-out .c{color:var(--cyan)}
+.console-in{display:flex;align-items:center;gap:9px;padding:11px 15px;border-top:1px solid var(--line);background:#0a1120}
+.console-in .ps1{font-family:var(--mono);font-size:.78rem;color:var(--green);white-space:nowrap}
+.console-in input{flex:1;background:transparent;border:0;color:var(--text);font-family:var(--mono);font-size:.8rem;padding:4px 0;min-width:0}
+.console-in input::placeholder{color:#4d6480}
+.console-in input:focus{outline:none}
+.console-in button{font-family:var(--mono);font-size:.7rem;padding:6px 12px;border-radius:7px;border:1px solid rgba(105,240,160,.4);
+  background:rgba(105,240,160,.08);color:var(--green);cursor:pointer;transition:.2s}
+.console-in button:hover{box-shadow:0 0 12px rgba(105,240,160,.3)}
+.cmd-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 15px 13px;background:#0a1120}
+.cmd-chip{font-family:var(--mono);font-size:.66rem;padding:4px 9px;border-radius:6px;border:1px solid var(--line-2);
+  background:var(--ink-2);color:var(--muted);cursor:pointer;transition:.2s}
+.cmd-chip:hover{border-color:var(--green);color:var(--green)}
+
+.board-wrap{display:flex;flex-direction:column;gap:14px}
+.board{position:relative;height:290px;border-radius:14px;border:1px dashed rgba(255,92,147,.35);overflow:hidden;
+  background:
+    radial-gradient(120px 90px at 20% 25%,rgba(255,92,147,.07),transparent 70%),
+    radial-gradient(140px 100px at 78% 70%,rgba(103,232,249,.06),transparent 70%),
+    repeating-linear-gradient(45deg,#0c1322 0 12px,#0a1020 12px 24px);
+  touch-action:none}
+.board-hint{position:absolute;left:12px;bottom:10px;font-family:var(--mono);font-size:.64rem;color:var(--muted);pointer-events:none;z-index:1}
+.sticker{position:absolute;width:112px;padding:11px 10px;border-radius:9px;cursor:grab;user-select:none;
+  font-family:var(--mono);font-size:.66rem;line-height:1.45;text-align:center;border:1.5px solid;
+  box-shadow:0 8px 20px rgba(0,0,0,.45);transition:box-shadow .2s,filter .2s;touch-action:none}
+.sticker:active{cursor:grabbing}
+.sticker.dragging{box-shadow:0 16px 34px rgba(0,0,0,.6);filter:brightness(1.12)}
+.sticker b{display:block;font-size:.78rem;margin-bottom:3px;font-weight:700}
+.sticker .em{font-size:1.15rem;display:block;margin-bottom:4px}
+.s1{background:#1a1030;border-color:var(--violet);color:#d9ccff}
+.s2{background:#0f2320;border-color:var(--green);color:#c6f7dd}
+.s3{background:#2a1a10;border-color:var(--amber);color:#ffe2b8}
+.s4{background:#2a1020;border-color:var(--magenta);color:#ffd0e0}
+.s5{background:#0d1e2e;border-color:var(--blue);color:#cfe6ff}
+.s6{background:#0c2430;border-color:var(--cyan);color:#c9f4fb}
+.board-actions{display:flex;gap:8px;flex-wrap:wrap}
+.mini-btn{font-family:var(--mono);font-size:.7rem;padding:8px 13px;border-radius:8px;cursor:pointer;transition:.2s;
+  border:1px solid var(--line-2);background:var(--ink-2);color:var(--muted)}
+.mini-btn:hover{border-color:var(--magenta);color:var(--magenta);transform:translateY(-1px)}
+.mini-btn.acc{border-color:rgba(105,240,160,.4);color:var(--green);background:rgba(105,240,160,.07)}
+.mini-btn.acc:hover{box-shadow:0 0 12px rgba(105,240,160,.3)}
+
+.atmo{margin-top:18px;background:var(--surface);border:1px solid rgba(103,232,249,.28);border-radius:14px;padding:20px 22px}
+.atmo-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.atmo-head h3{font-size:1rem;color:#eef3fa}
+.atmo-head .sub{font-family:var(--mono);font-size:.68rem;color:var(--cyan)}
+.atmo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px 22px}
+.atmo-toggles{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+
+/* ============ ROADMAP ============ */
+.road-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.road-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.road-card h3{font-size:1rem;color:#eef3fa;margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.road-card h3 .st{font-family:var(--mono);font-size:.62rem;padding:3px 8px;border-radius:999px;border:1px solid}
+.st.now{color:var(--green);border-color:rgba(105,240,160,.45);background:rgba(105,240,160,.08)}
+.st.next{color:var(--amber);border-color:rgba(255,180,84,.45);background:rgba(255,180,84,.08)}
+.st.plan{color:var(--muted);border-color:var(--line-2)}
+.road-card .why{font-size:.83rem;color:var(--muted);margin-bottom:14px}
+.bar-row{margin-bottom:12px}
+.bar-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:5px}
+.bar-head b{color:var(--text);font-weight:500}
+.bar{height:7px;border-radius:4px;background:#16223a;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;width:0;border-radius:4px;transition:width 1.3s cubic-bezier(.2,.8,.2,1);position:relative;
+  background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.bar.b2 i{background:linear-gradient(90deg,var(--amber),var(--magenta))}
+.bar.b3 i{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.bar.b4 i{background:linear-gradient(90deg,var(--violet),var(--magenta))}
+.bar i::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:translateX(-100%);animation:barsheen 2.6s ease-in-out infinite}
+@keyframes barsheen{60%,100%{transform:translateX(100%)}}
+.road-note{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:14px;border-top:1px dashed var(--line-2);padding-top:11px}
+
+/* ============ MUSIC ============ */
+.fm-hint{font-family:var(--mono);font-size:.74rem;color:var(--amber);background:rgba(255,180,84,.07);
+  border:1px dashed rgba(255,180,84,.35);border-radius:9px;padding:9px 14px;margin-bottom:20px;display:inline-block}
+.fm-hint.hidden{display:none}
+.fm-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:stretch}
+.deck{background:linear-gradient(160deg,#131c30,#0b1120 70%);border:1px solid rgba(167,139,250,.35);border-radius:16px;
+  padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 18px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(167,139,250,.15)}
+.deck-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.deck-brand{font-family:var(--mono);font-size:.72rem;color:var(--violet);letter-spacing:1.5px}
+.deck-state{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.deck.playing .deck-state{color:var(--green)}
+.cassette{background:#0a0f1c;border:1px solid var(--line-2);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+.cassette::before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(167,139,250,.06) 45%,transparent 60%);pointer-events:none}
+.cassette-label{font-family:var(--mono);font-size:.78rem;color:var(--warm);text-align:center;margin-bottom:12px;
+  border-bottom:1px dashed var(--line-2);padding-bottom:9px;letter-spacing:.4px}
+.cassette-label small{display:block;color:var(--muted);font-size:.66rem;margin-top:3px}
+.reels{display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+.reel{width:64px;height:64px;animation:spin var(--rev) linear infinite;animation-play-state:paused}
+.deck.playing .reel{animation-play-state:running}
+.reel .rim{fill:none;stroke:var(--violet);stroke-width:2.5}
+.reel .tooth{fill:var(--violet)}
+.reel .hub{fill:#0a0f1c;stroke:var(--line-2);stroke-width:1.5}
+.tape-window{flex:1;height:34px;margin:0 14px;background:#050810;border:1px solid var(--line);border-radius:6px;position:relative;overflow:hidden}
+.tape-window::after{content:'';position:absolute;left:0;right:0;top:50%;height:8px;transform:translateY(-50%);
+  background:linear-gradient(90deg,#2a1f3d,#3d2a52,#2a1f3d);box-shadow:0 0 8px rgba(167,139,250,.3)}
+.vu-row{display:flex;gap:10px;align-items:flex-end;height:44px}
+.vu{flex:1;background:#050810;border:1px solid var(--line);border-radius:5px;height:100%;position:relative;overflow:hidden}
+.vu i{position:absolute;left:0;right:0;bottom:0;height:5%;transition:height .08s linear;
+  background:linear-gradient(180deg,var(--magenta),var(--amber) 35%,var(--green) 70%,var(--blue))}
+.vu-cap{font-family:var(--mono);font-size:.62rem;color:var(--muted);text-align:center;margin-top:4px}
+.transport{display:flex;align-items:center;gap:14px}
+.play-btn{width:64px;height:64px;border-radius:50%;border:2px solid var(--violet);background:rgba(167,139,250,.12);
+  color:var(--violet);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s;flex:none}
+.play-btn:hover{box-shadow:0 0 26px rgba(167,139,250,.5);transform:scale(1.05)}
+.play-btn svg{width:26px;height:26px}
+.play-btn .i-pause{display:none}
+.play-btn[aria-pressed="true"]{background:var(--violet);color:var(--ink)}
+.play-btn[aria-pressed="true"] .i-play{display:none}
+.play-btn[aria-pressed="true"] .i-pause{display:block}
+.transport-meta{font-family:var(--mono);font-size:.74rem;color:var(--muted);line-height:1.8}
+.transport-meta b{color:var(--text);font-weight:500}
+.transport-meta .live-bpm{color:var(--amber)}
+.rack{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:18px}
+.rack-group{display:flex;flex-direction:column;gap:10px}
+.rack-title{font-family:var(--mono);font-size:.7rem;color:var(--violet);letter-spacing:1.2px;text-transform:uppercase}
+.atmo .rack-title{color:var(--cyan)}
+.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.track-card{background:var(--ink-2);border:1px solid var(--line);border-radius:11px;padding:12px 13px;cursor:pointer;
+  text-align:left;transition:.25s;color:var(--text);font-family:var(--sans)}
+.track-card:hover{border-color:rgba(167,139,250,.5);transform:translateY(-2px)}
+.track-card[aria-pressed="true"]{border-color:var(--violet);background:rgba(167,139,250,.1);box-shadow:0 0 18px rgba(167,139,250,.22)}
+.track-card .t-name{font-weight:700;font-size:.86rem;display:block;margin-bottom:3px}
+.track-card .t-meta{font-family:var(--mono);font-size:.66rem;color:var(--amber);display:block;margin-bottom:5px}
+.track-card .t-mood{font-size:.72rem;color:var(--muted);line-height:1.5;display:block}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+.slider-row{display:flex;flex-direction:column;gap:6px}
+.slider-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.slider-head output{color:var(--text)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(90deg,var(--sl-c,var(--blue)) var(--sl-f,50%),#1c2942 var(--sl-f,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--sl-c,var(--blue));
+  border:3px solid var(--ink);margin-top:-6px;box-shadow:0 0 10px var(--sl-c,var(--blue));transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-track{height:5px;border-radius:3px;background:#1c2942}
+input[type=range]::-moz-range-progress{height:5px;border-radius:3px;background:var(--sl-c,var(--blue))}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--sl-c,var(--blue));border:3px solid var(--ink);box-shadow:0 0 10px var(--sl-c,var(--blue))}
+.sl-vol{--sl-c:var(--blue)} .sl-bpm{--sl-c:var(--amber)} .sl-tone{--sl-c:var(--green)}
+.sl-echo{--sl-c:var(--magenta)} .sl-drive{--sl-c:var(--violet)}
+.sl-rain{--sl-c:var(--blue)} .sl-fall{--sl-c:var(--cyan)} .sl-grain{--sl-c:var(--muted)}
+.sl-scan{--sl-c:var(--magenta)} .sl-vinyl{--sl-c:var(--violet)} .sl-glow{--sl-c:var(--amber)} .sl-fog{--sl-c:var(--green)}
+.chip-toggles{display:flex;flex-wrap:wrap;gap:8px}
+.chip-toggle{font-family:var(--mono);font-size:.72rem;padding:7px 13px;border-radius:999px;cursor:pointer;transition:.2s;
+  border:1px solid var(--line-2);background:var(--ink-2);color:var(--muted)}
+.chip-toggle[aria-pressed="true"]{border-color:rgba(105,240,160,.5);color:var(--green);background:rgba(105,240,160,.08);box-shadow:0 0 10px rgba(105,240,160,.15)}
+.chip-toggle:hover{transform:translateY(-1px)}
+.rack-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.rack-btn{font-family:var(--mono);font-size:.74rem;padding:9px 15px;border-radius:9px;cursor:pointer;transition:.2s;
+  border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.08);color:var(--violet)}
+.rack-btn:hover{box-shadow:0 0 14px rgba(167,139,250,.35);transform:translateY(-1px)}
+.rack-btn.ghost{border-color:var(--line-2);color:var(--muted);background:var(--ink-2)}
+.rack-btn.ghost:hover{color:var(--text);box-shadow:none;border-color:var(--muted)}
+.rack-btn.cy{border-color:rgba(103,232,249,.45);background:rgba(103,232,249,.08);color:var(--cyan)}
+.rack-btn.cy:hover{box-shadow:0 0 14px rgba(103,232,249,.35)}
+.viz-select{font-family:var(--mono);font-size:.74rem;background:var(--ink-2);color:var(--text);border:1px solid var(--line-2);
+  border-radius:9px;padding:8px 12px;cursor:pointer}
+.viz-wrap{margin-top:20px;background:#0a0f1c;border:1px solid rgba(167,139,250,.3);border-radius:14px;padding:14px;position:relative;overflow:hidden}
+.viz-wrap::before{content:'NEVA FM · 88.6 · генеративный пост-панк · оригинальные петли, ноль чужих записей';
+  position:absolute;top:9px;left:14px;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.6px;z-index:1}
+#viz{display:block;width:100%;height:170px}
+.fm-foot{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:12px;line-height:1.8}
+.fm-foot b{color:var(--violet);font-weight:500}
+/* мини-клавиши */
+.keys-box{margin-top:18px;background:var(--surface);border:1px solid rgba(103,232,249,.28);border-radius:14px;padding:18px 20px}
+.keys-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.keys-head h3{font-size:.96rem;color:#eef3fa}
+.keys-head span{font-family:var(--mono);font-size:.68rem;color:var(--cyan)}
+.keys{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
+.key{height:74px;border-radius:0 0 9px 9px;border:1px solid var(--line-2);border-top:3px solid var(--k-c,var(--blue));
+  background:linear-gradient(180deg,#16223a,#0d1526);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:.68rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:9px;gap:3px;transition:.09s}
+.key b{color:var(--text);font-size:.76rem;font-weight:500}
+.key:hover{background:linear-gradient(180deg,#1c2b47,#111c33)}
+.key.on{background:linear-gradient(180deg,var(--k-c,var(--blue)),#0d1526);color:var(--ink);transform:translateY(3px);box-shadow:0 0 20px var(--k-c,var(--blue))}
+.key.on b{color:var(--ink)}
+.keys-foot{font-family:var(--mono);font-size:.66rem;color:var(--muted);margin-top:10px}
+
+/* ============ FAQ ============ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s}
+.faq-item[open]{border-color:rgba(255,92,147,.4);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.faq-item summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:14px;
+  font-weight:600;color:#eef3fa;font-size:.96rem;user-select:none;transition:.2s}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{background:rgba(255,92,147,.05)}
+.faq-item summary .q{font-family:var(--mono);font-size:.72rem;color:var(--magenta);flex:none}
+.faq-item summary .ind{margin-left:auto;font-family:var(--mono);color:var(--magenta);transition:transform .3s;flex:none}
+.faq-item[open] summary .ind{transform:rotate(45deg)}
+.faq-body{padding:0 20px 18px 52px;color:var(--muted);font-size:.92rem}
+.faq-body b{color:var(--text)}
+.faq-body code{font-family:var(--mono);font-size:.84em;color:var(--cyan);background:rgba(103,232,249,.08);padding:1px 6px;border-radius:4px}
+
+/* ============ CONTACTS ============ */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .contact-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.3s;display:flex;flex-direction:column;gap:10px}
 .contact-card:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:0 0 22px rgba(77,163,255,.2)}
 .c-top{display:flex;align-items:center;gap:10px}
 .c-top svg{width:18px;height:18px;color:var(--blue)}
 .c-label{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
-.c-value{color:var(--text);font-weight:700;font-size:.95rem;word-break:break-all;text-decoration:none}
+.c-value{color:var(--text);font-weight:700;font-size:.93rem;word-break:break-all;text-decoration:none}
 .c-value:hover{color:var(--blue)}
-.c-actions{display:flex;gap:8px;margin-top:2px}
+.c-actions{display:flex;gap:8px;margin-top:2px;flex-wrap:wrap}
 .copy-btn,.open-link{font-family:var(--mono);font-size:.72rem;padding:6px 12px;border-radius:7px;border:1px solid var(--line-2);background:var(--ink-2);color:var(--muted);cursor:pointer;text-decoration:none;transition:.25s;display:inline-flex;align-items:center;gap:6px}
 .copy-btn:hover,.open-link:hover{border-color:var(--green);color:var(--green)}
 .copy-btn svg{width:13px;height:13px}
 .contact-cta{margin-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .contact-cta .note{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
 
-/* ================= FOOTER / TOAST / TOTOP ================= */
+/* ============ FOOTER / TOAST / TOTOP ============ */
 footer{position:relative;z-index:2;text-align:center;padding:52px 26px 42px;border-top:1px solid var(--line);margin-top:44px;font-family:var(--mono);font-size:.8rem;color:var(--muted);background:rgba(7,11,18,.6)}
 footer .quote{color:var(--warm);margin-bottom:12px;font-size:.86rem}
 footer .f-line span{color:var(--amber)}
+footer a{color:var(--violet);text-decoration:none}
+footer a:hover{text-shadow:0 0 12px rgba(167,139,250,.6)}
 .to-top{position:fixed;right:22px;bottom:22px;z-index:45;width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--line-2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(12px);transition:.35s}
 .to-top.show{opacity:1;pointer-events:auto;transform:none}
 .to-top:hover{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px rgba(255,180,84,.3)}
 .to-top svg{width:18px;height:18px}
-.toast{position:fixed;left:50%;bottom:26px;z-index:60;transform:translate(-50%,80px);display:flex;align-items:center;gap:10px;
+.toast{position:fixed;left:50%;bottom:26px;z-index:60;transform:translate(-50%,90px);display:flex;align-items:center;gap:10px;
   background:var(--surface-2);border:1px solid rgba(105,240,160,.5);color:var(--text);font-family:var(--mono);font-size:.8rem;
-  padding:12px 20px;border-radius:11px;box-shadow:0 12px 34px rgba(0,0,0,.55);transition:transform .4s cubic-bezier(.2,.9,.3,1.2);pointer-events:none;max-width:90vw}
+  padding:12px 20px;border-radius:11px;box-shadow:0 12px 34px rgba(0,0,0,.55);transition:transform .4s cubic-bezier(.2,.9,.3,1.2);pointer-events:none;max-width:92vw}
 .toast.show{transform:translate(-50%,0)}
 .toast svg{width:16px;height:16px;color:var(--green);flex:none}
 .print-only{display:none}
 
-/* ================= RESPONSIVE ================= */
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .nav-tools .print-btn span{display:none}
+}
+@media (max-width:980px){
+  .fm-grid{grid-template-columns:1fr}
+  .sandbox-grid{grid-template-columns:1fr}
+}
 @media (max-width:900px){
   .about-grid{grid-template-columns:1fr}
   .terminal{position:static}
@@ -351,22 +697,30 @@ footer .f-line span{color:var(--amber)}
   .diagram-box{order:-1}
 }
 @media (max-width:760px){
-  .nav-links{display:none}
-  .burger{display:flex}
-  .nav-tools .print-btn span{display:none}
+  .nav-tools .sound-toggle span,.nav-tools .rain-toggle span{display:none}
   .hero{padding:126px 0 176px}
   .skyline{height:150px}
   :root{--tl-pad:28px;--tl-line:5px}
   section{padding:56px 0}
   .case-row{grid-template-columns:1fr}
   .case-row .k{padding-top:0}
+  .tracks{grid-template-columns:1fr}
+  .sliders{grid-template-columns:1fr}
+  #viz{height:130px}
+  .keys{grid-template-columns:repeat(4,1fr)}
+  .console-out{height:280px}
+  .faq-body{padding-left:20px}
+  .vinyl-bg{width:80vw;right:-30vw}
 }
 @media (max-width:480px){
-  nav{padding:0 14px;gap:12px}
+  nav{padding:0 12px;gap:10px}
   .nav-cta{display:none}
   .page{padding:0 18px}
   .stats{grid-template-columns:1fr 1fr}
   .hero-btns .btn{width:100%;justify-content:center}
+  .reel{width:52px;height:52px}
+  .board{height:340px}
+  .sticker{width:98px;font-size:.62rem}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -374,11 +728,11 @@ footer .f-line span{color:var(--amber)}
   .reveal,.enter{opacity:1;transform:none}
 }
 
-/* ================= ПЕЧАТЬ / PDF ================= */
+/* ============ ПЕЧАТЬ / PDF ============ */
 @page{size:A4;margin:12mm}
 @media print{
   body{background:#fff!important;color:#14181f;font-size:11.5px;line-height:1.5}
-  .aurora,#rain,.grain,nav,.skyline-wrap,.to-top,.toast,.hero-btns,.copy-btn,.open-link,.c-actions,.burger,.menu-overlay,.status-badge,.cursor,.diagram-box,.self-note,.contact-cta,.skip{display:none!important}
+  .aurora,#rain,.grain,.scanlines,.vhs-sweep,.vinyl-bg,.grid-horizon,.marquee,nav,.skyline-wrap,.to-top,.toast,.hero-btns,.copy-btn,.open-link,.c-actions,.burger,.menu-overlay,.status-badge,.cursor,.diagram-box,.contact-cta,.skip,#music,#sandbox,.self-links,.board-actions,.keys-box{display:none!important}
   .print-only{display:block;font-family:var(--mono);color:#333;margin:6px 0 10px;font-size:12px}
   .hero{padding:0 0 8px;min-height:0}
   .page{max-width:100%;padding:0}
@@ -387,53 +741,78 @@ footer .f-line span{color:var(--amber)}
   .name{background:none;-webkit-text-fill-color:#14181f;color:#14181f;font-size:30px;animation:none}
   .typed-line{display:none}
   .hero-pre,.sec-tag{color:#555!important}
-  .hero-sub,.hero-meta,.about-text p,.card p,.tl-item ul,.case-row .v,.edu-list li,.stat-label,.mega-cap,.sec-sub{color:#333!important}
-  .hero-meta span,.about-text b,.card p b,.tl-item li b{color:#14181f!important}
+  .hero-sub,.hero-meta,.about-text p,.card p,.tl-item ul,.case-row .v,.edu-list li,.stat-label,.mega-cap,.sec-sub,.proc-card p,.road-card .why,.faq-body{color:#333!important}
+  .hero-meta span,.about-text b,.card p b,.tl-item li b,.faq-body b{color:#14181f!important}
   h2{color:#14181f;font-size:17px;margin-bottom:8px}
   h2::after{background:#999;height:2px}
-  .card,.stat,.contact-card,.terminal,.quote-card,details.case{background:#fff!important;border:1px solid #bbb!important;box-shadow:none!important;color:#14181f;break-inside:avoid;transform:none!important}
+  .card,.stat,.contact-card,.terminal,.quote-card,details.case,.proc-card,.road-card,.faq-item{background:#fff!important;border:1px solid #bbb!important;box-shadow:none!important;color:#14181f;break-inside:avoid;transform:none!important}
   .quote-card{color:#14181f;border-left:3px solid #555}
   .stats{grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
   .stat-num,.mega-num{color:#14181f!important;text-shadow:none;font-size:20px}
   .about-grid{grid-template-columns:1fr;gap:12px}
   .terminal{display:none}
-  .tl-role,.proj-featured h3,.proj-grid h3,.value-grid h3,.skills-grid h3{color:#14181f}
-  .tl-place,.proj-num,.tl-lesson b,.case-row .k{color:#444!important}
-  .tl-lesson,.honest-note{background:#f4f4f4!important;border:1px solid #ccc!important;color:#333!important}
+  .tl-role,.proj-featured h3,.proj-grid h3,.value-grid h3,.skills-grid h3,.proc-card h3,.road-card h3,.faq-item summary{color:#14181f}
+  .tl-place,.proj-num,.tl-lesson b,.case-row .k,.proc-card .p-out,.faq-item summary .q{color:#444!important}
+  .tl-lesson,.honest-note,.road-note{background:#f4f4f4!important;border:1px solid #ccc!important;color:#333!important}
   .timeline::before,.timeline::after{background:#999;box-shadow:none}
   .tl-item::before{border-color:#555;background:#fff;box-shadow:none}
-  .tag,.role-chip,.chip{background:#fff!important;border:1px solid #888!important;color:#333!important;box-shadow:none!important}
+  .tag,.role-chip,.chip,.road-card h3 .st{background:#fff!important;border:1px solid #888!important;color:#333!important;box-shadow:none!important}
   .proj-featured{grid-template-columns:1fr}
-  details.case summary{display:none}
+  details.case summary,details.faq-item summary .ind{display:none}
   .case-body{padding:10px 14px}
+  .faq-body{padding:0 14px 10px}
+  .bar{background:#eee!important;border:1px solid #ccc}
+  .bar i{background:#555!important;animation:none!important}
+  .bar i::after{display:none}
   .reveal,.enter{opacity:1!important;transform:none!important}
   a{color:#14181f;text-decoration:none}
   .c-value{color:#14181f}
   footer{background:none;border-top:1px solid #bbb;color:#555;padding:14px 0}
   footer .quote{color:#333}
-  .v-icon{display:none}
+  .v-icon,.proc-card::before{display:none}
 }
 </style>
 </head>
 <body>
+<!-- куда ты смотришь, шалунишка 👀 исходник честный: всё написано руками, мемы прилагаются -->
 <a class="skip" href="#about">К содержанию</a>
 
 <div class="aurora" aria-hidden="true">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
 </div>
+<svg class="vinyl-bg" viewBox="0 0 200 200" aria-hidden="true">
+  <circle class="disc" cx="100" cy="100" r="96"/>
+  <circle class="disc" cx="100" cy="100" r="88"/><circle class="disc" cx="100" cy="100" r="80"/>
+  <circle class="disc" cx="100" cy="100" r="72"/><circle class="disc" cx="100" cy="100" r="64"/>
+  <circle class="disc" cx="100" cy="100" r="56"/><circle class="disc" cx="100" cy="100" r="48"/>
+  <circle class="lbl" cx="100" cy="100" r="34"/><circle class="lbl" cx="100" cy="100" r="4"/>
+  <path class="arm" d="M100 66 L100 40"/><path class="arm" d="M134 100 L160 100"/>
+</svg>
+<div class="grid-horizon" aria-hidden="true"></div>
 <canvas id="rain" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="vhs-sweep" aria-hidden="true"></div>
 
 <nav aria-label="Основная навигация">
-  <div class="logo"><b>mikhail</b>@spb<span class="tld">:~$</span></div>
+  <button class="logo" id="logo" title="mikhail@spb:~$ — просто логотип. или нет?"><b>mikhail</b>@spb<span class="tld">:~$</span></button>
   <div class="nav-links">
     <a href="#about">./обо_мне</a>
     <a href="#experience">./опыт</a>
     <a href="#projects">./проекты</a>
     <a href="#skills">./навыки</a>
+    <a href="#sandbox">./песочница</a>
+    <a href="#music">./радио</a>
     <a href="#contacts">./контакты</a>
   </div>
   <div class="nav-tools">
+    <button class="icon-btn sound-toggle" id="soundToggle" aria-pressed="false" title="Звук: вкл/выкл" aria-label="Включить или выключить звук">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+        <path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>
+        <path class="cross" d="M17 9l5 6M22 9l-5 6"/>
+      </svg><span>звук</span>
+    </button>
     <button class="icon-btn rain-toggle" aria-pressed="true" title="Дождь: вкл/выкл" aria-label="Переключить дождь">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17.5 13a4.5 4.5 0 0 0-.4-9A6 6 0 0 0 5.6 6.1 4 4 0 0 0 6.5 13h11"/><path class="drop" d="M8 16l-1 3M12.5 16l-1 3M17 16l-1 3"/></svg>
     </button>
@@ -449,9 +828,14 @@ footer .f-line span{color:var(--amber)}
 
 <div class="menu-overlay">
   <a href="#about">./обо_мне</a>
+  <a href="#process">./как_я_работаю</a>
   <a href="#experience">./опыт</a>
   <a href="#projects">./проекты</a>
   <a href="#skills">./навыки</a>
+  <a href="#sandbox">./песочница</a>
+  <a href="#roadmap">./сейчас_в_работе</a>
+  <a href="#music">./радио</a>
+  <a href="#faq">./вопросы</a>
   <a href="#contacts">./контакты</a>
   <a class="m-cta" href="https://t.me/Xersgoryytt" target="_blank" rel="noopener">написать в telegram →</a>
 </div>
@@ -463,22 +847,25 @@ footer .f-line span{color:var(--amber)}
     <div class="enter" style="--e:.12s"><span class="status-badge"><span class="pulse"></span>open to work · удалённо / релокация в СПб</span></div>
     <h1 class="name enter" style="--e:.2s">Михаил</h1>
     <div class="typed-line enter" style="--e:.3s"><span class="prompt">&gt;</span> <span id="typed">автоматизирую рутину</span><span class="cursor" aria-hidden="true"></span></div>
-    <p class="print-only">Бизнес-аналитик (автоматизация / AI) · требования и диалоговые сценарии · Telegram-боты · OpenVPN · документооборот</p>
-    <p class="hero-sub enter" style="--e:.38s">B2B-менеджер, который научился кодить и довёл собственные сервисы до <b>тысяч пользователей</b>. Перевожу бизнес-«хочу» в требования, сценарии и работающие инструменты: диалоговые боты, генерация договоров, сайты, VPN-инфраструктура.</p>
+    <p class="print-only">Бизнес-аналитик · специалист по автоматизации · Telegram-боты · документооборот · OpenVPN · сайт: nikto4451-commits.github.io/resume</p>
+    <p class="hero-sub enter" style="--e:.38s">B2B-менеджер, который научился кодить и довёл собственные сервисы до <b>тысяч пользователей</b>. Перевожу бизнес-«хочу» в требования, сценарии и работающие инструменты. Внизу — <b>терминал-песочница</b> и <b>пост-панк-синтезатор на Web Audio API</b>: резюме можно не только читать, но и слушать.</p>
     <div class="hero-meta enter" style="--e:.46s">Самара <span>→</span> Санкт-Петербург · удалённый формат · открыт к предложениям</div>
     <div class="hero-btns enter" style="--e:.54s">
       <a class="btn btn-primary" href="https://t.me/Xersgoryytt" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.6l-3.1 14.6c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.6L18.1 7c.4-.3-.1-.5-.6-.2L7.1 13.3l-4.5-1.4c-1-.3-1-1 .2-1.4L20.5 3.2c.8-.3 1.6.2 1.4 1.4z"/></svg>
         Написать в Telegram</a>
-      <a class="btn btn-ghost" href="tel:+79171609487">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
-        +7 917 160-94-87</a>
+      <a class="btn btn-violet" href="#music">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+        Включить Нева FM</a>
+      <a class="btn btn-green" href="#sandbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg>
+        Открыть терминал</a>
     </div>
     <div class="stats">
       <div class="stat enter" style="--e:.62s"><div class="stat-num" data-count="4160">4&nbsp;160</div><div class="stat-label">клиентов VPN-сервиса</div><div class="stat-note">на момент последней проверки</div></div>
       <div class="stat enter" style="--e:.7s"><div class="stat-num" data-count="10">10</div><div class="stat-label">месяцев B2B в «ТЕНДЕР-КОНСАЛТ»</div><div class="stat-note">янв — окт 2026</div></div>
-      <div class="stat enter" style="--e:.78s"><div class="stat-num" data-count="3">3</div><div class="stat-label">проекта доведены до пользователей</div><div class="stat-note">боты · VPN · сайты</div></div>
-      <div class="stat enter" style="--e:.86s"><div class="stat-num">PDF</div><div class="stat-label">договоры собираются автоматически</div><div class="stat-note">заказной бот-генератор</div></div>
+      <div class="stat enter" style="--e:.78s"><div class="stat-num" data-count="4">4</div><div class="stat-label">проекта доведены до пользователей</div><div class="stat-note">боты · VPN · сайты · этот сайт</div></div>
+      <div class="stat enter" style="--e:.86s"><div class="stat-num">0</div><div class="stat-label">библиотек в этом сайте</div><div class="stat-note">canvas · web audio · чистый JS</div></div>
     </div>
   </div>
   <div class="skyline-wrap" aria-hidden="true">
@@ -506,6 +893,10 @@ footer .f-line span{color:var(--amber)}
   </div>
 </header>
 
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mq1"></div>
+</div>
+
 <div class="page">
 
   <!-- ================= ABOUT ================= -->
@@ -523,18 +914,20 @@ footer .f-line span{color:var(--amber)}
           <div class="cmd">$ status</div>
           <div class="out">open_to_work: <span class="hl">true</span></div>
           <div class="cmd">$ focus</div>
-          <div class="out">автоматизация · боты · анализ требований</div>
+          <div class="out">анализ требований · автоматизация · боты</div>
           <div class="cmd">$ llm_tools</div>
           <div class="out">в рабочих задачах — <span class="hl">ежедневно</span></div>
+          <div class="cmd">$ soundtrack</div>
+          <div class="out"><span class="vi">пост-панк, синтезирую сам</span></div>
           <div class="cmd">$ uptime_vpn</div>
           <div class="out">4&nbsp;160 клиентов <span class="cm"># пик</span></div>
         </div>
       </div>
       <div class="about-text">
-        <p class="reveal">Начинал в активных продажах: колл-центр <b>МТС</b> (июнь — декабрь 2025), затем почти год B2B в <b>«ТЕНДЕР-КОНСАЛТ»</b> — компании тендерного сопровождения бизнеса. Мой фокус — <span class="hl-a">коммерческие предложения и согласование прямых продаж</span>; с госзакупками работал эпизодически, в формате переработок.</p>
-        <p class="reveal" style="--d:.08s">Параллельно учился кодить — и сразу применял: Telegram-боты, сайты с почтой и автоподготовкой договоров, собственный <b>VPN-сервис на OpenVPN</b>, который вырос до <span class="hl-g">4&nbsp;160 клиентов</span>. Друг заказал бота-генератор договоров — теперь документы собираются в PDF за минуты, с параметрами под конкретный договор и человека.</p>
-        <p class="reveal" style="--d:.16s">В октябре 2026 ушёл со стабильной позиции <b>осознанно</b> — ради роста в IT. Продажи научили меня понимать клиента, код дал инструмент решать его задачи. Сейчас ищу команду, где этот гибрид полезен каждый день.</p>
-        <p class="reveal" style="--d:.24s">Ращу себя в <span class="hl-a">бизнес-анализе</span>: сбор и формализация требований, диалоговые сценарии, критерии приёмки. <span class="hl-v">LLM-ассистенты — ежедневный рабочий инструмент</span>: код, шаблоны документов, промпты и проверка результатов. Понимаю, зачем ИИ нужны жёсткие рамки, валидация и сценарий «не уверен → передай человеку».</p>
+        <p class="reveal">Начинал в активных продажах: колл-центр <b>МТС</b> (июнь — декабрь 2025), затем почти год B2B в <b>«ТЕНДЕР-КОНСАЛТ»</b> — компании тендерного сопровождения бизнеса. Мой фокус — <span class="hl-a">коммерческие предложения и согласование прямых продаж</span>: полный цикл от первого контакта до подписанного договора. С госзакупками работал эпизодически, в формате переработок.</p>
+        <p class="reveal" style="--d:.08s">Параллельно учился кодить — и сразу применял на реальных болях: Telegram-боты, сайты с почтой и автоподготовкой договоров, собственный <b>VPN-сервис на OpenVPN</b>, который вырос до <span class="hl-g">4&nbsp;160 клиентов</span>. Заказной бот-генератор договоров собирает документы в PDF за минуты — с параметрами под конкретный тип договора и человека, с валидацией каждого шага.</p>
+        <p class="reveal" style="--d:.16s">В октябре 2026 ушёл со стабильной позиции <b>осознанно</b> — ради роста в IT. Продажи научили меня понимать клиента и говорить на языке денег, код дал инструмент решать его задачи. Сейчас качаю <span class="hl-a">бизнес-анализ</span>: сбор и формализация требований, диалоговые сценарии, критерии приёмки. <span class="hl-v">LLM-ассистенты — ежедневный рабочий инструмент</span>, результаты всегда проверяю и валидирую.</p>
+        <p class="reveal" style="--d:.24s">Этот сайт — тоже строчка портфолио: дождь на canvas, ЭЛТ-развёртка, scroll-spy, печать в PDF, терминал-песочница и <b>генеративный пост-панк-движок на Web Audio API</b> — бас, драм-машина, гитара с дилеем, пэды. Ноль библиотек, весь код открыт.</p>
         <div class="quote-card reveal" style="--d:.32s">«Я не складываю сертификаты в стол — я решаю задачи, за которые мне платили».</div>
       </div>
     </div>
@@ -545,17 +938,53 @@ footer .f-line span{color:var(--amber)}
     <div class="sec-tag reveal">// 02. чем я полезен бизнесу</div>
     <h2 class="reveal">Что вы получите, взяв меня в команду</h2>
     <div class="value-grid" style="margin-top:26px">
-      <div class="card glow-track v1 reveal"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/><path d="M9 11h6M9 14h4"/></svg></div><h3>Понимаю клиента → формализую</h3><p>Активные продажи и B2B-переговоры: выявляю реальную потребность и перевожу «хочу» в структурированные требования, сценарии и ТЗ, понятные разработчику.</p></div>
-      <div class="card glow-track v5 reveal" style="--d:.08s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9.5 16.5h5"/></svg></div><h3>Проектирую диалоги · знаю рамки ИИ</h3><p>Диалоговые сценарии: ветки, тон, границы, обработка ошибок. LLM использую в работе ежедневно — понимаю риски галлюцинаций и зачем нужны валидация, ограничения и передача диалога человеку.</p></div>
-      <div class="card glow-track v2 reveal" style="--d:.16s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div><h3>Автоматизирую рутину</h3><p>Боты, генерация документов, автоподготовка договоров. Нахожу процессы, где люди часами делают руками то, что скрипт сделает за минуты.</p></div>
-      <div class="card glow-track v3 reveal" style="--d:.24s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 13c-2-6 2-10 9-10 0 7-4 11-10 9z"/><circle cx="14.5" cy="8.5" r="1.5"/></svg></div><h3>Довожу до пользователей</h3><p>VPN-сервис прошёл весь путь: сервер → продукт → 4&nbsp;160 клиентов → поддержка. Умею не только писать код, но и доводить его до людей.</p></div>
+      <div class="card glow-track v1 reveal"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/><path d="M9 11h6M9 14h4"/></svg></div><h3>Понимаю клиента → формализую</h3><p>Активные продажи и B2B-переговоры: выявляю реальную потребность и перевожу «хочу» в структурированные требования, сценарии и ТЗ, понятные разработчику с полуслова.</p></div>
+      <div class="card glow-track v5 reveal" style="--d:.08s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9.5 16.5h5"/></svg></div><h3>Проектирую диалоги · знаю рамки ИИ</h3><p>Диалоговые сценарии: ветки, тон, границы, обработка ошибок. LLM использую ежедневно — понимаю риски галлюцинаций и зачем нужны валидация, ограничения и передача диалога человеку.</p></div>
+      <div class="card glow-track v2 reveal" style="--d:.16s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div><h3>Автоматизирую рутину</h3><p>Боты, генерация документов, автоподготовка договоров, CRM-логика. Нахожу процессы, где люди часами делают руками то, что скрипт сделает за минуты — и автоматизирую end-to-end.</p></div>
+      <div class="card glow-track v3 reveal" style="--d:.24s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 13c-2-6 2-10 9-10 0 7-4 11-10 9z"/><circle cx="14.5" cy="8.5" r="1.5"/></svg></div><h3>Довожу до пользователей</h3><p>VPN-сервис прошёл весь путь: сервер → продукт → 4&nbsp;160 клиентов → поддержка. Умею не только писать код, но и доводить его до людей и отвечать за то, чтобы он работал.</p></div>
       <div class="card glow-track v4 reveal" style="--d:.32s"><div class="v-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h3>Работаю автономно</h3><p>Самообучение с нуля и удалённый формат — моя норма. Не требую микроменеджмента, задаю вопросы по делу, соблюдаю договорённости и сроки.</p></div>
     </div>
   </section>
 
+  <!-- ================= PROCESS ================= -->
+  <section id="process" data-acc="#67e8f9">
+    <div class="sec-tag reveal">// 03. как я работаю</div>
+    <h2 class="reveal">От «хочу что-нибудь» до работающего инструмента</h2>
+    <p class="sec-sub reveal">Метод, который я обкатал на заказном боте, документообороте и собственном сервисе. Пять шагов, на каждом — понятный артефакт, а не «мы поработали».</p>
+    <div class="proc-grid">
+      <div class="proc-card reveal">
+        <h3>Снять боль</h3>
+        <p>Интервью с тем, кто реально делает работу руками. Не «что хотите», а «покажите, как сейчас» и «где теряете время».</p>
+        <div class="p-out">→ карта процесса as-is</div>
+      </div>
+      <div class="proc-card reveal" style="--d:.07s">
+        <h3>Формализовать</h3>
+        <p>Перевожу разговор в требования: роли, сценарии, параметры, ограничения. Отделяю «надо бизнесу» от «просто привыкли».</p>
+        <div class="p-out">→ требования + критерии приёмки</div>
+      </div>
+      <div class="proc-card reveal" style="--d:.14s">
+        <h3>Спроектировать сценарий</h3>
+        <p>Основной путь, альтернативы, ошибки, пустые состояния. Что увидит человек, если введёт не то — думаем до кода.</p>
+        <div class="p-out">→ User Flow + edge cases</div>
+      </div>
+      <div class="proc-card reveal" style="--d:.21s">
+        <h3>Собрать и проверить</h3>
+        <p>Могу сам сделать прототип на Python или сверстать экран. Проверяю на реальных данных, а не на «идеальном примере».</p>
+        <div class="p-out">→ рабочий прототип / ТЗ разработке</div>
+      </div>
+      <div class="proc-card reveal" style="--d:.28s">
+        <h3>Довести и замерить</h3>
+        <p>Передача заказчику, инструкция, поддержка. Считаю эффект: было часов — стало минут, было ошибок — стало ноль.</p>
+        <div class="p-out">→ инструкция + цифры эффекта</div>
+      </div>
+    </div>
+    <div class="proc-line reveal" style="--d:.34s"></div>
+    <div class="quote-card reveal" style="--d:.4s;margin-top:22px">«Требование, которое нельзя проверить, — это не требование, а пожелание».</div>
+  </section>
+
   <!-- ================= EXPERIENCE ================= -->
   <section id="experience" data-acc="#ffb454">
-    <div class="sec-tag reveal">// 03. опыт</div>
+    <div class="sec-tag reveal">// 04. опыт</div>
     <h2 class="reveal">Карьерный путь</h2>
     <p class="sec-sub reveal">Полтора года в продажах — и параллельный трек разработки и анализа, который постепенно стал основным.</p>
     <div class="timeline">
@@ -568,7 +997,7 @@ footer .f-line span{color:var(--amber)}
           <li>Работа в CRM, ведение клиентской базы, живая адаптация скриптов под собеседника.</li>
         </ul>
         <div class="tl-chips"><span class="tag">холодные звонки</span><span class="tag">KPI</span><span class="tag">CRM</span><span class="tag">возражения</span><span class="tag">адаптация скриптов</span></div>
-        <div class="tl-lesson"><b>Что это дало:</b> стрессоустойчивость, скорость коммуникации и умение слышать клиента с первых секунд разговора. Скрипты — те же диалоговые сценарии, только голосом.</div>
+        <div class="tl-lesson"><b>Что это дало:</b> стрессоустойчивость, скорость коммуникации и умение слышать клиента с первых секунд. Скрипты — те же диалоговые сценарии, только голосом.</div>
       </div>
       <div class="tl-item reveal">
         <div class="tl-role">Менеджер по B2B-продажам</div>
@@ -590,7 +1019,7 @@ footer .f-line span{color:var(--amber)}
           <li>Заказной Telegram-бот генерации договоров, VPN-сервис на OpenVPN с монетизацией, сайты с автоматизацией документооборота.</li>
           <li><b>Сбор и формализация требований</b>: интервью с заказчиком → схема параметров и сценариев → критерии приёмки → работающий инструмент.</li>
           <li><b>Проектирование диалоговых сценариев (User Flow)</b>: ветвление логики, валидация ввода, обработка крайних случаев и ошибок.</li>
-          <li><b>tag learning</b>: код, шаблоны документов, промпты; результаты проверяю и валидирую, а не принимаю на веру.</li>
+          <li><b>LLM-ассистенты — ежедневно в работе</b>: код, шаблоны документов, промпты; результаты проверяю и валидирую, а не принимаю на веру.</li>
           <li>Полный цикл в одиночку: идея → требования → реализация → пользователи → поддержка.</li>
         </ul>
         <div class="tl-chips"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">OpenVPN</span><span class="tag t-green">PDF-генерация</span><span class="tag t-amber">сбор требований</span><span class="tag t-amber">User Flow</span><span class="tag t-violet">LLM-инструменты</span><span class="tag t-violet">промпт-инжиниринг</span></div>
@@ -601,9 +1030,9 @@ footer .f-line span{color:var(--amber)}
 
   <!-- ================= PROJECTS ================= -->
   <section id="projects" data-acc="#69f0a0">
-    <div class="sec-tag reveal">// 04. проекты</div>
+    <div class="sec-tag reveal">// 05. проекты</div>
     <h2 class="reveal">Практика, а не теория</h2>
-    <p class="sec-sub reveal">Три проекта, три разных навыка: инфраструктура, заказная разработка, автоматизация бизнес-процессов.</p>
+    <p class="sec-sub reveal">Инфраструктура, заказная разработка, автоматизация бизнес-процессов — и этот сайт как вишенка.</p>
 
     <div class="card glow-track proj-featured reveal">
       <div>
@@ -636,35 +1065,35 @@ footer .f-line span{color:var(--amber)}
           <circle class="node" cx="332" cy="72" r="5" fill="#69f0a0"/><circle class="node" cx="282" cy="94" r="5" fill="#4da3ff"/>
           <circle class="node" cx="322" cy="118" r="5" fill="#ff5c93"/><circle class="node" cx="272" cy="142" r="5" fill="#69f0a0"/>
           <circle class="node" cx="312" cy="166" r="5" fill="#4da3ff"/><circle class="node" cx="262" cy="190" r="5" fill="#ffb454"/>
-          <circle class="node" cx="302" cy="212" r="5" fill="#69f0a0"/><circle class="node" cx="334" cy="196" r="5" fill="#4da3ff"/>
+          <circle class="node" cx="302" cy="212" r="5" fill="#69f0a0"/><circle class="node" cx="334" cy="196" r="5" fill="#a78bfa"/>
         </svg>
         <div class="diagram-cap">схема сервиса · сервер ↔ клиенты</div>
       </div>
     </div>
 
     <div class="proj-grid">
-      <div class="card glow-track reveal">
+      <div class="card glow-track tilt reveal">
         <div class="proj-head"><span class="proj-num">project_02 · commissioned</span><span class="chip ok"><span class="dot"></span>заказной · используется</span></div>
         <h3>Telegram-бот — генератор договоров</h3>
-        <p>Заказной проект с полным циклом анализа: снял требования с заказчика, спроектировал <b>диалоговый сценарий сбора параметров</b> — стороны, реквизиты, суммы, даты — с валидацией ввода и обработкой крайних случаев. Бот подставляет данные в шаблоны под <b>разные типы договоров и разных людей</b> и отдаёт готовый PDF.</p>
-        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">PDF-генерация</span><span class="tag t-green">шаблоны документов</span><span class="tag t-amber">сбор требований</span><span class="tag t-amber">User Flow</span><span class="tag t-amber">валидация ввода</span></div>
+        <p>Заказной проект с полным циклом анализа: снял требования с заказчика, спроектировал <b>диалоговый сценарий сбора параметров</b> — стороны, реквизиты, суммы, даты — с валидацией ввода и обработкой крайних случаев. Бот подставляет данные в шаблоны под <b>разные типы договоров</b> и отдаёт готовый PDF.</p>
+        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">PDF-генерация</span><span class="tag t-amber">сбор требований</span><span class="tag t-amber">User Flow</span><span class="tag t-amber">валидация ввода</span></div>
         <div class="proj-proof"><b>Доказывает:</b> умею снять задачу с заказчика, формализовать требования, спроектировать диалоговую логику и выдать инструмент, которым реально пользуются.</div>
         <details class="case">
           <summary>разбор кейса <span class="plus">+</span></summary>
           <div class="case-body">
-            <div class="case-row"><span class="k">задача</span><span class="v">Друг тонул в договорах: каждый — вручную, с правками реквизитов и условий под конкретного человека.</span></div>
-            <div class="case-row"><span class="k">требования</span><span class="v">Интервью с заказчиком → список типов договоров и параметров → критерии приёмки: корректные реквизиты, ноль ошибок копипаста, документ за минуты.</span></div>
-            <div class="case-row"><span class="k">сценарий</span><span class="v">User Flow сбора параметров: ветвление по типу договора, валидация на каждом шаге, понятные сообщения при некорректном вводе, подтверждение перед генерацией.</span></div>
-            <div class="case-row"><span class="k">решение</span><span class="v">Rule-based ассистент: поведение детерминировано, «фантазировать» нечему. Но задачи проектирования те же, что у AI-агентов: сценарии, границы, обработка ошибок. LLM-ассистенты использовал как рабочий инструмент при разработке.</span></div>
+            <div class="case-row"><span class="k">задача</span><span class="v">Заказчик тонул в договорах: каждый — вручную, с правками реквизитов и условий под конкретного человека.</span></div>
+            <div class="case-row"><span class="k">требования</span><span class="v">Интервью → список типов договоров и параметров → критерии приёмки: корректные реквизиты, ноль ошибок копипаста, документ за минуты.</span></div>
+            <div class="case-row"><span class="k">сценарий</span><span class="v">User Flow: ветвление по типу договора, валидация на каждом шаге, понятные сообщения при некорректном вводе, подтверждение перед генерацией.</span></div>
+            <div class="case-row"><span class="k">решение</span><span class="v">Rule-based ассистент: поведение детерминировано, «фантазировать» нечему. Но задачи проектирования те же, что у AI-агентов: сценарии, границы, обработка ошибок.</span></div>
             <div class="case-row"><span class="k">результат</span><span class="v">Документ за минуты вместо ручного заполнения. Заказчик пользуется, ошибки копипаста ушли.</span></div>
           </div>
         </details>
       </div>
-      <div class="card glow-track reveal" style="--d:.1s">
+      <div class="card glow-track tilt reveal" style="--d:.1s">
         <div class="proj-head"><span class="proj-num">project_03 · automation</span><span class="chip info"><span class="dot"></span>личные и заказные задачи</span></div>
         <h3>Сайты + автоматизация документооборота</h3>
-        <p>Сборка сайтов: отдельные страницы, навигация, подключение почты и форм. Спроектировал процесс end-to-end и настроил генерацию документов и автоматическую подготовку договоров — то, что в продажах делается руками часами.</p>
-        <div class="tags"><span class="tag t-green">HTML / CSS</span><span class="tag t-green">почта / SMTP</span><span class="tag t-green">генерация документов</span><span class="tag t-green">автоматизация</span><span class="tag t-amber">описание процессов</span></div>
+        <p>Сборка сайтов: страницы, навигация, подключение почты и форм. Спроектировал процесс end-to-end и настроил генерацию документов и автоматическую подготовку договоров — то, что в продажах делается руками часами.</p>
+        <div class="tags"><span class="tag t-green">HTML / CSS</span><span class="tag t-green">почта / SMTP</span><span class="tag t-green">генерация документов</span><span class="tag t-amber">описание процессов</span></div>
         <div class="proj-proof"><b>Доказывает:</b> вижу процесс целиком и автоматизирую его end-to-end, а не просто «верстаю странички».</div>
         <details class="case">
           <summary>разбор кейса <span class="plus">+</span></summary>
@@ -676,48 +1105,58 @@ footer .f-line span{color:var(--amber)}
         </details>
       </div>
     </div>
-    <div class="self-note reveal"><b>P.S.</b> Этот сайт — тоже мой проект: написан вручную на HTML/CSS/JS. Дождь — canvas, анимации — без библиотек. Исходник покажу на собеседовании.</div>
+
+    <div class="card glow-track self-card reveal">
+      <div class="proj-head"><span class="proj-num">project_04 · this_site</span><span class="chip vio"><span class="dot"></span>open source · MIT</span></div>
+      <h3>Это резюме — тоже проект</h3>
+      <p>Написано вручную: <b>canvas-дождь</b>, ЭЛТ-развёртка и VHS-полоса, силуэт Петербурга с мерцающими окнами, scroll-spy с перекраской навигации, печать в PDF, терминал-песочница, перетаскиваемые стикеры, пульт атмосферы — и <b>генеративный пост-панк-синтезатор на Web Audio API</b>: секвенсор с look-ahead, синтез ударных, бас с перегрузом, гитара с хорусом и дилеем, пэды с ревербом. Ноль зависимостей. В исходнике спрятаны мемы — загляни.</p>
+      <div class="tags"><span class="tag t-violet">Web Audio API</span><span class="tag t-violet">Canvas 2D</span><span class="tag t-green">JavaScript</span><span class="tag t-green">HTML / CSS</span><span class="tag t-cyan">Pointer Events</span><span class="tag t-amber">0 зависимостей</span></div>
+      <div class="proj-proof"><b>Доказывает:</b> могу не только описать фичу, но и собрать её от идеи до прода. И да — открой консоль 😉</div>
+      <div class="self-links">
+        <a href="https://github.com/nikto4451-commits/resume" target="_blank" rel="noopener">исходник на GitHub →</a>
+        <a href="#music">послушать синтезатор →</a>
+        <a href="#sandbox">потыкать песочницу →</a>
+      </div>
+    </div>
   </section>
 
   <!-- ================= SKILLS ================= -->
   <section id="skills" data-acc="#ff5c93">
-    <div class="sec-tag reveal">// 05. навыки</div>
+    <div class="sec-tag reveal">// 06. навыки</div>
     <h2 class="reveal">Стек и компетенции</h2>
     <div class="legend reveal">сплошные теги — есть практика · пунктирные — активно изучаю</div>
     <div class="skills-grid">
-      <!-- ПРОВЕРЬ: сплошные теги ниже = только то, что реально делал руками -->
       <div class="card glow-track reveal">
         <h3>Бизнес-анализ</h3>
         <div class="sub">требования → сценарии → ТЗ</div>
         <div class="tags"><span class="tag t-amber">сбор требований</span><span class="tag t-amber">формализация требований</span><span class="tag t-amber">диалоговые сценарии / User Flow</span><span class="tag t-amber">критерии приёмки</span><span class="tag t-amber">крайние случаи / edge cases</span><span class="tag t-amber">ТЗ для разработчиков</span><span class="tag t-amber">описание процессов</span><span class="tag learning">User Stories / Use Cases · изучаю</span><span class="tag learning">BPMN · изучаю</span><span class="tag learning">Jira / Confluence · изучаю</span></div>
       </div>
-      <!-- ПРОВЕРЬ: если промпт-инжиниринг пока только теория — сделай тег learning -->
       <div class="card glow-track reveal" style="--d:.08s">
         <h3>AI / LLM</h3>
         <div class="sub">инструменты в работе — ежедневно; агенты — разбираю глубже</div>
-        <div class="tags"><span class="tag t-violet">LLM-ассистенты в рабочих задачах</span><span class="tag t-violet">промпт-инжиниринг</span><span class="tag t-violet">проверка и валидация ответов</span><span class="tag t-violet">ограничения LLM · понимание</span><span class="tag t-violet">риски галлюцинаций · понимание</span><span class="tag learning">AI-агенты · изучаю</span><span class="tag learning">RAG · изучаю</span><span class="tag learning">LLM-диалоги · изучаю</span></div>
+        <div class="tags"><span class="tag t-violet">LLM-ассистенты в рабочих задачах</span><span class="tag t-violet">промпт-инжиниринг</span><span class="tag t-violet">проверка и валидация ответов</span><span class="tag t-violet">ограничения LLM · понимание</span><span class="tag t-violet">риски галлюцинаций · понимание</span><span class="tag learning">AI-агенты · изучаю</span><span class="tag learning">RAG · изучаю</span></div>
       </div>
       <div class="card glow-track reveal" style="--d:.16s">
         <h3>Коммуникация и продажи</h3>
         <div class="sub">то, чему не учат на курсах разработки</div>
-        <div class="tags"><span class="tag t-amber">активные продажи</span><span class="tag t-amber">B2B-переговоры</span><span class="tag t-amber">подготовка КП</span><span class="tag t-amber">согласование сделок</span><span class="tag t-amber">работа с возражениями</span><span class="tag t-amber">выявление потребностей</span><span class="tag t-amber">CRM</span><span class="tag t-amber">документооборот</span><span class="tag t-amber">клиентская поддержка</span><span class="tag learning">тендерные процессы · базово</span></div>
+        <div class="tags"><span class="tag t-amber">активные продажи</span><span class="tag t-amber">B2B-переговоры</span><span class="tag t-amber">подготовка КП</span><span class="tag t-amber">согласование сделок</span><span class="tag t-amber">выявление потребностей</span><span class="tag t-amber">CRM-логика · воронки</span><span class="tag t-amber">документооборот</span><span class="tag t-amber">клиентская поддержка</span><span class="tag learning">тендерные процессы · базово</span></div>
       </div>
       <div class="card glow-track reveal" style="--d:.24s">
         <h3>Разработка</h3>
         <div class="sub">проверено на собственных и заказных проектах</div>
-        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">HTML / CSS</span><span class="tag t-green">работа с API</span><span class="tag t-green">PDF-генерация</span><span class="tag learning">JavaScript</span><span class="tag learning">Git</span><span class="tag learning">SQL</span></div>
+        <div class="tags"><span class="tag t-green">Python</span><span class="tag t-green">Telegram Bot API</span><span class="tag t-green">HTML / CSS</span><span class="tag t-green">JavaScript</span><span class="tag t-green">Web Audio API</span><span class="tag t-green">Canvas 2D</span><span class="tag t-green">работа с API / JSON</span><span class="tag t-green">PDF-генерация</span><span class="tag learning">Git</span><span class="tag learning">SQL</span></div>
       </div>
       <div class="card glow-track reveal" style="--d:.32s">
         <h3>Инфраструктура и автоматизация</h3>
         <div class="sub">от настройки сервера до бизнес-процесса</div>
-        <div class="tags"><span class="tag">Linux / VPS</span><span class="tag">SSH</span><span class="tag">OpenVPN</span><span class="tag">почтовые интеграции</span><span class="tag">генерация документов</span><span class="tag">автоматизация процессов</span></div>
+        <div class="tags"><span class="tag">Linux / VPS</span><span class="tag">SSH</span><span class="tag">OpenVPN</span><span class="tag">почтовые интеграции</span><span class="tag">генерация документов</span><span class="tag">автоматизация процессов</span><span class="tag">Chrome DevTools / Network</span></div>
       </div>
       <div class="card glow-track reveal" style="--d:.4s">
         <h3>Образование и языки</h3>
         <div class="sub">честно, без приписок</div>
         <ul class="edu-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v5"/></svg><span><b>Среднее специальное образование.</b> Программирование — самообучение по документации и реальным задачам.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg><span><b>Английский:</b> читаю техническую документацию; разговорный — пока базовый, подтягиваю.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg><span><b>Английский:</b> читаю техническую документацию; разговорный — базовый, подтягиваю.</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span><b>Русский</b> — родной. Формат: удалённо, готов к релокации в Санкт-Петербург.</span></li>
         </ul>
       </div>
@@ -725,15 +1164,282 @@ footer .f-line span{color:var(--amber)}
     <div class="quote-card reveal" style="margin-top:26px">Гибрид «продажи × код × аналитика» даёт максимум пользы здесь:</div>
     <div class="roles reveal">
       <span class="role-chip">Бизнес-аналитик · AI / автоматизация</span>
+      <span class="role-chip">CRM-интегратор · внедрение</span>
       <span class="role-chip">Аналитик диалоговых сценариев</span>
       <span class="role-chip">Специалист по автоматизации</span>
-      <span class="role-chip">Junior Python-разработчик</span>
+    </div>
+  </section>
+</div>
+
+<div class="marquee rev" aria-hidden="true">
+  <div class="mq-track" id="mq2"></div>
+</div>
+
+<div class="page">
+
+  <!-- ================= SANDBOX ================= -->
+  <!-- весь мир крутится вокруг банана 🍌 попробуй набрать banana -->
+  <section id="sandbox" data-acc="#69f0a0">
+    <div class="sec-tag reveal">// 07. песочница</div>
+    <h2 class="reveal">Потыкай, прежде чем звать на созвон</h2>
+    <p class="sec-sub reveal">Необязательная часть резюме — но она честнее любого списка навыков. Терминал ниже понимает команды, стикеры таскаются мышью, а пульт меняет атмосферу страницы вживую. Ничего не сломается: это просто игра с интерфейсом.</p>
+
+    <div class="sandbox-grid">
+      <div class="console reveal">
+        <div class="console-bar"><i></i><i></i><i></i><span>mikhail@spb: ~/resume</span><span class="hint">↑↓ история · Tab дополнит</span></div>
+        <div class="console-out" id="conOut" role="log" aria-live="polite" aria-label="Вывод терминала"></div>
+        <form class="console-in" id="conForm" autocomplete="off">
+          <span class="ps1">visitor@spb:~$</span>
+          <input id="conIn" type="text" placeholder="набери help и нажми Enter" aria-label="Команда терминала" spellcheck="false">
+          <button type="submit">enter</button>
+        </form>
+        <div class="cmd-chips" id="cmdChips"></div>
+      </div>
+
+      <div class="board-wrap reveal" style="--d:.1s">
+        <div class="board" id="board">
+          <div class="sticker s1" data-s="0" tabindex="0" role="button" aria-label="Стикер: требования. Перетаскивай мышью или стрелками"><span class="em">📋</span><b>сначала боль</b>потом фича</div>
+          <div class="sticker s2" data-s="1" tabindex="0" role="button" aria-label="Стикер: код. Перетаскивай мышью или стрелками"><span class="em">🐍</span><b>python</b>и всё само</div>
+          <div class="sticker s3" data-s="2" tabindex="0" role="button" aria-label="Стикер: дождь. Перетаскивай мышью или стрелками"><span class="em">🌧</span><b>спб</b>скоро буду</div>
+          <div class="sticker s4" data-s="3" tabindex="0" role="button" aria-label="Стикер: пост-панк. Перетаскивай мышью или стрелками"><span class="em">🎸</span><b>пост-панк</b>в браузере</div>
+          <div class="sticker s5" data-s="4" tabindex="0" role="button" aria-label="Стикер: банан. Перетаскивай мышью или стрелками"><span class="em">🍌</span><b>банан</b>мир вокруг него</div>
+          <div class="sticker s6" data-s="5" tabindex="0" role="button" aria-label="Стикер: сон. Перетаскивай мышью или стрелками"><span class="em">💀</span><b>нет личной</b>жизни · есть прод</div>
+          <div class="board-hint">тащи мышью · фокус + стрелки тоже работают</div>
+        </div>
+        <div class="board-actions">
+          <button class="mini-btn acc" id="btnShuffle">🎲 перемешать</button>
+          <button class="mini-btn" id="btnBoardReset">вернуть как было</button>
+          <button class="mini-btn" id="btnStack">сложить в стопку</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="atmo reveal" style="--d:.16s">
+      <div class="atmo-head">
+        <h3>Пульт атмосферы</h3>
+        <span class="sub">// крути фон как хочешь — всё применяется вживую</span>
+      </div>
+      <div class="atmo-grid">
+        <div class="slider-row sl-rain"><div class="slider-head"><span>плотность дождя</span><output id="oRain">55</output></div><input type="range" id="aRain" min="0" max="100" value="55" aria-label="Плотность дождя"></div>
+        <div class="slider-row sl-fall"><div class="slider-head"><span>скорость капель</span><output id="oFall">50</output></div><input type="range" id="aFall" min="10" max="100" value="50" aria-label="Скорость капель"></div>
+        <div class="slider-row sl-grain"><div class="slider-head"><span>зерно плёнки</span><output id="oGrain">30</output></div><input type="range" id="aGrain" min="0" max="100" value="30" aria-label="Зерно плёнки"></div>
+        <div class="slider-row sl-scan"><div class="slider-head"><span>ЭЛТ-развёртка</span><output id="oScan">28</output></div><input type="range" id="aScan" min="0" max="100" value="28" aria-label="ЭЛТ-развёртка"></div>
+        <div class="slider-row sl-vinyl"><div class="slider-head"><span>винил на фоне</span><output id="oVinyl">35</output></div><input type="range" id="aVinyl" min="0" max="100" value="35" aria-label="Винил на фоне"></div>
+        <div class="slider-row sl-glow"><div class="slider-head"><span>свечение секций</span><output id="oGlow">70</output></div><input type="range" id="aGlow" min="0" max="100" value="70" aria-label="Свечение секций"></div>
+        <div class="slider-row sl-fog"><div class="slider-head"><span>туман · aurora</span><output id="oFog">80</output></div><input type="range" id="aFog" min="0" max="100" value="80" aria-label="Туман"></div>
+        <div class="slider-row" style="--sl-c:var(--magenta)"><div class="slider-head"><span>сетка-горизонт</span><output id="oGrid">50</output></div><input type="range" id="aGrid" min="0" max="100" value="50" aria-label="Сетка-горизонт"></div>
+      </div>
+      <div class="atmo-toggles">
+        <button class="chip-toggle" id="tgGrid" aria-pressed="true">сетка</button>
+        <button class="chip-toggle" id="tgVinyl" aria-pressed="true">винил</button>
+        <button class="chip-toggle" id="tgTilt" aria-pressed="true">наклон карточек</button>
+        <button class="rack-btn cy" id="btnAtmoRandom">🎲 случайная ночь</button>
+        <button class="rack-btn ghost" id="btnAtmoReset">сброс</button>
+        <button class="rack-btn ghost" id="btnAtmoCopy">скопировать пресет</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROADMAP ================= -->
+  <section id="roadmap" data-acc="#ffb454">
+    <div class="sec-tag reveal">// 08. сейчас в работе</div>
+    <h2 class="reveal">Что качаю прямо сейчас</h2>
+    <p class="sec-sub reveal">Честная карта роста: где я уже уверенно работаю руками, где учусь каждый вечер, и что в плане на ближайшие месяцы. Проценты — моя субъективная оценка готовности к боевым задачам, не сертификат.</p>
+    <div class="road-grid">
+      <div class="road-card reveal">
+        <h3>Аналитика требований <span class="st now">в работе</span></h3>
+        <div class="why">Основа того, чем хочу заниматься каждый день. Практика есть на заказных проектах, добираю нотации и форматы.</div>
+        <div class="bar-row"><div class="bar-head"><b>сбор и формализация</b><span>75%</span></div><div class="bar"><i data-w="75"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>User Flow / сценарии</b><span>70%</span></div><div class="bar b3"><i data-w="70"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>BPMN / UML</b><span>30%</span></div><div class="bar b2"><i data-w="30"></i></div></div>
+        <div class="road-note">// ближайший шаг: нарисовать as-is/to-be схему процесса договоров</div>
+      </div>
+      <div class="road-card reveal" style="--d:.08s">
+        <h3>Данные и отчётность <span class="st now">в работе</span></h3>
+        <div class="why">Чтобы аргументировать решения цифрами, а не «мне кажется». Тренируюсь на данных собственных сервисов.</div>
+        <div class="bar-row"><div class="bar-head"><b>Excel / Google Sheets</b><span>70%</span></div><div class="bar b3"><i data-w="70"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>SQL · select / join / group</b><span>40%</span></div><div class="bar"><i data-w="40"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>BI-дашборды</b><span>25%</span></div><div class="bar b4"><i data-w="25"></i></div></div>
+        <div class="road-note">// ближайший шаг: дашборд по воронке и оттоку на реальных выгрузках</div>
+      </div>
+      <div class="road-card reveal" style="--d:.16s">
+        <h3>Инженерия и автоматизация <span class="st now">сильная сторона</span></h3>
+        <div class="why">То, что уже приносило деньги и экономило часы. Здесь я не учусь — здесь я делаю.</div>
+        <div class="bar-row"><div class="bar-head"><b>Python · боты, скрипты</b><span>80%</span></div><div class="bar b3"><i data-w="80"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>JS / Canvas / Web Audio</b><span>70%</span></div><div class="bar"><i data-w="70"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>Linux / VPS / сети</b><span>65%</span></div><div class="bar b2"><i data-w="65"></i></div></div>
+        <div class="road-note">// доказательство: этот сайт и бот-генератор договоров</div>
+      </div>
+      <div class="road-card reveal" style="--d:.24s">
+        <h3>AI-инструменты <span class="st next">следующий уровень</span></h3>
+        <div class="why">Пользуюсь каждый день, теперь разбираю внутренности: агенты, ограничения, безопасные сценарии.</div>
+        <div class="bar-row"><div class="bar-head"><b>LLM в рабочих задачах</b><span>80%</span></div><div class="bar b4"><i data-w="80"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>промпт-инжиниринг</b><span>65%</span></div><div class="bar b4"><i data-w="65"></i></div></div>
+        <div class="bar-row"><div class="bar-head"><b>агенты / RAG</b><span>20%</span></div><div class="bar b2"><i data-w="20"></i></div></div>
+        <div class="road-note">// ближайший шаг: описать сценарий агента с границами и передачей человеку</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MUSIC ================= -->
+  <section id="music" data-acc="#a78bfa">
+    <div class="sec-tag reveal">// 09. радио «Нева FM»</div>
+    <h2 class="reveal">Пост-панк, который я написал кодом</h2>
+    <p class="sec-sub reveal">Никаких чужих записей: браузер синтезирует <b style="color:var(--text)">оригинальные петли в духе Цоя, Вещих Ослов и Совы</b> — моторик-бас, драм-машина, гитара с дилеем, пэды как фонари в тумане. Выбирай кассету и крути ручки как хочешь — всё меняется вживую.</p>
+    <div class="fm-hint reveal" id="fmHint">🔊 браузер включит звук после первого клика по странице — такое правило, не я придумал</div>
+
+    <div class="fm-grid">
+      <div class="deck reveal" id="deck">
+        <div class="deck-top">
+          <span class="deck-brand">NEVA FM · MK-2026</span>
+          <span class="deck-state" id="deckState">■ стоп</span>
+        </div>
+        <div class="cassette">
+          <div class="cassette-label" id="cassetteLabel">Цой · пульс перемен<small>120 BPM · Am · моторик-бит</small></div>
+          <div class="reels">
+            <svg class="reel" viewBox="0 0 64 64" aria-hidden="true">
+              <circle class="rim" cx="32" cy="32" r="28"/>
+              <circle class="hub" cx="32" cy="32" r="10"/>
+              <g><rect class="tooth" x="29" y="6" width="6" height="10" rx="2"/><rect class="tooth" x="29" y="48" width="6" height="10" rx="2"/><rect class="tooth" x="6" y="29" width="10" height="6" rx="2"/><rect class="tooth" x="48" y="29" width="10" height="6" rx="2"/><rect class="tooth" x="13" y="13" width="8" height="6" rx="2" transform="rotate(45 17 16)"/><rect class="tooth" x="43" y="45" width="8" height="6" rx="2" transform="rotate(45 47 48)"/></g>
+            </svg>
+            <div class="tape-window" aria-hidden="true"></div>
+            <svg class="reel" viewBox="0 0 64 64" aria-hidden="true" style="animation-direction:reverse">
+              <circle class="rim" cx="32" cy="32" r="28"/>
+              <circle class="hub" cx="32" cy="32" r="10"/>
+              <g><rect class="tooth" x="29" y="6" width="6" height="10" rx="2"/><rect class="tooth" x="29" y="48" width="6" height="10" rx="2"/><rect class="tooth" x="6" y="29" width="10" height="6" rx="2"/><rect class="tooth" x="48" y="29" width="10" height="6" rx="2"/><rect class="tooth" x="13" y="13" width="8" height="6" rx="2" transform="rotate(45 17 16)"/><rect class="tooth" x="43" y="45" width="8" height="6" rx="2" transform="rotate(45 47 48)"/></g>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="vu-row">
+            <div class="vu"><i id="vuL"></i></div>
+            <div class="vu"><i id="vuR"></i></div>
+          </div>
+          <div class="vu-cap">L · выходной уровень · R</div>
+        </div>
+        <div class="transport">
+          <button class="play-btn" id="playBtn" aria-pressed="false" aria-label="Играть или остановить">
+            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+          </button>
+          <div class="transport-meta">
+            <b id="nowPlaying">Цой · пульс перемен</b><br>
+            <span class="live-bpm" id="liveBpm">120 BPM</span> · <span id="liveKey">Am</span> · <span id="liveStep">такт 1/4</span><br>
+            <span style="color:var(--muted)">пробел — play/stop</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rack reveal" style="--d:.1s">
+        <div class="rack-group">
+          <div class="rack-title">кассеты · оригинальные генеративные петли</div>
+          <div class="tracks" role="group" aria-label="Выбор кассеты">
+            <button class="track-card" data-track="0" aria-pressed="true">
+              <span class="t-name">Цой · пульс перемен</span>
+              <span class="t-meta">120 BPM · Am</span>
+              <span class="t-mood">ровный моторик-бит, минорный бас, гитара как фонарь во дворе</span>
+            </button>
+            <button class="track-card" data-track="1" aria-pressed="false">
+              <span class="t-name">Вещие Ослы · гаражный драйв</span>
+              <span class="t-meta">142 BPM · Em</span>
+              <span class="t-mood">злее и быстрее: шестнадцатые, перегруженный бас, короткие стабы</span>
+            </button>
+            <button class="track-card" data-track="2" aria-pressed="false">
+              <span class="t-name">Сова · неоновый сон</span>
+              <span class="t-meta">92 BPM · Dm</span>
+              <span class="t-mood">медленнее и шире: half-time, пэды, гитара в dotted-дилее</span>
+            </button>
+          </div>
+        </div>
+        <div class="rack-group">
+          <div class="rack-title">ручки · всё применяется вживую</div>
+          <div class="sliders">
+            <div class="slider-row sl-vol"><div class="slider-head"><span>громкость</span><output id="outVol">65</output></div><input type="range" id="slVol" min="0" max="100" value="65" aria-label="Громкость"></div>
+            <div class="slider-row sl-bpm"><div class="slider-head"><span>темп · BPM</span><output id="outBpm">120</output></div><input type="range" id="slBpm" min="70" max="160" value="120" aria-label="Темп"></div>
+            <div class="slider-row sl-tone"><div class="slider-head"><span>тон · срез фильтра</span><output id="outTone">70</output></div><input type="range" id="slTone" min="0" max="100" value="70" aria-label="Тон"></div>
+            <div class="slider-row sl-echo"><div class="slider-head"><span>эхо · дилей</span><output id="outEcho">35</output></div><input type="range" id="slEcho" min="0" max="100" value="35" aria-label="Эхо"></div>
+            <div class="slider-row sl-drive"><div class="slider-head"><span>драйв баса</span><output id="outDrive">25</output></div><input type="range" id="slDrive" min="0" max="100" value="25" aria-label="Драйв баса"></div>
+            <div class="slider-row" style="--sl-c:var(--cyan)"><div class="slider-head"><span>визуализация</span></div>
+              <select class="viz-select" id="vizMode" aria-label="Режим визуализации">
+                <option value="neva" selected>Нева · зеркальные бары</option>
+                <option value="bars">эквалайзер · бары</option>
+                <option value="wave">осциллограф · волна</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="rack-group">
+          <div class="rack-title">инструменты</div>
+          <div class="chip-toggles">
+            <button class="chip-toggle" id="tgDrums" aria-pressed="true">ударные</button>
+            <button class="chip-toggle" id="tgGuitar" aria-pressed="true">гитара</button>
+            <button class="chip-toggle" id="tgPad" aria-pressed="true">пэды</button>
+          </div>
+        </div>
+        <div class="rack-actions">
+          <button class="rack-btn" id="btnRandom">🎲 случайный вайб</button>
+          <button class="rack-btn ghost" id="btnReset">сброс к кассете</button>
+          <button class="rack-btn ghost" id="btnCopyPreset">скопировать пресет</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="viz-wrap reveal" style="--d:.18s">
+      <canvas id="viz" aria-label="Визуализация звука"></canvas>
+    </div>
+
+    <div class="keys-box reveal" style="--d:.24s">
+      <div class="keys-head">
+        <h3>Мини-клавиши · сыграй поверх петли</h3>
+        <span>// клавиатура A S D F G H J K или мышью</span>
+      </div>
+      <div class="keys" id="keys" role="group" aria-label="Мини-синтезатор"></div>
+      <div class="keys-foot">ноты ля-минорной пентатоники · тот же движок, что и в кассетах · звук идёт через дилей и реверб</div>
+    </div>
+
+    <div class="fm-foot reveal" style="--d:.3s">// движок: <b>Web Audio API</b> · секвенсор с look-ahead · синтез kick/snare/hat из шума и синусов · бас через waveshaper · гитара: детюн + хорус + дилей · пэды через сгенерированный реверб. <b>ноль сэмплов, ноль чужих записей</b> — только код и питерская тоска.</div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq" data-acc="#ff5c93">
+    <div class="sec-tag reveal">// 10. вопросы, которые мне задают</div>
+    <h2 class="reveal">Отвечаю заранее</h2>
+    <p class="sec-sub reveal">Чтобы не тратить время на созвоне: вот честные ответы на то, что обычно спрашивают про мой нестандартный бэкграунд.</p>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary><span class="q">01</span>Почему ушли из продаж, где уже были деньги?<span class="ind">+</span></summary>
+        <div class="faq-body">Потому что упёрся в потолок по сложности задач. В B2B я научился понимать клиента и доводить сделку до договора, но каждый следующий месяц был похож на предыдущий. Код дал возможность не продавать решение, а <b>строить его</b>. Ушёл осознанно, с планом и запасом, а не в никуда.</div>
+      </details>
+      <details class="faq-item reveal" style="--d:.06s">
+        <summary><span class="q">02</span>У вас нет коммерческого опыта аналитиком. Почему мы должны взять?<span class="ind">+</span></summary>
+        <div class="faq-body">Потому что я был по обе стороны ТЗ. Как менеджер я собирал требования с бизнеса и переводил их в параметры для юристов и специалистов. Как разработчик — сам проектировал сценарии, валидацию и обработку ошибок для заказного бота, которым пользуются. <b>Я не пересказываю учебник — я делал это руками и отвечал за результат.</b></div>
+      </details>
+      <details class="faq-item reveal" style="--d:.12s">
+        <summary><span class="q">03</span>Что с образованием?<span class="ind">+</span></summary>
+        <div class="faq-body">Среднее специальное. Программирование и аналитика — самообучение по документации и реальным задачам. Не приписываю себе диплом, которого нет. Компенсирую практикой: <code>4 160</code> клиентов сервиса, заказной бот в проде, этот сайт с синтезатором на Web Audio.</div>
+      </details>
+      <details class="faq-item reveal" style="--d:.18s">
+        <summary><span class="q">04</span>Насколько реально владеете SQL и BI?<span class="ind">+</span></summary>
+        <div class="faq-body">Честно: SQL — базовый уровень, <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code>, агрегации; тренируюсь на тренажёрах и данных своих сервисов. BI — начинающий, собираю первый дашборд. В разделе «сейчас в работе» стоят реальные проценты, а не «expert». <b>Учусь быстро и сразу применяю</b> — так же было с OpenVPN и Bot API.</div>
+      </details>
+      <details class="faq-item reveal" style="--d:.24s">
+        <summary><span class="q">05</span>Как используете ИИ и не полагаетесь ли на него слишком?<span class="ind">+</span></summary>
+        <div class="faq-body">Ежедневно: код, черновики документов, структурирование требований, промпты. Но результат всегда проверяю — прогоном, сверкой с источником, валидацией входных данных. Понимаю природу галлюцинаций: модель уверенно врёт там, где нет контекста. Поэтому в сценариях, которые я проектирую, всегда есть <b>границы, проверка и путь «не уверен → передай человеку»</b>.</div>
+      </details>
+      <details class="faq-item reveal" style="--d:.3s">
+        <summary><span class="q">06</span>Формат работы и планы?<span class="ind">+</span></summary>
+        <div class="faq-body">Удалёнка, полная занятость. Сейчас в Самаре, в планах переезд в Санкт-Петербург — на формат работы это не влияет, интернет и дисциплина уже проверены годами автономных проектов. Готов к ТК, ИП или самозанятости. <b>Часовой пояс МСК, на связи в рабочие часы, отвечаю быстро.</b></div>
+      </details>
+      <details class="faq-item reveal" style="--d:.36s">
+        <summary><span class="q">07</span>А этот сайт вы правда сами написали?<span class="ind">+</span></summary>
+        <div class="faq-body">Да, вручную: HTML, CSS, чистый JS без единой библиотеки. Дождь и банановый режим — Canvas 2D, музыка — Web Audio API с собственным секвенсором, стикеры — Pointer Events. Исходник открыт на GitHub, там же мемы в комментариях. <b>Могу показать и объяснить любую строчку на созвоне.</b></div>
+      </details>
     </div>
   </section>
 
   <!-- ================= CONTACTS ================= -->
   <section id="contacts" data-acc="#4da3ff">
-    <div class="sec-tag reveal">// 06. контакты</div>
+    <div class="sec-tag reveal">// 11. контакты</div>
     <h2 class="reveal">Свяжитесь со мной</h2>
     <p class="sec-sub reveal">Отвечаю быстро — продажи приучили. Telegram предпочтительнее.</p>
     <div class="contact-grid">
@@ -752,6 +1458,11 @@ footer .f-line span{color:var(--amber)}
         <a class="c-value" href="mailto:nikto4451@gmail.com">nikto4451@gmail.com</a>
         <div class="c-actions"><button class="copy-btn" data-copy="nikto4451@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>копировать</button><a class="open-link" href="mailto:nikto4451@gmail.com">написать →</a></div>
       </div>
+      <div class="contact-card reveal" style="--d:.24s">
+        <div class="c-top"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 6.7 8.7a3.6 3.6 0 0 1 .1-2.7s.8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1a3.6 3.6 0 0 1 .1 2.7 3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg><span class="c-label">github · исходник резюме</span></div>
+        <a class="c-value" href="https://github.com/nikto4451-commits" target="_blank" rel="noopener">nikto4451-commits</a>
+        <div class="c-actions"><a class="open-link" href="https://github.com/nikto4451-commits/resume" target="_blank" rel="noopener">репозиторий →</a></div>
+      </div>
     </div>
     <div class="contact-cta reveal">
       <a class="btn btn-primary" href="https://t.me/Xersgoryytt" target="_blank" rel="noopener">Обсудить задачу в Telegram</a>
@@ -760,43 +1471,122 @@ footer .f-line span{color:var(--amber)}
   </section>
 </div>
 
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mq3"></div>
+</div>
+
 <footer>
   <div class="quote">// Код — это продолжение переговоров: побеждает тот, кто понял задачу. //</div>
-  <div class="f-line">© 2026 Михаил · Самара <span>→</span> Санкт-Петербург · сделано вручную под пост-панк и дождь</div>
+  <div class="f-line">© 2026 Михаил · Самара <span>→</span> Санкт-Петербург · сделано вручную под пост-панк и дождь · <a href="https://github.com/nikto4451-commits/resume" target="_blank" rel="noopener">open source · MIT</a></div>
 </footer>
 
 <button class="to-top" aria-label="Наверх"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <div class="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span id="toast-text">Скопировано</span></div>
 
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   куда ты смотришь, шалунишка 👀
+   весь мир крутится вокруг банана 🍌
+   у айтишников нету личной жизни 💀 — зато их резюме поёт
+   ═══════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
 document.documentElement.classList.replace('no-js','js');
 var $=function(s){return document.querySelector(s)};
 var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var root=document.documentElement;
+var isTouch=window.matchMedia('(hover: none)').matches;
 
-/* ---------- ДОЖДЬ (один rAF-цикл, пауза при скрытии вкладки) ---------- */
+/* ---------- ТОСТ ---------- */
+var toastEl=$('.toast'),toastText=$('#toast-text'),toastTimer;
+function toast(msg){
+  toastText.textContent=msg;toastEl.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){toastEl.classList.remove('show')},2400);
+}
+function legacyCopy(t){
+  var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  var ok=false;try{ok=document.execCommand('copy')}catch(e){}
+  document.body.removeChild(ta);return ok;
+}
+function copyText(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){toast('Скопировано: '+t)}).catch(function(){toast(legacyCopy(t)?'Скопировано: '+t:'Не удалось скопировать');});
+  }else{toast(legacyCopy(t)?'Скопировано: '+t:'Не удалось скопировать');}
+}
+$$('.copy-btn').forEach(function(b){b.addEventListener('click',function(){copyText(b.getAttribute('data-copy'))});});
+
+/* ---------- БЕГУЩИЕ СТРОКИ ---------- */
+var MQ=[
+  ['город спит, а деплой идёт','<b>перемен требует наш бэклог</b>','дождь в питере — не погода, а состояние'],
+  ['<i>требование без критерия приёмки — это пожелание</i>','у айтишников нету личной жизни 💀','<u>бас ровный, как SLA</u>'],
+  ['весь мир крутится вокруг банана 🍌','<b>сначала боль, потом фича</b>','код — это продолжение переговоров'],
+  ['<i>ноль зависимостей, ноль чужих записей</i>','самара → санкт-петербург','<u>сделано руками под пост-панк</u>']
+];
+function fillMq(el,rows){
+  var html='';
+  for(var r=0;r<2;r++){
+    rows.forEach(function(line){
+      html+='<span class="mq-item"><span class="mq-dot"></span>'+line+'</span>';
+    });
+  }
+  el.innerHTML=html;
+}
+fillMq($('#mq1'),MQ[0].concat(MQ[1]));
+fillMq($('#mq2'),MQ[2].concat(MQ[3]));
+fillMq($('#mq3'),MQ[1].concat(MQ[0]));
+
+/* ---------- АТМОСФЕРА ---------- */
+var ATMO_DEF={rain:55,fall:50,grain:30,scan:28,vinyl:35,glow:70,fog:80,grid:50};
+var atmo={rain:55,fall:50,grain:30,scan:28,vinyl:35,glow:70,fog:80,grid:50};
+var atmoFlags={grid:true,vinyl:true,tilt:!isTouch};
+function applyAtmo(){
+  root.style.setProperty('--a-grain',(atmo.grain/100*.18).toFixed(4));
+  root.style.setProperty('--a-scan',(atmo.scan/100*.18).toFixed(4));
+  root.style.setProperty('--a-fog',(atmo.fog/100*1.25).toFixed(3));
+  root.style.setProperty('--a-glow',(atmo.glow/100*1.4).toFixed(3));
+  root.style.setProperty('--a-vinyl',(atmo.vinyl/100*.14).toFixed(4));
+  root.style.setProperty('--a-vinyl-dur',(120-atmo.vinyl*.9).toFixed(1)+'s');
+  root.style.setProperty('--a-grid',(atmo.grid/100).toFixed(3));
+  document.body.classList.toggle('no-grid',!atmoFlags.grid);
+  document.body.classList.toggle('no-vinyl',!atmoFlags.vinyl);
+}
+
+/* ---------- ДОЖДЬ + БАНАНОВЫЙ РЕЖИМ ---------- */
 var canvas=$('#rain'),ctx=canvas.getContext('2d');
-var rainOn=!reduced,rafId=null,drops=[],W=0,H=0;
+var rainOn=!reduced,rafId=null,drops=[],W=0,H=0,bananaUntil=0;
 function newDrop(fresh){
   return {x:Math.random()*W,y:fresh?Math.random()*H:-24,l:10+Math.random()*16,s:7+Math.random()*9,o:.05+Math.random()*.12,amber:Math.random()<.07};
 }
+function dropCount(){return Math.round(Math.min(230,Math.floor(W/9))*(atmo.rain/55));}
 function sizeRain(){
   var dpr=Math.min(2,window.devicePixelRatio||1);
   W=window.innerWidth;H=window.innerHeight;
   canvas.width=W*dpr;canvas.height=H*dpr;
   ctx.setTransform(dpr,0,0,dpr,0,0);
-  var n=Math.min(160,Math.floor(W/9));
+  var n=dropCount();
   drops=[];for(var i=0;i<n;i++)drops.push(newDrop(true));
 }
+function syncDropCount(){
+  var n=dropCount();
+  while(drops.length<n)drops.push(newDrop(true));
+  if(drops.length>n)drops.length=n;
+}
 function rainTick(){
-  ctx.clearRect(0,0,W,H);ctx.lineWidth=1;
+  ctx.clearRect(0,0,W,H);
+  var banana=performance.now()<bananaUntil;
+  var speedK=atmo.fall/50;
+  if(banana){ctx.font='16px serif';ctx.textAlign='center';}
+  else ctx.lineWidth=1;
   for(var i=0;i<drops.length;i++){
     var d=drops[i];
-    ctx.strokeStyle=d.amber?'rgba(255,180,84,'+(d.o*.9)+')':'rgba(150,180,220,'+d.o+')';
-    ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-1.6,d.y+d.l);ctx.stroke();
-    d.y+=d.s;d.x-=.5;
+    if(banana){ctx.globalAlpha=Math.min(1,d.o*6);ctx.fillText('🍌',d.x,d.y);ctx.globalAlpha=1;}
+    else{
+      ctx.strokeStyle=d.amber?'rgba(255,180,84,'+(d.o*.9)+')':'rgba(150,180,220,'+d.o+')';
+      ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-1.6,d.y+d.l);ctx.stroke();
+    }
+    d.y+=d.s*speedK;d.x-=.5*speedK;
     if(d.y>H+24){drops[i]=newDrop(false);}
   }
   rafId=requestAnimationFrame(rainTick);
@@ -807,12 +1597,23 @@ var rainBtn=$('.rain-toggle');
 function syncRainBtn(){rainBtn.setAttribute('aria-pressed',rainOn?'true':'false');rainBtn.title=rainOn?'Дождь: выключить':'Дождь: включить';}
 sizeRain();syncRainBtn();if(rainOn)rainStart();
 rainBtn.addEventListener('click',function(){rainOn=!rainOn;syncRainBtn();rainOn?rainStart():rainStop();});
-var resizeT;window.addEventListener('resize',function(){clearTimeout(resizeT);resizeT=setTimeout(sizeRain,150);});
 document.addEventListener('visibilitychange',function(){if(document.hidden)rainStop();else if(rainOn)rainStart();});
+
+/* пасхалка: 5 кликов по логотипу → банановый дождь */
+var logoClicks=0;
+$('#logo').addEventListener('click',function(){
+  logoClicks++;
+  if(logoClicks>=5){logoClicks=0;triggerBanana();}
+});
+function triggerBanana(){
+  bananaUntil=performance.now()+9000;
+  if(!rainOn){rainOn=true;syncRainBtn();rainStart();}
+  toast('🍌 весь мир крутится вокруг банана');
+}
 
 /* ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ---------- */
 var typedEl=$('#typed');
-var phrases=['автоматизирую рутину','проектирую диалоговые сценарии','перевожу «хочу» в требования и ТЗ','генерирую договоры в PDF','пишу Telegram-ботов','поднял OpenVPN на 4\u00A0160 клиентов','понимаю клиента и код'];
+var phrases=['автоматизирую рутину','проектирую диалоговые сценарии','перевожу «хочу» в требования и ТЗ','генерирую договоры в PDF','пишу Telegram-ботов','поднял OpenVPN на 4\u00A0160 клиентов','синтезирую пост-панк в браузере','понимаю клиента и код'];
 if(reduced){typedEl.textContent=phrases[0];}
 else{
   var pi=0,ci=0,del=false;
@@ -830,7 +1631,7 @@ else{
 var revealEls=$$('.reveal');
 if(reduced||!('IntersectionObserver' in window)){revealEls.forEach(function(el){el.classList.add('visible')});}
 else{
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.12});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.1});
   revealEls.forEach(function(el){io.observe(el)});
 }
 
@@ -852,7 +1653,17 @@ else{
   nums.forEach(function(el){io2.observe(el)});
 }
 
-/* ---------- SCROLLSPY + ЦВЕТ СЕКЦИИ ---------- */
+/* ---------- ПРОГРЕСС-БАРЫ ---------- */
+var bars=$$('.bar i');
+if(reduced||!('IntersectionObserver' in window)){bars.forEach(function(b){b.style.width=b.getAttribute('data-w')+'%'});}
+else{
+  var io3=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){var b=e.target;setTimeout(function(){b.style.width=b.getAttribute('data-w')+'%'},120);io3.unobserve(b);}
+  });},{threshold:.5});
+  bars.forEach(function(b){io3.observe(b)});
+}
+
+/* ---------- SCROLLSPY ---------- */
 var spyLinks=$$('.nav-links a');
 var spyMap={};spyLinks.forEach(function(a){spyMap[a.getAttribute('href').slice(1)]=a});
 if('IntersectionObserver' in window){
@@ -862,14 +1673,14 @@ if('IntersectionObserver' in window){
         spyLinks.forEach(function(a){a.classList.remove('active')});
         var link=spyMap[e.target.id];if(link)link.classList.add('active');
         var acc=e.target.getAttribute('data-acc');
-        if(acc)document.documentElement.style.setProperty('--nav-acc',acc);
+        if(acc)root.style.setProperty('--nav-acc',acc);
       }
     });
   },{rootMargin:'-40% 0px -55% 0px',threshold:0});
   $$('[data-acc]').forEach(function(s){spy.observe(s)});
 }
 
-/* ---------- ПРОГРЕСС / ПАРАЛЛАКС / ЛИНИЯ ТАЙМЛАЙНА ---------- */
+/* ---------- ПРОГРЕСС / ПАРАЛЛАКС / ТАЙМЛАЙН ---------- */
 var progress=$('.progress'),toTop=$('.to-top'),skyline=$('.skyline-wrap'),aurora=$('.aurora'),tl=$('.timeline');
 var ticking=false;
 function onScroll(){
@@ -892,33 +1703,20 @@ window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAni
 onScroll();
 toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:reduced?'auto':'smooth'});});
 
-/* ---------- СВЕЧЕНИЕ КАРТОЧЕК ЗА КУРСОРОМ ---------- */
+/* ---------- СВЕЧЕНИЕ + НАКЛОН КАРТОЧЕК ---------- */
 $$('.glow-track').forEach(function(c){
   c.addEventListener('pointermove',function(e){
     var r=c.getBoundingClientRect();
     c.style.setProperty('--mx',(e.clientX-r.left)+'px');
     c.style.setProperty('--my',(e.clientY-r.top)+'px');
+    if(c.classList.contains('tilt')&&atmoFlags.tilt&&!reduced&&e.pointerType==='mouse'){
+      var rx=((e.clientY-r.top)/r.height-.5)*-4.5;
+      var ry=((e.clientX-r.left)/r.width-.5)*4.5;
+      c.style.transform='perspective(900px) rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg) translateY(-4px)';
+    }
   });
-});
-
-/* ---------- КОПИРОВАНИЕ + ТОСТ ---------- */
-var toastEl=$('.toast'),toastText=$('#toast-text'),toastTimer;
-function toast(msg){
-  toastText.textContent=msg;toastEl.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(function(){toastEl.classList.remove('show')},2200);
-}
-function legacyCopy(t){
-  var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
-  document.body.appendChild(ta);ta.select();
-  var ok=false;try{ok=document.execCommand('copy')}catch(e){}
-  document.body.removeChild(ta);return ok;
-}
-$$('.copy-btn').forEach(function(b){
-  b.addEventListener('click',function(){
-    var t=b.getAttribute('data-copy');
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t).then(function(){toast('Скопировано: '+t)}).catch(function(){toast(legacyCopy(t)?'Скопировано: '+t:'Не удалось скопировать');});
-    }else{toast(legacyCopy(t)?'Скопировано: '+t:'Не удалось скопировать');}
+  c.addEventListener('pointerleave',function(){
+    if(c.classList.contains('tilt'))c.style.transform='';
   });
 });
 
@@ -933,13 +1731,898 @@ burger.addEventListener('click',function(){
 $$('.menu-overlay a').forEach(function(a){a.addEventListener('click',closeMenu)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
 
-/* ---------- ПЕЧАТЬ / PDF ---------- */
-var cases=$$('details.case');
-function beforePrint(){cases.forEach(function(d){d.setAttribute('data-was',d.open?'1':'0');d.open=true;});}
-function afterPrint(){cases.forEach(function(d){d.open=d.getAttribute('data-was')==='1';});}
+/* ---------- ПЕЧАТЬ ---------- */
+var cases=$$('details.case'),faqs=$$('details.faq-item');
+function beforePrint(){
+  cases.concat(faqs).forEach(function(d){d.setAttribute('data-was',d.open?'1':'0');d.open=true;});
+}
+function afterPrint(){
+  cases.concat(faqs).forEach(function(d){d.open=d.getAttribute('data-was')==='1';});
+}
 window.addEventListener('beforeprint',beforePrint);
 window.addEventListener('afterprint',afterPrint);
 $('.print-btn').addEventListener('click',function(){window.print();});
+
+/* ═══════════════════════════════════════════════════════════════
+   НЕВА FM · генеративный пост-панк на Web Audio API
+   у айтишников нету личной жизни — зато есть look-ahead секвенсор
+   ═══════════════════════════════════════════════════════════════ */
+var PRESETS=[
+  {name:'Цой · пульс перемен',sub:'моторик-бит',bpm:120,key:'Am',
+   roots:[33,29,36,31],chords:[[57,60,64],[53,57,60],[55,60,64],[55,59,62]],
+   kick:[0,8],snare:[4,12],hatEvery:2,openHat:14,hatGain:.2,
+   bassSteps:[0,2,4,6,8,10,12,14],bassOct:[0,0,12,0,0,12,0,10],bassDur:.95,bassGain:.5,
+   gtrSteps:[2,6,10,14],gtrArp:[0,7,12,7],gtrDur:.55,gtrGain:.22,
+   lead:[[0,76],[6,72],[18,74],[22,72],[32,69],[38,67],[52,64],[58,67]],leadGain:.15,
+   echoSteps:3,padGain:.16,tone:70,echo:35,drive:25},
+  {name:'Вещие Ослы · гаражный драйв',sub:'шестнадцатые и перегруз',bpm:142,key:'Em',
+   roots:[40,36,43,38],chords:[[52,55,59],[48,52,55],[55,59,62],[50,54,57]],
+   kick:[0,4,8,12],snare:[4,12],hatEvery:1,openHat:-1,hatGain:.11,
+   bassSteps:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],bassOct:[0,0,0,12,0,0,12,0,0,0,0,12,0,12,0,7],bassDur:.5,bassGain:.55,
+   gtrSteps:[0,3,6,10,12],gtrArp:[0,0,7,0,12],gtrDur:.22,gtrGain:.2,
+   lead:null,leadGain:0,
+   echoSteps:2,padGain:.08,tone:62,echo:28,drive:55},
+  {name:'Сова · неоновый сон',sub:'half-time и пэды',bpm:92,key:'Dm',
+   roots:[38,34,41,36],chords:[[50,53,57],[58,62,65],[53,57,60],[55,60,64]],
+   kick:[0,10],snare:[8],hatEvery:2,openHat:6,hatGain:.16,
+   bassSteps:[0,6,8,14],bassOct:[0,0,12,7],bassDur:2.2,bassGain:.42,
+   gtrSteps:[0,3,6,9,12],gtrArp:[12,7,0,7,12],gtrDur:1.4,gtrGain:.18,
+   lead:[[0,74],[10,72],[20,69],[26,65],[36,69],[44,72],[52,74],[58,77]],leadGain:.14,
+   echoSteps:3,padGain:.26,tone:55,echo:50,drive:12}
+];
+
+var Engine=(function(){
+  var AC=window.AudioContext||window.webkitAudioContext;
+  var ready=false,playing=false,muted=false,failed=!AC;
+  var actx,master,comp,toneFilter,musicBus,analyser;
+  var drumsGain,bassGain,bassShaper,guitarBus,guitarGain,padGain,leadGain;
+  var echoSend,echoDelay,echoFb,echoReturn,verbSend,convolver,verbReturn;
+  var chorusDelay,chorusLfo,chorusLfoGain,chorusMix;
+  var noiseBuf=null;
+  var presetIdx=0,pending=null,step=0,bar=0,nextTime=0,timer=null;
+  var bpm=120,vol=65,tone=70,echo=35,drive=25;
+  var inst={drums:true,guitar:true,pad:true};
+  var freqData=null,timeData=null;
+
+  function mtof(m){return 440*Math.pow(2,(m-69)/12);}
+  function driveCurve(k){
+    var n=1024,c=new Float32Array(n),amt=k*1.2;
+    for(var i=0;i<n;i++){var x=i*2/n-1;c[i]=(1+amt)*x/(1+amt*Math.abs(x));}
+    return c;
+  }
+  function makeNoise(){
+    var len=actx.sampleRate*1.2,b=actx.createBuffer(1,len,actx.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i<len;i++)d[i]=Math.random()*2-1;
+    return b;
+  }
+  function makeIR(){
+    var dur=1.9,len=Math.floor(actx.sampleRate*dur),b=actx.createBuffer(2,len,actx.sampleRate);
+    for(var ch=0;ch<2;ch++){var d=b.getChannelData(ch);
+      for(var i=0;i<len;i++){d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6);}}
+    return b;
+  }
+  function cleanup(nodes){
+    var last=nodes[nodes.length-1];
+    last.onended=function(){nodes.forEach(function(n){try{n.disconnect()}catch(e){}});};
+  }
+  function pan(node,v){
+    if(actx.createStereoPanner){var p=actx.createStereoPanner();p.pan.value=v;node.connect(p);return p;}
+    return node;
+  }
+
+  function init(){
+    if(ready||failed)return ready;
+    try{
+      actx=new AC();
+      master=actx.createGain();master.gain.value=Math.pow(vol/100,1.6)*.9;
+      comp=actx.createDynamicsCompressor();
+      comp.threshold.value=-20;comp.knee.value=18;comp.ratio.value=3.5;comp.attack.value=.004;comp.release.value=.18;
+      analyser=actx.createAnalyser();analyser.fftSize=512;analyser.smoothingTimeConstant=.82;
+      freqData=new Uint8Array(analyser.frequencyBinCount);
+      timeData=new Uint8Array(analyser.fftSize);
+      toneFilter=actx.createBiquadFilter();toneFilter.type='lowpass';toneFilter.Q.value=.4;
+      musicBus=actx.createGain();musicBus.gain.value=1;
+      musicBus.connect(toneFilter);toneFilter.connect(comp);comp.connect(master);master.connect(analyser);analyser.connect(actx.destination);
+      noiseBuf=makeNoise();
+      drumsGain=actx.createGain();drumsGain.gain.value=.9;drumsGain.connect(musicBus);
+      bassGain=actx.createGain();bassGain.gain.value=1;
+      bassShaper=actx.createWaveShaper();bassShaper.oversample='2x';
+      bassShaper.connect(bassGain);bassGain.connect(musicBus);
+      guitarBus=actx.createGain();guitarBus.gain.value=1;
+      guitarGain=actx.createGain();guitarGain.gain.value=1;
+      chorusDelay=actx.createDelay(.05);chorusDelay.delayTime.value=.018;
+      chorusLfo=actx.createOscillator();chorusLfo.frequency.value=.8;
+      chorusLfoGain=actx.createGain();chorusLfoGain.gain.value=.004;
+      chorusLfo.connect(chorusLfoGain);chorusLfoGain.connect(chorusDelay.delayTime);chorusLfo.start();
+      chorusMix=actx.createGain();chorusMix.gain.value=.55;
+      guitarBus.connect(guitarGain);
+      guitarBus.connect(chorusDelay);chorusDelay.connect(chorusMix);chorusMix.connect(guitarGain);
+      var gPan=pan(guitarGain,.22);gPan.connect(musicBus);
+      padGain=actx.createGain();padGain.gain.value=1;
+      var pPan=pan(padGain,-.18);pPan.connect(musicBus);
+      leadGain=actx.createGain();leadGain.gain.value=1;leadGain.connect(musicBus);
+      echoSend=actx.createGain();echoSend.gain.value=.35;
+      echoDelay=actx.createDelay(2);echoDelay.delayTime.value=.375;
+      echoFb=actx.createGain();echoFb.gain.value=.38;
+      var echoLp=actx.createBiquadFilter();echoLp.type='lowpass';echoLp.frequency.value=2600;
+      echoReturn=actx.createGain();echoReturn.gain.value=.8;
+      echoSend.connect(echoDelay);echoDelay.connect(echoLp);echoLp.connect(echoFb);echoFb.connect(echoDelay);
+      echoLp.connect(echoReturn);echoReturn.connect(musicBus);
+      guitarGain.connect(echoSend);leadGain.connect(echoSend);
+      convolver=actx.createConvolver();convolver.buffer=makeIR();
+      verbSend=actx.createGain();verbSend.gain.value=.5;
+      verbReturn=actx.createGain();verbReturn.gain.value=.65;
+      verbSend.connect(convolver);convolver.connect(verbReturn);verbReturn.connect(musicBus);
+      padGain.connect(verbSend);leadGain.connect(verbSend);
+      applyTone();applyDrive();applyEcho();applyPresetParams(PRESETS[presetIdx]);
+      ready=true;
+      return true;
+    }catch(e){failed=true;return false;}
+  }
+
+  function kick(t){
+    var o=actx.createOscillator(),g=actx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(155,t);o.frequency.exponentialRampToValueAtTime(44,t+.11);
+    g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.24);
+    o.connect(g);g.connect(drumsGain);o.start(t);o.stop(t+.26);cleanup([o,g]);
+  }
+  function snare(t){
+    var s=actx.createBufferSource();s.buffer=noiseBuf;
+    var bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1900;bp.Q.value=.9;
+    var g=actx.createGain();g.gain.setValueAtTime(.62,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);
+    s.connect(bp);bp.connect(g);g.connect(drumsGain);s.start(t);s.stop(t+.2);cleanup([s,bp,g]);
+    var o=actx.createOscillator(),og=actx.createGain();
+    o.type='triangle';o.frequency.setValueAtTime(196,t);
+    og.gain.setValueAtTime(.28,t);og.gain.exponentialRampToValueAtTime(.001,t+.07);
+    o.connect(og);og.connect(drumsGain);o.start(t);o.stop(t+.08);cleanup([o,og]);
+  }
+  function hat(t,open,gain){
+    var s=actx.createBufferSource();s.buffer=noiseBuf;
+    var hp=actx.createBiquadFilter();hp.type='highpass';hp.frequency.value=7400;
+    var g=actx.createGain();var dur=open?.3:.045;
+    g.gain.setValueAtTime(gain,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    s.connect(hp);hp.connect(g);var p=pan(g,.1);p.connect(drumsGain);
+    s.start(t);s.stop(t+dur+.02);cleanup([s,hp,g]);
+  }
+  function bass(t,midi,dur,gain){
+    var o=actx.createOscillator(),sub=actx.createOscillator();
+    var f=actx.createBiquadFilter(),g=actx.createGain(),sg=actx.createGain();
+    o.type='sawtooth';o.frequency.value=mtof(midi);
+    sub.type='square';sub.frequency.value=mtof(midi);sg.gain.value=.35;
+    f.type='lowpass';f.Q.value=4;
+    f.frequency.setValueAtTime(1300,t);f.frequency.exponentialRampToValueAtTime(320,t+Math.max(.08,dur*.8));
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(gain,t+.008);
+    g.gain.setValueAtTime(gain,t+Math.max(.01,dur-.05));g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(f);sub.connect(sg);sg.connect(f);f.connect(g);g.connect(bassShaper);
+    o.start(t);sub.start(t);o.stop(t+dur+.02);sub.stop(t+dur+.02);cleanup([o,sub,f,g,sg]);
+  }
+  function guitar(t,midi,dur,gain){
+    var g=actx.createGain(),f=actx.createBiquadFilter();
+    f.type='lowpass';f.frequency.value=2700;f.Q.value=.6;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(gain,t+.006);
+    g.gain.exponentialRampToValueAtTime(.001,t+Math.max(.12,dur));
+    var o1=actx.createOscillator(),o2=actx.createOscillator();
+    o1.type='sawtooth';o2.type='sawtooth';
+    o1.frequency.value=mtof(midi);o2.frequency.value=mtof(midi);
+    o1.detune.value=-6;o2.detune.value=6;
+    o1.connect(f);o2.connect(f);f.connect(g);g.connect(guitarBus);
+    o1.start(t);o2.start(t);o1.stop(t+dur+.05);o2.stop(t+dur+.05);cleanup([o1,o2,f,g]);
+  }
+  function pad(t,midis,dur,gain){
+    midis.forEach(function(m){
+      var o1=actx.createOscillator(),o2=actx.createOscillator();
+      var f=actx.createBiquadFilter(),g=actx.createGain();
+      o1.type='sawtooth';o2.type='sawtooth';
+      o1.frequency.value=mtof(m);o2.frequency.value=mtof(m);
+      o1.detune.value=-8;o2.detune.value=8;
+      f.type='lowpass';f.frequency.value=780;f.Q.value=.3;
+      g.gain.setValueAtTime(.0001,t);
+      g.gain.linearRampToValueAtTime(gain,t+.5);
+      g.gain.setValueAtTime(gain,t+Math.max(.6,dur-.7));
+      g.gain.linearRampToValueAtTime(.0001,t+dur);
+      o1.connect(f);o2.connect(f);f.connect(g);g.connect(padGain);
+      o1.start(t);o2.start(t);o1.stop(t+dur+.05);o2.stop(t+dur+.05);cleanup([o1,o2,f,g]);
+    });
+  }
+  function leadNote(t,midi,dur,gain){
+    var o=actx.createOscillator(),o2=actx.createOscillator();
+    var g=actx.createGain(),f=actx.createBiquadFilter();
+    o.type='triangle';o2.type='sawtooth';
+    o.frequency.value=mtof(midi);o2.frequency.value=mtof(midi);o2.detune.value=5;
+    var g2=actx.createGain();g2.gain.value=.3;
+    f.type='lowpass';f.frequency.value=3200;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(gain,t+.02);
+    g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(leadGain);
+    o.start(t);o2.start(t);o.stop(t+dur+.05);o2.stop(t+dur+.05);cleanup([o,o2,g,g2,f]);
+  }
+
+  function scheduleStep(p,s,t){
+    var spb=60/bpm,sixteenth=spb/4,chord=p.chords[bar],root=p.roots[bar];
+    if(inst.drums){
+      if(p.kick.indexOf(s)>=0)kick(t);
+      if(p.snare.indexOf(s)>=0)snare(t);
+      if(s%p.hatEvery===0)hat(t,s===p.openHat,p.hatGain);
+    }
+    var bi=p.bassSteps.indexOf(s);
+    if(bi>=0)bass(t,root+p.bassOct[bi],p.bassDur*sixteenth,p.bassGain);
+    if(inst.guitar){
+      var gi=p.gtrSteps.indexOf(s);
+      if(gi>=0)guitar(t,root+24+p.gtrArp[gi],p.gtrDur*sixteenth,p.gtrGain);
+    }
+    if(inst.pad&&s===0)pad(t,chord,spb*4*.98,p.padGain);
+    if(p.lead){
+      var total=bar*16+s;
+      for(var i=0;i<p.lead.length;i++){
+        if(p.lead[i][0]===total){leadNote(t,p.lead[i][1],spb*1.6,p.leadGain);break;}
+      }
+    }
+  }
+  function tick(){
+    if(!playing)return;
+    var ahead=document.hidden?1.6:.22;
+    while(nextTime<actx.currentTime+ahead){
+      if(step===0&&pending!==null){
+        presetIdx=pending;pending=null;
+        var p=PRESETS[presetIdx];
+        bpm=p.bpm;applyPresetParams(p);applyEchoDelay(p);
+        window.dispatchEvent(new CustomEvent('fm-preset',{detail:{idx:presetIdx}}));
+      }
+      scheduleStep(PRESETS[presetIdx],step,nextTime);
+      nextTime+=(60/bpm)/4;
+      step=(step+1)%16;if(step===0)bar=(bar+1)%4;
+      if(step%4===0)window.dispatchEvent(new CustomEvent('fm-step',{detail:{bar:bar}}));
+    }
+  }
+  function applyPresetParams(p){
+    tone=p.tone;echo=p.echo;drive=p.drive;
+    applyTone();applyEcho();applyDrive();
+    if(actx)applyEchoDelay(p);
+  }
+  function applyEchoDelay(p){
+    if(!actx)return;
+    echoDelay.delayTime.setTargetAtTime((60/bpm)/4*p.echoSteps,actx.currentTime,.05);
+  }
+  function applyTone(){if(actx)toneFilter.frequency.setTargetAtTime(300*Math.pow(40,tone/100),actx.currentTime,.03);}
+  function applyEcho(){if(actx)echoSend.gain.setTargetAtTime(echo/100*.9,actx.currentTime,.03);}
+  function applyDrive(){
+    if(!actx)return;
+    bassShaper.curve=driveCurve(drive);
+    bassGain.gain.setTargetAtTime(1/(1+drive/100*1.4),actx.currentTime,.03);
+  }
+  function applyVol(){if(actx&&!muted)master.gain.setTargetAtTime(Math.pow(vol/100,1.6)*.9,actx.currentTime,.03);}
+
+  return {
+    init:init,
+    isReady:function(){return ready},
+    isFailed:function(){return failed},
+    isPlaying:function(){return playing},
+    isMuted:function(){return muted},
+    getPresetIdx:function(){return presetIdx},
+    getState:function(){return{bpm:bpm,vol:vol,tone:tone,echo:echo,drive:drive,inst:{drums:inst.drums,guitar:inst.guitar,pad:inst.pad}}},
+    play:function(){
+      if(!init())return false;
+      if(actx.state==='suspended')actx.resume();
+      if(playing)return true;
+      playing=true;step=0;bar=0;nextTime=actx.currentTime+.08;
+      musicBus.gain.setTargetAtTime(1,actx.currentTime,.03);
+      applyEchoDelay(PRESETS[presetIdx]);
+      timer=setInterval(tick,60);tick();
+      return true;
+    },
+    stop:function(){
+      if(!playing)return;
+      playing=false;
+      if(timer){clearInterval(timer);timer=null;}
+      if(actx)musicBus.gain.setTargetAtTime(0,actx.currentTime,.04);
+    },
+    setMuted:function(m){
+      muted=m;
+      if(actx)master.gain.setTargetAtTime(m?0:Math.pow(vol/100,1.6)*.9,actx.currentTime,.04);
+    },
+    selectTrack:function(i){
+      if(i===presetIdx&&pending===null)return;
+      if(playing){pending=i;}
+      else{
+        presetIdx=i;var p=PRESETS[i];bpm=p.bpm;
+        if(actx){applyPresetParams(p);}else{tone=p.tone;echo=p.echo;drive=p.drive;}
+        window.dispatchEvent(new CustomEvent('fm-preset',{detail:{idx:i}}));
+      }
+    },
+    setBpm:function(v){bpm=v;if(actx)applyEchoDelay(PRESETS[presetIdx]);},
+    setVol:function(v){vol=v;applyVol();},
+    setTone:function(v){tone=v;applyTone();},
+    setEcho:function(v){echo=v;applyEcho();},
+    setDrive:function(v){drive=v;applyDrive();},
+    setInst:function(k,v){inst[k]=v;},
+    applyFullPreset:function(i){
+      presetIdx=i;pending=null;var p=PRESETS[i];bpm=p.bpm;
+      if(actx)applyPresetParams(p);else{tone=p.tone;echo=p.echo;drive=p.drive;}
+      window.dispatchEvent(new CustomEvent('fm-preset',{detail:{idx:i}}));
+    },
+    note:function(midi){
+      if(!init())return false;
+      if(actx.state==='suspended')actx.resume();
+      if(muted)return false;
+      musicBus.gain.setTargetAtTime(1,actx.currentTime,.02);
+      leadNote(actx.currentTime+.01,midi,1.1,.2);
+      return true;
+    },
+    getFreq:function(){if(!analyser)return null;analyser.getByteFrequencyData(freqData);return freqData;},
+    getTime:function(){if(!analyser)return null;analyser.getByteTimeDomainData(timeData);return timeData;}
+  };
+})();
+
+/* ---------- UI ПЛЕЕРА ---------- */
+var deck=$('#deck'),playBtn=$('#playBtn'),deckState=$('#deckState'),soundToggle=$('#soundToggle'),fmHint=$('#fmHint');
+var nowPlaying=$('#nowPlaying'),liveBpm=$('#liveBpm'),liveKey=$('#liveKey'),liveStep=$('#liveStep'),cassetteLabel=$('#cassetteLabel');
+var slVol=$('#slVol'),slBpm=$('#slBpm'),slTone=$('#slTone'),slEcho=$('#slEcho'),slDrive=$('#slDrive');
+var outVol=$('#outVol'),outBpm=$('#outBpm'),outTone=$('#outTone'),outEcho=$('#outEcho'),outDrive=$('#outDrive');
+var trackBtns=$$('.track-card');
+var tgDrums=$('#tgDrums'),tgGuitar=$('#tgGuitar'),tgPad=$('#tgPad');
+var vizMode=$('#vizMode');
+var vuL=$('#vuL'),vuR=$('#vuR');
+
+function sliderFill(el){
+  var min=+el.min||0,max=+el.max||100,v=+el.value;
+  el.style.setProperty('--sl-f',((v-min)/(max-min)*100)+'%');
+}
+[slVol,slBpm,slTone,slEcho,slDrive].forEach(sliderFill);
+
+function syncTransport(){
+  var on=Engine.isPlaying();
+  playBtn.setAttribute('aria-pressed',on?'true':'false');
+  deck.classList.toggle('playing',on&&!Engine.isMuted());
+  deckState.textContent=on?(Engine.isMuted()?'▶ играет · звук выкл':'● играет'):'■ стоп';
+  var audible=on&&!Engine.isMuted();
+  soundToggle.setAttribute('aria-pressed',audible?'true':'false');
+  soundToggle.title=audible?'Звук: выключить':'Звук: включить';
+  if(on)fmHint.classList.add('hidden');
+}
+function syncPresetUI(idx){
+  var p=PRESETS[idx],st=Engine.getState();
+  trackBtns.forEach(function(b){b.setAttribute('aria-pressed',+b.getAttribute('data-track')===idx?'true':'false');});
+  nowPlaying.textContent=p.name;
+  liveKey.textContent=p.key;
+  cassetteLabel.innerHTML=p.name+'<small>'+p.bpm+' BPM · '+p.key+' · '+p.sub+'</small>';
+  slBpm.value=st.bpm;outBpm.textContent=st.bpm;
+  slTone.value=st.tone;outTone.textContent=st.tone;
+  slEcho.value=st.echo;outEcho.textContent=st.echo;
+  slDrive.value=st.drive;outDrive.textContent=st.drive;
+  [slBpm,slTone,slEcho,slDrive].forEach(sliderFill);
+  liveBpm.textContent=st.bpm+' BPM';
+  root.style.setProperty('--rev',(60/st.bpm*8).toFixed(2)+'s');
+}
+window.addEventListener('fm-preset',function(e){syncPresetUI(e.detail.idx);});
+window.addEventListener('fm-step',function(e){liveStep.textContent='такт '+(e.detail.bar+1)+'/4';});
+
+function startPlayback(){
+  if(Engine.isFailed()){toast('Этот браузер без Web Audio — дождь всё равно идёт ☔');return;}
+  Engine.play();Engine.setMuted(false);syncTransport();
+}
+playBtn.addEventListener('click',function(){
+  if(Engine.isPlaying()){Engine.stop();}else{startPlayback();}
+  syncTransport();
+});
+soundToggle.addEventListener('click',function(){
+  userSoundDecision=true;
+  if(!Engine.isPlaying()||Engine.isMuted()){startPlayback();}
+  else{Engine.setMuted(true);}
+  syncTransport();
+});
+trackBtns.forEach(function(b){
+  b.addEventListener('click',function(){
+    var i=+b.getAttribute('data-track');
+    Engine.selectTrack(i);
+    if(!Engine.isPlaying())syncPresetUI(Engine.getPresetIdx());
+    toast('🎧 кассета: '+PRESETS[i].name);
+  });
+});
+slVol.addEventListener('input',function(){outVol.textContent=slVol.value;Engine.setVol(+slVol.value);sliderFill(slVol);});
+slBpm.addEventListener('input',function(){
+  outBpm.textContent=slBpm.value;liveBpm.textContent=slBpm.value+' BPM';
+  Engine.setBpm(+slBpm.value);sliderFill(slBpm);
+  root.style.setProperty('--rev',(60/+slBpm.value*8).toFixed(2)+'s');
+});
+slTone.addEventListener('input',function(){outTone.textContent=slTone.value;Engine.setTone(+slTone.value);sliderFill(slTone);});
+slEcho.addEventListener('input',function(){outEcho.textContent=slEcho.value;Engine.setEcho(+slEcho.value);sliderFill(slEcho);});
+slDrive.addEventListener('input',function(){outDrive.textContent=slDrive.value;Engine.setDrive(+slDrive.value);sliderFill(slDrive);});
+function bindToggle(btn,key){
+  btn.addEventListener('click',function(){
+    var on=btn.getAttribute('aria-pressed')!=='true';
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    Engine.setInst(key,on);
+  });
+}
+bindToggle(tgDrums,'drums');bindToggle(tgGuitar,'guitar');bindToggle(tgPad,'pad');
+
+$('#btnRandom').addEventListener('click',function(){
+  var i=Math.floor(Math.random()*PRESETS.length);
+  Engine.applyFullPreset(i);
+  var p=PRESETS[i];
+  var bpmR=Math.max(70,Math.min(160,p.bpm+Math.round((Math.random()-.5)*24)));
+  var toneR=35+Math.round(Math.random()*50),echoR=15+Math.round(Math.random()*55),driveR=10+Math.round(Math.random()*50);
+  Engine.setBpm(bpmR);Engine.setTone(toneR);Engine.setEcho(echoR);Engine.setDrive(driveR);
+  slBpm.value=bpmR;outBpm.textContent=bpmR;liveBpm.textContent=bpmR+' BPM';
+  slTone.value=toneR;outTone.textContent=toneR;
+  slEcho.value=echoR;outEcho.textContent=echoR;
+  slDrive.value=driveR;outDrive.textContent=driveR;
+  [slBpm,slTone,slEcho,slDrive].forEach(sliderFill);
+  root.style.setProperty('--rev',(60/bpmR*8).toFixed(2)+'s');
+  var modes=['neva','bars','wave'];vizMode.value=modes[Math.floor(Math.random()*3)];
+  toast('🎲 случайный вайб: '+p.name+' · '+bpmR+' BPM');
+});
+$('#btnReset').addEventListener('click',function(){
+  Engine.applyFullPreset(Engine.getPresetIdx());
+  Engine.setInst('drums',true);Engine.setInst('guitar',true);Engine.setInst('pad',true);
+  [tgDrums,tgGuitar,tgPad].forEach(function(b){b.setAttribute('aria-pressed','true')});
+  vizMode.value='neva';
+  toast('сброшено к настройкам кассеты');
+});
+$('#btnCopyPreset').addEventListener('click',function(){
+  var st=Engine.getState();
+  copyText(JSON.stringify({track:PRESETS[Engine.getPresetIdx()].name,bpm:st.bpm,volume:st.vol,tone:st.tone,echo:st.echo,drive:st.drive,instruments:st.inst,visualizer:vizMode.value}));
+});
+document.addEventListener('keydown',function(e){
+  if(e.code!=='Space')return;
+  var t=e.target;
+  if(t&&(t.tagName==='INPUT'||t.tagName==='SELECT'||t.tagName==='TEXTAREA'||t.tagName==='BUTTON'||t.isContentEditable||t.classList.contains('sticker')))return;
+  e.preventDefault();
+  if(Engine.isPlaying()){Engine.stop();}else{startPlayback();}
+  syncTransport();
+});
+
+/* первый жест → включаем музыку */
+var userSoundDecision=false;
+function firstGesture(){
+  window.removeEventListener('pointerdown',firstGesture);
+  window.removeEventListener('keydown',firstGesture);
+  if(userSoundDecision)return;
+  if(Engine.isFailed())return;
+  Engine.play();syncTransport();
+}
+window.addEventListener('pointerdown',firstGesture);
+window.addEventListener('keydown',firstGesture);
+
+/* ---------- МИНИ-КЛАВИШИ ---------- */
+var KEY_NOTES=[
+  {m:69,n:'A4',k:'A',c:'#4da3ff'},{m:72,n:'C5',k:'S',c:'#67e8f9'},
+  {m:74,n:'D5',k:'D',c:'#69f0a0'},{m:76,n:'E5',k:'F',c:'#ffb454'},
+  {m:79,n:'G5',k:'G',c:'#ff5c93'},{m:81,n:'A5',k:'H',c:'#a78bfa'},
+  {m:84,n:'C6',k:'J',c:'#67e8f9'},{m:88,n:'E6',k:'K',c:'#69f0a0'}
+];
+var keysWrap=$('#keys');
+KEY_NOTES.forEach(function(o,i){
+  var b=document.createElement('button');
+  b.className='key';b.type='button';b.style.setProperty('--k-c',o.c);
+  b.setAttribute('data-i',i);
+  b.setAttribute('aria-label','Нота '+o.n+', клавиша '+o.k);
+  b.innerHTML='<b>'+o.n+'</b><span>'+o.k+'</span>';
+  keysWrap.appendChild(b);
+});
+var keyEls=$$('.key');
+function hitKey(i){
+  var el=keyEls[i];if(!el)return;
+  userSoundDecision=true;
+  var ok=Engine.note(KEY_NOTES[i].m);
+  if(!ok&&Engine.isFailed()){toast('Браузер без Web Audio 😔');return;}
+  if(Engine.isMuted()){Engine.setMuted(false);syncTransport();}
+  el.classList.add('on');
+  setTimeout(function(){el.classList.remove('on')},170);
+}
+keyEls.forEach(function(el){
+  el.addEventListener('pointerdown',function(e){e.preventDefault();hitKey(+el.getAttribute('data-i'));});
+});
+document.addEventListener('keydown',function(e){
+  if(e.repeat)return;
+  var t=e.target;
+  if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+  var k=e.key.toUpperCase();
+  for(var i=0;i<KEY_NOTES.length;i++){
+    if(KEY_NOTES[i].k===k){hitKey(i);return;}
+  }
+});
+
+/* ---------- ВИЗУАЛИЗАЦИЯ ---------- */
+var viz=$('#viz'),vctx=viz.getContext('2d'),vW=0,vH=0,peaks=[];
+var VIZ_COLORS=['#4da3ff','#67e8f9','#69f0a0','#ffb454','#ff5c93','#a78bfa'];
+function sizeViz(){
+  var dpr=Math.min(2,window.devicePixelRatio||1);
+  vW=viz.clientWidth;vH=viz.clientHeight;
+  viz.width=Math.max(1,vW*dpr);viz.height=Math.max(1,vH*dpr);
+  vctx.setTransform(dpr,0,0,dpr,0,0);
+  peaks=new Array(64).fill(0);
+}
+function drawViz(ts){
+  requestAnimationFrame(drawViz);
+  if(document.hidden||vW===0)return;
+  vctx.clearRect(0,0,vW,vH);
+  var audible=Engine.isPlaying()&&!Engine.isMuted();
+  var freq=audible?Engine.getFreq():null;
+  var time=audible?Engine.getTime():null;
+  var mode=vizMode.value;
+  var lPct=4,rPct=4;
+  if(freq){
+    var half=freq.length>>1,lSum=0,rSum=0;
+    for(var i=0;i<half;i++)lSum+=freq[i];
+    for(var j=half;j<freq.length;j++)rSum+=freq[j];
+    lPct=Math.min(100,lSum/half/255*140);rPct=Math.min(100,rSum/half/255*140);
+  }
+  vuL.style.height=lPct+'%';vuR.style.height=rPct+'%';
+
+  if(mode==='wave'){
+    vctx.lineWidth=2;vctx.shadowBlur=14;
+    for(var pass=0;pass<2;pass++){
+      vctx.strokeStyle=pass===0?'rgba(255,92,147,.45)':'#4da3ff';
+      vctx.shadowColor=pass===0?'#ff5c93':'#4da3ff';
+      vctx.beginPath();
+      var n=time?time.length:128;
+      for(var k=0;k<n;k++){
+        var x=k/(n-1)*vW;
+        var v=time?(time[k]-128)/128:(reduced?0:Math.sin(ts/700+k*.22)*.06);
+        var y=vH/2+v*(vH*.42)+(pass===0?5:0);
+        k===0?vctx.moveTo(x,y):vctx.lineTo(x,y);
+      }
+      vctx.stroke();
+    }
+    vctx.shadowBlur=0;
+    return;
+  }
+  var N=56,gap=3,bw=(vW-(N-1)*gap)/N;
+  var mirrored=mode==='neva';
+  var baseY=mirrored?vH*.52:vH-8;
+  var maxH=mirrored?vH*.4:vH-22;
+  if(mirrored){
+    vctx.strokeStyle='rgba(167,139,250,.35)';vctx.lineWidth=1;
+    vctx.beginPath();vctx.moveTo(0,baseY+1);vctx.lineTo(vW,baseY+1);vctx.stroke();
+  }
+  for(var b=0;b<N;b++){
+    var val;
+    if(freq){
+      var idx=Math.floor(Math.pow(b/N,1.6)*(freq.length*.72));
+      val=freq[idx]/255;
+    }else{
+      val=reduced?.05:.08+Math.sin(ts/900+b*.45)*.05;
+    }
+    var h=Math.max(2,val*maxH);
+    var x=b*(bw+gap);
+    var col=VIZ_COLORS[Math.floor(b/N*VIZ_COLORS.length)%VIZ_COLORS.length];
+    vctx.fillStyle=col;vctx.globalAlpha=.92;
+    vctx.fillRect(x,baseY-h,bw,h);
+    if(mirrored){vctx.globalAlpha=.22;vctx.fillRect(x,baseY+3,bw,h*.55);}
+    vctx.globalAlpha=1;
+    if(!mirrored){
+      peaks[b]=Math.max(peaks[b]-.008,h);
+      vctx.fillStyle='#f2e9d8';
+      vctx.fillRect(x,baseY-peaks[b]-3,bw,2);
+    }
+  }
+}
+sizeViz();requestAnimationFrame(drawViz);
+
+/* ---------- ТЕРМИНАЛ-ПЕСОЧНИЦА ---------- */
+var conOut=$('#conOut'),conIn=$('#conIn'),conForm=$('#conForm'),cmdChips=$('#cmdChips');
+var history=[],hIdx=-1;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function print(text,cls){
+  var d=document.createElement('div');
+  d.className='ln '+(cls||'r');
+  d.innerHTML=text;
+  conOut.appendChild(d);
+  conOut.scrollTop=conOut.scrollHeight;
+  while(conOut.children.length>240)conOut.removeChild(conOut.firstChild);
+}
+var COMMANDS={
+  help:function(){
+    print('доступные команды:','a');
+    print('  <span class="c">whoami</span>     — кто я и куда иду');
+    print('  <span class="c">skills</span>     — стек по блокам');
+    print('  <span class="c">projects</span>   — что довёл до пользователей');
+    print('  <span class="c">process</span>    — как я работаю, 5 шагов');
+    print('  <span class="c">contact</span>    — как связаться');
+    print('  <span class="c">neofetch</span>   — сводка в стиле терминала');
+    print('  <span class="c">music</span> [0-2] — кассета: 0 Цой · 1 Ослы · 2 Сова');
+    print('  <span class="c">play</span> / <span class="c">stop</span> — звук');
+    print('  <span class="c">rain</span> [0-100] — плотность дождя');
+    print('  <span class="c">vibe</span>       — случайная ночь');
+    print('  <span class="c">ls</span> · <span class="c">cat resume.txt</span> · <span class="c">date</span> · <span class="c">clear</span>');
+    print('а ещё есть <span class="m">banana</span> и <span class="m">sudo</span>. попробуй.','d');
+  },
+  whoami:function(){
+    print('михаил · sales → engineering → analytics','v');
+    print('B2B-менеджер, который научился кодить и довёл свои сервисы до тысяч пользователей.','r');
+    print('сейчас: бизнес-анализ + автоматизация. удалённо. самара → санкт-петербург.','d');
+    print('статус: <span class="a">open_to_work: true</span>');
+  },
+  skills:function(){
+    print('бизнес-анализ  ▓▓▓▓▓▓▓░░░  сбор требований, User Flow, критерии приёмки','a');
+    print('разработка     ▓▓▓▓▓▓▓▓░░  Python, Bot API, JS, Canvas, Web Audio','c');
+    print('инфраструктура ▓▓▓▓▓▓░░░░  Linux/VPS, SSH, OpenVPN, SMTP','r');
+    print('AI / LLM       ▓▓▓▓▓▓▓▓░░  ежедневно в работе, валидация результатов','v');
+    print('продажи        ▓▓▓▓▓▓▓▓▓░  B2B, КП, согласование сделок, CRM','a');
+    print('SQL / BI       ▓▓▓▓░░░░░░  учусь прямо сейчас, честно','d');
+  },
+  projects:function(){
+    print('01 · VPN на OpenVPN — <span class="a">4 160 клиентов</span> на пике. сервер, доступы, поддержка.','r');
+    print('02 · Telegram-бот генератор договоров — заказной, в использовании. PDF за минуты.','r');
+    print('03 · Сайты + автоматизация документооборота — связка заявка → письмо → договор.','r');
+    print('04 · Этот сайт — canvas-дождь, Web Audio синтезатор, 0 библиотек.','v');
+    print('подробности — в разделе ./проекты выше.','d');
+  },
+  process:function(){
+    print('1. снять боль      → карта процесса as-is','c');
+    print('2. формализовать   → требования + критерии приёмки','c');
+    print('3. спроектировать  → User Flow + edge cases','c');
+    print('4. собрать         → прототип / ТЗ разработке','c');
+    print('5. довести         → инструкция + цифры эффекта','c');
+  },
+  contact:function(){
+    print('telegram  <span class="a">@Xersgoryytt</span>  ← быстрее всего','r');
+    print('телефон   +7 917 160-94-87','r');
+    print('email     nikto4451@gmail.com','r');
+    print('github    github.com/nikto4451-commits','r');
+    print('отвечаю быстро — продажи приучили.','d');
+  },
+  neofetch:function(){
+    print('<span class="v"> ┌───────────────┐</span>   <span class="a">mikhail@spb</span>');
+    print('<span class="v"> │  ▓▓▓▓▓▓▓▓▓▓▓  │</span>   ─────────────────────');
+    print('<span class="v"> │  ◯         ◯  │</span>   role: BA × automation');
+    print('<span class="v"> │  ▀▀▀▀▀▀▀▀▀▀▀  │</span>   from: самара → санкт-петербург');
+    print('<span class="v"> └───────────────┘</span>   stack: python · js · web audio');
+    print('                       clients: 4 160 (vpn peak)');
+    print('                       deps: <span class="a">0</span> · libraries: <span class="a">0</span>');
+    print('                       soundtrack: generative post-punk');
+    print('                       status: <span class="a">open to work</span>');
+  },
+  ls:function(){
+    print('<span class="c">about.md</span>  <span class="c">projects/</span>  <span class="c">skills.json</span>  <span class="c">resume.txt</span>  <span class="m">banana.txt</span>  <span class="c">neva-fm.js</span>');
+  },
+  cat:function(arg){
+    if(arg==='resume.txt'){
+      print('Михаил — бизнес-аналитик / специалист по автоматизации.','r');
+      print('B2B-продажи (МТС, ТЕНДЕР-КОНСАЛТ) + собственные продукты в проде.','r');
+      print('Требования → сценарии → работающий инструмент. Удалённо.','r');
+    }else if(arg==='banana.txt'){
+      print('весь мир крутится вокруг банана 🍌','m');
+    }else{
+      print('cat: '+(arg||'')+' — нет такого файла. попробуй resume.txt','d');
+    }
+  },
+  date:function(){print(new Date().toLocaleString('ru-RU'),'d');},
+  clear:function(){conOut.innerHTML='';},
+  banana:function(){
+    print('🍌 весь мир крутится вокруг банана','m');
+    print('дождь переключён в банановый режим на 9 секунд.','d');
+    triggerBanana();
+  },
+  sudo:function(){
+    print('visitor не входит в файл sudoers. инцидент будет зарегистрирован.','m');
+    print('шучу. но найми меня — и получишь доступ ко всему нужному 😉','d');
+  },
+  play:function(){
+    userSoundDecision=true;startPlayback();
+    print('▶ нева fm пошла. кассета: '+PRESETS[Engine.getPresetIdx()].name,'v');
+  },
+  stop:function(){
+    userSoundDecision=true;Engine.stop();syncTransport();
+    print('■ стоп. тишина — тоже пост-панк.','d');
+  },
+  music:function(arg){
+    var i=parseInt(arg,10);
+    if(isNaN(i)||i<0||i>2){print('usage: music [0|1|2] — 0 Цой · 1 Ослы · 2 Сова','d');return;}
+    userSoundDecision=true;
+    Engine.selectTrack(i);
+    if(!Engine.isPlaying()){startPlayback();}
+    print('🎧 кассета: '+PRESETS[i].name,'v');
+  },
+  rain:function(arg){
+    var v=parseInt(arg,10);
+    if(isNaN(v)){print('usage: rain [0-100]','d');return;}
+    v=Math.max(0,Math.min(100,v));
+    atmo.rain=v;aRain.value=v;oRain.textContent=v;sliderFill(aRain);applyAtmo();syncDropCount();
+    if(v>0&&!rainOn){rainOn=true;syncRainBtn();rainStart();}
+    print('плотность дождя: '+v+'%','c');
+  },
+  vibe:function(){randomAtmo();print('🎲 случайная ночь собрана. смотри на фон.','v');},
+  echo:function(arg){print(esc(arg||''),'r');}
+};
+var CMD_NAMES=Object.keys(COMMANDS);
+function runCmd(raw){
+  var line=raw.trim();
+  print('<span class="u">visitor@spb:~$</span> '+esc(line),'r');
+  if(!line)return;
+  history.push(line);hIdx=history.length;
+  var parts=line.split(/\s+/);
+  var name=parts[0].toLowerCase();
+  var arg=parts.slice(1).join(' ');
+  if(COMMANDS[name]){
+    try{COMMANDS[name](arg);}catch(e){print('ошибка выполнения: '+esc(e.message),'m');}
+  }else{
+    print('команда не найдена: '+esc(name)+'. набери <span class="c">help</span>','m');
+  }
+}
+conForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  var v=conIn.value;conIn.value='';
+  runCmd(v);
+});
+conIn.addEventListener('keydown',function(e){
+  if(e.key==='ArrowUp'){e.preventDefault();if(hIdx>0){hIdx--;conIn.value=history[hIdx];}}
+  else if(e.key==='ArrowDown'){e.preventDefault();if(hIdx<history.length-1){hIdx++;conIn.value=history[hIdx];}else{hIdx=history.length;conIn.value='';}}
+  else if(e.key==='Tab'){
+    e.preventDefault();
+    var v=conIn.value.trim().toLowerCase();
+    if(!v)return;
+    var m=CMD_NAMES.filter(function(c){return c.indexOf(v)===0});
+    if(m.length===1)conIn.value=m[0]+' ';
+    else if(m.length>1)print(m.join('  '),'d');
+  }
+});
+['help','whoami','neofetch','projects','music 2','banana','sudo','vibe'].forEach(function(c){
+  var b=document.createElement('button');
+  b.type='button';b.className='cmd-chip';b.textContent=c;
+  b.addEventListener('click',function(){runCmd(c);conIn.focus();});
+  cmdChips.appendChild(b);
+});
+print('mikhail@spb resume shell · v2.6 · пост-панк внутри','v');
+print('набери <span class="c">help</span>, чтобы увидеть команды. или ткни чипсы ниже.','d');
+print('подсказка: <span class="m">neofetch</span>, <span class="m">music 2</span>, <span class="m">banana</span>','d');
+
+/* ---------- СТИКЕРЫ ---------- */
+var board=$('#board'),stickers=$$('.sticker'),zTop=10;
+var HOME=[[6,8,-6],[38,4,4],[68,12,-3],[10,52,5],[42,48,-5],[70,55,7]];
+function boardSize(){return{w:board.clientWidth,h:board.clientHeight};}
+function place(el,xPct,yPct,rot){
+  var bs=boardSize();
+  var w=el.offsetWidth,h=el.offsetHeight;
+  var x=Math.max(2,Math.min(bs.w-w-2,xPct/100*(bs.w-w)));
+  var y=Math.max(2,Math.min(bs.h-h-2,yPct/100*(bs.h-h)));
+  el.style.left=x+'px';el.style.top=y+'px';
+  el.style.transform='rotate('+rot+'deg)';
+  el.setAttribute('data-rot',rot);
+}
+function homeAll(){stickers.forEach(function(el,i){place(el,HOME[i][0],HOME[i][1],HOME[i][2]);el.style.zIndex=i+1;});}
+function clampEl(el){
+  var bs=boardSize();
+  var x=parseFloat(el.style.left)||0,y=parseFloat(el.style.top)||0;
+  x=Math.max(2,Math.min(bs.w-el.offsetWidth-2,x));
+  y=Math.max(2,Math.min(bs.h-el.offsetHeight-2,y));
+  el.style.left=x+'px';el.style.top=y+'px';
+}
+homeAll();
+stickers.forEach(function(el){
+  var drag=null;
+  el.addEventListener('pointerdown',function(e){
+    if(e.button!==undefined&&e.button!==0)return;
+    el.setPointerCapture(e.pointerId);
+    el.classList.add('dragging');
+    el.style.zIndex=++zTop;
+    var r=el.getBoundingClientRect(),br=board.getBoundingClientRect();
+    drag={dx:e.clientX-r.left,dy:e.clientY-r.top,br:br};
+    e.preventDefault();
+  });
+  el.addEventListener('pointermove',function(e){
+    if(!drag)return;
+    var x=e.clientX-drag.br.left-drag.dx;
+    var y=e.clientY-drag.br.top-drag.dy;
+    el.style.left=Math.max(2,Math.min(board.clientWidth-el.offsetWidth-2,x))+'px';
+    el.style.top=Math.max(2,Math.min(board.clientHeight-el.offsetHeight-2,y))+'px';
+  });
+  function end(e){
+    if(!drag)return;
+    drag=null;el.classList.remove('dragging');
+    try{el.releasePointerCapture(e.pointerId);}catch(err){}
+  }
+  el.addEventListener('pointerup',end);
+  el.addEventListener('pointercancel',end);
+  el.addEventListener('keydown',function(e){
+    var step=e.shiftKey?24:8,x=parseFloat(el.style.left)||0,y=parseFloat(el.style.top)||0,moved=true;
+    if(e.key==='ArrowLeft')x-=step;
+    else if(e.key==='ArrowRight')x+=step;
+    else if(e.key==='ArrowUp')y-=step;
+    else if(e.key==='ArrowDown')y+=step;
+    else if(e.key==='Enter'||e.key===' '){el.style.zIndex=++zTop;moved=false;}
+    else moved=false;
+    if(moved){
+      e.preventDefault();
+      el.style.zIndex=++zTop;
+      el.style.left=Math.max(2,Math.min(board.clientWidth-el.offsetWidth-2,x))+'px';
+      el.style.top=Math.max(2,Math.min(board.clientHeight-el.offsetHeight-2,y))+'px';
+    }
+  });
+});
+$('#btnShuffle').addEventListener('click',function(){
+  stickers.forEach(function(el){
+    place(el,Math.random()*100,Math.random()*100,Math.round((Math.random()-.5)*22));
+    el.style.zIndex=++zTop;
+  });
+  toast('стикеры перемешаны');
+});
+$('#btnBoardReset').addEventListener('click',function(){homeAll();zTop=10;toast('вернул как было');});
+$('#btnStack').addEventListener('click',function(){
+  stickers.forEach(function(el,i){
+    place(el,34+i*2.5,26+i*3.5,(i-2.5)*3);
+    el.style.zIndex=i+1;
+  });
+  zTop=10;toast('сложено в стопку');
+});
+
+/* ---------- ПУЛЬТ АТМОСФЕРЫ ---------- */
+var aRain=$('#aRain'),aFall=$('#aFall'),aGrain=$('#aGrain'),aScan=$('#aScan'),
+    aVinyl=$('#aVinyl'),aGlow=$('#aGlow'),aFog=$('#aFog'),aGrid=$('#aGrid');
+var oRain=$('#oRain'),oFall=$('#oFall'),oGrain=$('#oGrain'),oScan=$('#oScan'),
+    oVinyl=$('#oVinyl'),oGlow=$('#oGlow'),oFog=$('#oFog'),oGrid=$('#oGrid');
+var ATMO_UI=[[aRain,oRain,'rain'],[aFall,oFall,'fall'],[aGrain,oGrain,'grain'],[aScan,oScan,'scan'],
+             [aVinyl,oVinyl,'vinyl'],[aGlow,oGlow,'glow'],[aFog,oFog,'fog'],[aGrid,oGrid,'grid']];
+ATMO_UI.forEach(function(t){sliderFill(t[0]);});
+function syncAtmoUI(){
+  ATMO_UI.forEach(function(t){
+    t[0].value=atmo[t[2]];t[1].textContent=atmo[t[2]];sliderFill(t[0]);
+  });
+  applyAtmo();syncDropCount();
+}
+ATMO_UI.forEach(function(t){
+  t[0].addEventListener('input',function(){
+    atmo[t[2]]=+t[0].value;t[1].textContent=t[0].value;sliderFill(t[0]);
+    applyAtmo();
+    if(t[2]==='rain'){syncDropCount();if(atmo.rain>0&&!rainOn){rainOn=true;syncRainBtn();rainStart();}}
+  });
+});
+var tgGrid=$('#tgGrid'),tgVinyl=$('#tgVinyl'),tgTilt=$('#tgTilt');
+tgTilt.setAttribute('aria-pressed',atmoFlags.tilt?'true':'false');
+function bindFlag(btn,key){
+  btn.addEventListener('click',function(){
+    atmoFlags[key]=btn.getAttribute('aria-pressed')!=='true';
+    btn.setAttribute('aria-pressed',atmoFlags[key]?'true':'false');
+    applyAtmo();
+    if(key==='tilt'&&!atmoFlags.tilt)$$('.tilt').forEach(function(c){c.style.transform='';});
+  });
+}
+bindFlag(tgGrid,'grid');bindFlag(tgVinyl,'vinyl');bindFlag(tgTilt,'tilt');
+function randomAtmo(){
+  atmo.rain=20+Math.round(Math.random()*80);
+  atmo.fall=25+Math.round(Math.random()*60);
+  atmo.grain=10+Math.round(Math.random()*55);
+  atmo.scan=Math.round(Math.random()*70);
+  atmo.vinyl=15+Math.round(Math.random()*70);
+  atmo.glow=40+Math.round(Math.random()*60);
+  atmo.fog=35+Math.round(Math.random()*65);
+  atmo.grid=Math.round(Math.random()*90);
+  syncAtmoUI();
+  if(!rainOn){rainOn=true;syncRainBtn();rainStart();}
+}
+$('#btnAtmoRandom').addEventListener('click',function(){randomAtmo();toast('🎲 случайная ночь на Неве');});
+$('#btnAtmoReset').addEventListener('click',function(){
+  Object.keys(ATMO_DEF).forEach(function(k){atmo[k]=ATMO_DEF[k];});
+  atmoFlags.grid=true;atmoFlags.vinyl=true;atmoFlags.tilt=!isTouch;
+  tgGrid.setAttribute('aria-pressed','true');tgVinyl.setAttribute('aria-pressed','true');
+  tgTilt.setAttribute('aria-pressed',atmoFlags.tilt?'true':'false');
+  syncAtmoUI();toast('атмосфера сброшена');
+});
+$('#btnAtmoCopy').addEventListener('click',function(){
+  copyText(JSON.stringify({atmosphere:atmo,flags:atmoFlags}));
+});
+applyAtmo();
+
+/* ---------- RESIZE ---------- */
+var resizeT;
+window.addEventListener('resize',function(){
+  clearTimeout(resizeT);
+  resizeT=setTimeout(function(){
+    sizeRain();sizeViz();
+    stickers.forEach(clampEl);
+  },150);
+});
+
+/* ---------- КОНСУЛЬ ДЛЯ ЛЮБОПЫТНЫХ ---------- */
+try{
+  console.log('%c🍌 ВЕСЬ МИР КРУТИТСЯ ВОКРУГА БАНАНА','font-size:16px;font-weight:bold;color:#ffb454;background:#070b12;padding:8px 14px;border-radius:6px');
+  console.log('%cкуда ты смотришь, шалунишка 👀','font-size:13px;color:#ff5c93;background:#0b1120;padding:5px 12px;border-radius:5px');
+  console.log('%cу айтишников нету личной жизни 💀 зато их резюме синтезирует пост-панк','font-size:12px;color:#a78bfa;background:#0b1120;padding:5px 12px;border-radius:5px');
+  console.log('%cраз ты открыл консоль — ты внимательный. таких и ищем → t.me/Xersgoryytt','font-size:12px;color:#69f0a0;background:#0b1120;padding:5px 12px;border-radius:5px');
+  console.info('пасхалки: 5 кликов по логотипу 🍌 · терминал в разделе ./песочница · клавиши A S D F G H J K');
+}catch(e){}
+
 })();
 </script>
 </body>
